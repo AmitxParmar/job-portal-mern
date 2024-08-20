@@ -1,5 +1,11 @@
+import LogoGrid from "@/components/Landing/LogoGrid";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <LogoGrid />
+    </div>
+  );
 };
 
 export default Home;
