@@ -1,5 +1,6 @@
 import LogoGrid from "@/components/Landing/LogoGrid";
 import UsefulFor from "@/components/Landing/Role";
+import ShowcaseSection from "@/components/Landing/ShowcaseSection";
 
 const Home = () => {
   return (
@@ -9,6 +10,9 @@ const Home = () => {
       </section>
       <section>
         <UsefulFor />
+      </section>
+      <section>
+        <ShowcaseSection />
       </section>
     </div>
   );
