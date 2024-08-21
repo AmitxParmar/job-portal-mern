@@ -62,7 +62,7 @@ const Achievements = () => {
         </div>
       </div>
 
-      <div className="lg:px-[1.875rem] mx-auto z-[2] relative ">
+      <div className="lg:px-[1.875rem] mx-auto z-[2] relative">
         {/* Achievements for mobile */}
         <div className="lg:hidden shadow-xl">
           <Swiper
@@ -90,8 +90,8 @@ const Achievements = () => {
           </Swiper>
         </div>
 
-        <div className="hidden lg:flex mx-auto">
-          <TabGroup onChange={setSelectedIndex} selectedIndex={selectedIndex}>
+        <TabGroup onChange={setSelectedIndex} selectedIndex={selectedIndex}>
+          <div className="hidden lg:flex mx-auto">
             <TabList
               as="div"
               className="flex mx-auto shadow-2xl bg-light w-[380px] h-[380px] min-h-[380px] flex-col rounded-[20px] space-y-[30px] px-7 justify-center  text-heading"
@@ -123,6 +123,7 @@ const Achievements = () => {
             </TabList>
 
             <TabPanels
+              as="div"
               className={
                 "md:w-[680px] md:max-w-full max-w-xs md:h-[380px] md:ml-16 md:order-1 lg:order-none"
               }
@@ -143,8 +144,8 @@ const Achievements = () => {
                 </TabPanel>
               ))}
             </TabPanels>
-          </TabGroup>
-        </div>
+          </div>
+        </TabGroup>
       </div>
     </div>
   );
