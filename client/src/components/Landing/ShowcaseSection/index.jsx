@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const items = new Array(12).fill("Item ");
 const ShowcaseSection = () => {
   return (
-    <div className="max-h-[900px] overflow-hidden pb-12 md:px-[3%] bg-[#150f04] w-screen">
+    <div className="max-h-[900px] overflow-hidden pb-12 md:px-[3%] bg-[#150f04] w-screen max-w-full">
       <div className="xl:text-[0.7vw] pt-[6.4em] md:pb-[1.6em] text-xs w-full lg:max-w-[128rem] mx-auto">
         <div className="text-[#fff] px-4 text-start md:text-center mb-[2.8em]">
           <div className="uppercase text-base font-medium leading-[1.2]">

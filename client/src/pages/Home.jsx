@@ -1,10 +1,11 @@
+import Achievements from "@/components/Landing/Achievements";
 import LogoGrid from "@/components/Landing/LogoGrid";
 import UsefulFor from "@/components/Landing/Role";
 import ShowcaseSection from "@/components/Landing/ShowcaseSection";
 
 const Home = () => {
   return (
-    <div className="overflow-x-hidden">
+    <div className="">
       <section>
         <LogoGrid />
       </section>
@@ -13,6 +14,9 @@ const Home = () => {
       </section>
       <section>
         <ShowcaseSection />
+      </section>
+      <section>
+        <Achievements />
       </section>
     </div>
   );
