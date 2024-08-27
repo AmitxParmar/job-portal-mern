@@ -1,2 +1,3 @@
-POST http://localhost:8000/post {"idk":"data"}
+GET https://zrqnzscd-8000.inc1.devtunnels.ms/
+
 

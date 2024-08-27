@@ -10,7 +10,7 @@ const userSchema = new Schema({
     default: "jobSeeker",
   },
   isVerified: { type: Boolean, default: false },
-  inviteCodeUsed: { type: mongoose.Schema.Types.ObjectId, ref: "InviteCode" }, // Tracks the invite code used
+  inviteCodeUsed: { type: Schema.Types.ObjectId, ref: "InviteCode" }, // Tracks the invite code used
   profile: {
     bio: { type: String },
     skills: [{ type: String }],
