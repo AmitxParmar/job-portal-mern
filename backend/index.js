@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.routes.js";
 import jobsRouter from "./routes/job.routes.js";
 import userRouter from "./routes/user.routes.js";
 import inviteCodeRouter from "./routes/invitecode.routes.js";
+import applicationRouter from "./routes/application.routes.js";
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/jobs", jobsRouter);
 app.use("/api/invitecode", inviteCodeRouter);
 app.use("/api/user", userRouter);
+app.use("/api/applications", applicationRouter);
 
 // Connect to MongoDB
 connectDB();

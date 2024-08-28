@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/user.model"); // Assuming you have a User model
+import jwt from "jsonwebtoken";
+import User from "../models/user.model.js"; // Assuming you have a User model
 
 const verifyToken = (req, res, next) => {
   const token = req.headers["x-access-token"] || req.headers["authorization"];
@@ -30,4 +30,4 @@ const isAdmin = async (req, res, next) => {
   }
 };
 
-module.exports = { verifyToken, isAdmin };
+export { verifyToken, isAdmin };
