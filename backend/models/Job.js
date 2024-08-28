@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const jobSchema = new Schema({
   employer: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
@@ -12,7 +12,7 @@ const jobSchema = new Schema({
   salaryRange: { type: String },
   skillsRequired: [{ type: String }],
   postedAt: { type: Date, default: Date.now },
-  applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  applicants: [{ type: Schema.Types.ObjectId, ref: "User" }],
   status: { type: String, enum: ["open", "closed"], default: "open" },
 });
 

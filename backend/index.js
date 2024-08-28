@@ -3,35 +3,40 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./db/db.js";
 import authRouter from "./routes/auth.routes.js";
+import jobsRouter from "./routes/job.routes.js";
 
 dotenv.config();
 
+// Initialize Express app
 const app = express();
 
-app.use(express.urlencoded({ extended: false }));
+// Middleware setup
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use(cors());
-
+// CORS setup
 app.use(
   cors({
     origin: "*",
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// NOTE: just for testing purposes, remove it later.
+// Test route (can be removed later)
 app.get("/", (req, res) => {
-  console.log("test get home api route");
-  res.send({ status: "PORT FORWARDING TEST!" });
+  res.json({ status: "Server is running!" });
 });
 
+// Route handlers
 app.use("/api/auth", authRouter);
+app.use("/api/jobs", jobsRouter);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () =>
-  console.log(`Server listening on port ${process.env.PORT}`)
-);
-
+// Connect to MongoDB
 connectDB();
+
+// Start the server
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
