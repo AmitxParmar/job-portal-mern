@@ -6,6 +6,7 @@ import {
   updateJob,
   deleteJob,
   bookmarkJob,
+  getBookmarkedJobs,
   applyForJob,
   getJobApplications,
 } from "../controllers/job.controller.js";
@@ -40,6 +41,9 @@ router.post(
   verifyRole("jobSeeker"), */
   bookmarkJob
 );
+
+// Get bookmarked jobs
+router.get("/bookmarks", getBookmarkedJobs);
 
 // Route to unbookmark a job (job seeker only)
 //router.post(

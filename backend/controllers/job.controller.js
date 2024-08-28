@@ -81,7 +81,7 @@ export const deleteJob = async (req, res, next) => {
     const job = await Job.findById(req.params.id);
     if (!job) return next(createError(404, "Job not found!"));
 
-    /*  if (job.createdBy.toString() !== req.user.id) {
+    /*  if (job.employer.toString() !== req.user.id) {
       return next(createError(403, "You can only delete your own jobs!"));
     }
  */
@@ -141,6 +141,17 @@ export const bookmarkJob = async (req, res, next) => {
   }
 };
  */
+// Get Bookmarked Jobs
+export const getBookmarkedJobs = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).populate("bookmarkedJobs");
+    if (!user) return next(createError(404, "User not found!"));
+
+    res.status(200).json(user.bookmarkedJobs);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // Apply for a job
 export const applyForJob = async (req, res, next) => {
@@ -176,7 +187,7 @@ export const getJobApplications = async (req, res, next) => {
     );
     if (!job) return next(createError(404, "Job not found!"));
 
-    if (job.createdBy.toString() !== req.user.id) {
+    if (job.employer.toString() !== req.user.id) {
       return next(
         createError(403, "You can only view applications for your own jobs!")
       );
