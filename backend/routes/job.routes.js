@@ -10,7 +10,7 @@ import {
   applyForJob,
   getJobApplications,
 } from "../controllers/job.controller.js";
-/* import { verifyToken, verifyRole } from "@/middleware/authMiddleware.js"; */
+/* import { verifyToken, verifyRole } from "../middleware/authMiddleware.js"; */
 
 const router = express.Router();
 

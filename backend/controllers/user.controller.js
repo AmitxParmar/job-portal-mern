@@ -1,5 +1,5 @@
-import User from "@/models/User";
-import { createError } from "@/utils/error";
+import User from "../models/User.js";
+import { createError } from "../utils/error.js";
 
 // Get User Profile
 export const getUserProfile = async (req, res, next) => {

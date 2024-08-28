@@ -2,8 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./db/db.js";
+
 import authRouter from "./routes/auth.routes.js";
 import jobsRouter from "./routes/job.routes.js";
+import userRouter from "./routes/user.routes.js";
+import inviteCodeRouter from "./routes/invitecode.routes.js";
 
 dotenv.config();
 
@@ -31,6 +34,8 @@ app.get("/", (req, res) => {
 // Route handlers
 app.use("/api/auth", authRouter);
 app.use("/api/jobs", jobsRouter);
+app.use("/api/invitecode", inviteCodeRouter);
+app.use("/api/user", userRouter);
 
 // Connect to MongoDB
 connectDB();
