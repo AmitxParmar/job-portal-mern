@@ -9,7 +9,10 @@ const jobSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   location: { type: String },
-  salaryRange: { type: String },
+  salaryRange: {
+    min: { type: Number },
+    max: { type: Number },
+  },
   skillsRequired: [{ type: String }],
   postedAt: { type: Date, default: Date.now },
   applicants: [{ type: Schema.Types.ObjectId, ref: "User" }],
