@@ -13,6 +13,23 @@ const jobSchema = new Schema({
     min: { type: Number },
     max: { type: Number },
   },
+  tags: [{ type: String }],
+  socials: {
+    linkedin: { type: String },
+    twitter: { type: String },
+    website: { type: String }
+  },
+  salaryRange: {
+    min: { type: Number },
+    max: { type: Number },
+    frequency: {
+      type: String,
+      enum: ["monthly", "yearly"],
+      required: true
+    }
+  },
+
+
   skillsRequired: [{ type: String }],
   postedAt: { type: Date, default: Date.now },
   applicants: [{ type: Schema.Types.ObjectId, ref: "User" }],
