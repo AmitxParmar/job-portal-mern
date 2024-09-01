@@ -58,19 +58,11 @@ const Navbar = () => {
         </div>
       </header>
       <Separator className="bg-gray-500" />
-      <div className="text-white h-[600px] items-center align-center grid grid-cols-5 ">
+      <div className="text-white bg-black h-[600px] items-center align-center justify-between flex flex-row px-12">
         <DropDownMenu />
-        <Select>
-          <LuggageIcon />
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
+        <Separator orientation="vertical" className="h-[60%]" />
+        <DropDownMenu />
+        <Separator orientation="vertical" className="h-[60%]" />
         <Select>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Theme" />
@@ -81,8 +73,24 @@ const Navbar = () => {
             <SelectItem value="system">System</SelectItem>
           </SelectContent>
         </Select>
-
-        <Slider defaultValue={[50]} max={100} step={1} className={`w-[60%]`} />
+        <Separator orientation="vertical" className="h-[60%]" />
+        <Select>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Theme" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="system">System</SelectItem>
+          </SelectContent>
+        </Select>
+        <Separator orientation="vertical" className="h-[60%]" />
+        <Slider
+          defaultValue={[50]}
+          max={100}
+          step={1}
+          className={`max-w-[250px] w-[60%]`}
+        />
       </div>
     </>
   );

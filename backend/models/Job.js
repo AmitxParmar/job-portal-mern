@@ -1,5 +1,14 @@
 import { Schema, model } from "mongoose";
 
+const locationSchema = new Schema(
+  {
+    city: { type: String, required: true },
+    state: { type: String },
+    country: { type: String, required: true },
+  },
+  { _id: true }
+); // This ensures each location has its own unique ID
+
 const jobSchema = new Schema({
   employer: {
     type: Schema.Types.ObjectId,
@@ -8,7 +17,7 @@ const jobSchema = new Schema({
   },
   title: { type: String, required: true },
   description: { type: String, required: true },
-  location: { type: String },
+  location: { type: locationSchema, required: true },
   salaryRange: {
     min: { type: Number },
     max: { type: Number },
@@ -17,18 +26,17 @@ const jobSchema = new Schema({
   socials: {
     linkedin: { type: String },
     twitter: { type: String },
-    website: { type: String }
+    website: { type: String },
   },
   salaryRange: {
     min: { type: Number },
     max: { type: Number },
     frequency: {
       type: String,
-      enum: ["monthly", "yearly"],
-      required: true
-    }
+      enum: ["hourly", "monthly", "yearly"],
+      required: true,
+    },
   },
-
 
   skillsRequired: [{ type: String }],
   postedAt: { type: Date, default: Date.now },
