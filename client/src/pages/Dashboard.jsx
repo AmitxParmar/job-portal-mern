@@ -22,7 +22,7 @@ const Dashboard = () => {
     "Backend Developer",
   ];
   return (
-    <div className=" flex flex-col max-h-screen  scrollbar-thin bg-gray-50 ">
+    <div className=" flex flex-col max-h-screen  scrollbar-thin bg-purple-50 ">
       {/* <!-- Header --> */}
       <Navbar />
       {/* <!-- Main Content --> */}

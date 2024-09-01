@@ -3,7 +3,7 @@ import { Bookmark } from "lucide-react";
 
 const JobCard = ({ name }) => {
   return (
-    <div className="p-2 border border-gray-400 rounded-2xl shadow-lg w-full sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-between bg-white flex flex-col m-2">
+    <div className="p-2 border hover:scale-105 transition-all rounded-2xl shadow-lg w-full sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-between bg-white flex flex-col m-2">
       <div className="bg-orange-100 rounded-2xl p-4 w-full">
         <div className="flex flex-row justify-between items-center">
           <p className="text-sm rounded-full bg-white text-center align-center py-2 px-3 font-bold text-black">

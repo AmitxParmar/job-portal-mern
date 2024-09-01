@@ -165,6 +165,21 @@ export const bookmarkJob = async (req, res, next) => {
   }
 };
  */
+// Get all unique job locations
+export const getJobLocations = async (req, res, next) => {
+  try {
+    const locations = await Job.distinct("location");
+
+    if (!locations || locations.length === 0) {
+      return res.status(404).json({ message: "No job locations found." });
+    }
+
+    res.status(200).json(locations);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Get Bookmarked Jobs
 export const getBookmarkedJobs = async (req, res, next) => {
   try {

@@ -1,11 +1,11 @@
 const Filters = () => {
   return (
-    <aside className="w-1/5 bg-white p-4 border-r">
+    <aside className="w-1/5 bg-white p-4 border-r scrollbar scrollbar-thumb-purple-500/30 scrollbar-corner-keyframes-translateX-100%-transform border shadow-lg overflow-auto">
       {/* <!-- Filters content here --> */}
       <h2 className="font-semibold text-3xl mb-4">Filters</h2>
       {/* <!-- Add filter items here --> */}
       {/* <ScrollArea>asd</ScrollArea> */}
-      <div className="overflow-y-scroll scrollbar-none scrollbar-thumb-black">
+      <div className="">
         Use the searchbar at the bottom to ask questions. Phind will
         automatically try to use your codebase to answer. Type @ specify
         files/code in your query. Type @web_search to do a web search. Enable

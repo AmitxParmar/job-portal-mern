@@ -3,7 +3,20 @@ import { Separator } from "@/components/ui/separator";
 import { Bell } from "lucide-react";
 import { BellDotIcon } from "lucide-react";
 import { LucideSettings } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
+import { Slider } from "@/components/ui/slider";
+import { Search } from "lucide-react";
+import { LuggageIcon } from "lucide-react";
+import { Calendar } from "lucide-react";
+import { Calculator } from "lucide-react";
+import DropDownMenu from "@/components/DropDownMenu";
 const Navbar = () => {
   const notification = false;
   return (
@@ -45,7 +58,32 @@ const Navbar = () => {
         </div>
       </header>
       <Separator className="bg-gray-500" />
-      <div className="text-white bg-black"></div>
+      <div className="text-white h-[600px] items-center align-center grid grid-cols-5 ">
+        <DropDownMenu />
+        <Select>
+          <LuggageIcon />
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Theme" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="system">System</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Theme" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="system">System</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Slider defaultValue={[50]} max={100} step={1} className={`w-[60%]`} />
+      </div>
     </>
   );
 };

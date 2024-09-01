@@ -3,11 +3,10 @@ import Job from "../models/Job.js";
 import User from "../models/User.js";
 import { createError } from "../utils/error.js";
 
-// Apply for a job
 export const applyForJob = async (req, res, next) => {
   try {
     const { jobId, notes } = req.body;
-    const userId = req.user.id; // Assumes you have an auth middleware
+    const userId = req.user.id;
 
     const job = await Job.findById(jobId);
     if (!job) return next(createError(404, "Job not found!"));
