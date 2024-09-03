@@ -10,12 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { City } from "country-state-city";
 import { Slider } from "@/components/ui/slider";
-import { Search } from "lucide-react";
-import { LuggageIcon } from "lucide-react";
-import { Calendar } from "lucide-react";
-import { Calculator } from "lucide-react";
+
 import DropDownMenu from "@/components/DropDownMenu";
 const Navbar = () => {
   const notification = false;
@@ -61,7 +58,7 @@ const Navbar = () => {
       <div className="text-white bg-black h-[600px] items-center align-center justify-between flex flex-row px-12">
         <DropDownMenu />
         <Separator orientation="vertical" className="h-[60%]" />
-        <DropDownMenu />
+        <DropDownMenu options={City.getCitiesOfCountry("IN")} />
         <Separator orientation="vertical" className="h-[60%]" />
         <Select>
           <SelectTrigger className="w-[180px]">

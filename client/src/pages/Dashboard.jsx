@@ -22,7 +22,7 @@ const Dashboard = () => {
     "Backend Developer",
   ];
   return (
-    <div className=" flex flex-col max-h-screen  scrollbar-thin bg-purple-50 ">
+    <div className="max-w-[1980px] mx-auto flex flex-col max-h-screen  scrollbar-thin bg-purple-50 ">
       {/* <!-- Header --> */}
       <Navbar />
       {/* <!-- Main Content --> */}
@@ -30,10 +30,10 @@ const Dashboard = () => {
         {/* <!-- Left Sidebar (Filters) --> */}
         <Filters />
         {/* <!-- Center Content (Job Cards) --> */}
-        <main className="flex-1 p-6 ">
+        <main className="">
           <h1 className="text-5xl p-6 font-bold">Recommended Jobs</h1>
           {/* <!-- Job Cards Grid --> */}
-          <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen scrollbar-none overflow-y-scroll lg:grid-cols-4 h-full gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 min-h-max px-6 py-24 scrollbar-none overflow-y-scroll lg:grid-cols-5 h-full gap-2">
             {jobs.map((item) => (
               <JobCard key={item} name={item} />
             ))}
