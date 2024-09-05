@@ -17,13 +17,14 @@ import { ChevronsUpDown } from "lucide-react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Virtuoso } from "react-virtuoso";
+import PropTypes from "prop-types";
 
 const frameworks = [
-  { value: "next.js", label: "Next.js" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt.js", label: "Nuxt.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
+  { name: "next.js", label: "Next.js" },
+  { name: "sveltekit", label: "SvelteKit" },
+  { name: "nuxt.js", label: "Nuxt.js" },
+  { name: "remix", label: "Remix" },
+  { name: "astro", label: "Astro" },
 ];
 
 const DropDownMenu = ({
@@ -32,22 +33,22 @@ const DropDownMenu = ({
   searchPlaceholder = "Search...",
   emptyMessage = "No options found.",
   onSelect,
-  itemsPerPage = 50,
 }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
 
   // Filter options based on search
+
   const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(search.toLowerCase())
+    option.name.toLowerCase().includes(search.toLowerCase())
   );
 
   const ItemRenderer = useCallback(
     ({ item }) => (
       <CommandItem
-        key={item.value}
-        value={item.value}
+        key={item.name}
+        value={item.name}
         onSelect={(currentValue) => {
           setValue(currentValue === value ? "" : currentValue);
           setOpen(false);
@@ -57,13 +58,13 @@ const DropDownMenu = ({
         <Check
           className={cn(
             "mr-2 h-4 w-4",
-            value === item.value ? "opacity-100" : "opacity-0"
+            value === item.name ? "opacity-100" : "opacity-0"
           )}
         />
         {item.label}
       </CommandItem>
     ),
-    [value, onSelect]
+    [onSelect, value]
   );
 
   return (
@@ -76,7 +77,9 @@ const DropDownMenu = ({
           className="w-[200px] justify-between"
         >
           {value
-            ? options.find((option) => option.value === value)?.label
+            ? options.find(
+                (option) => option.name.toLowerCase() === value.toLowerCase()
+              )
             : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -105,6 +108,15 @@ const DropDownMenu = ({
       </PopoverContent>
     </Popover>
   );
+};
+
+DropDownMenu.propTypes = {
+  options: PropTypes.array.isRequired,
+  placeholder: PropTypes.string,
+  searchPlaceholder: PropTypes.string,
+  emptyMessage: PropTypes.string,
+  onSelect: PropTypes.func,
+  itemsPerPage: PropTypes.number,
 };
 
 export default DropDownMenu;

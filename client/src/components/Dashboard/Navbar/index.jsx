@@ -14,8 +14,11 @@ import { City } from "country-state-city";
 import { Slider } from "@/components/ui/slider";
 
 import DropDownMenu from "@/components/DropDownMenu";
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   const notification = false;
+  console.log(City.getCitiesOfCountry("IN"), "cities");
   return (
     <>
       <header className="flex sticky justify-between items-center bg-black text-white p-4">
@@ -23,21 +26,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-6">
           <div className="text-lg font-bold">Job Portal</div>
           <nav className="space-x-4">
-            <a href="#" className="hover:text-gray-300">
-              Find job
-            </a>
-            <a href="#" className="hover:text-gray-300">
-              Messages
-            </a>
-            <a href="#" className="hover:text-gray-300">
-              Hiring
-            </a>
-            <a href="#" className="hover:text-gray-300">
-              Community
-            </a>
-            <a href="#" className="hover:text-gray-300">
-              FAQ
-            </a>
+            <Link to="/dashboard">Find job</Link>
           </nav>
         </div>
 
@@ -55,13 +44,13 @@ const Navbar = () => {
         </div>
       </header>
       <Separator className="bg-gray-500" />
-      <div className="text-white bg-black h-[600px] items-center align-center justify-between flex flex-row px-12">
+      <div className="text-white bg-black h-56 items-center align-center justify-between flex flex-row px-12">
         <DropDownMenu />
         <Separator orientation="vertical" className="h-[60%]" />
         <DropDownMenu options={City.getCitiesOfCountry("IN")} />
-        <Separator orientation="vertical" className="h-[60%]" />
+        <Separator orientation="vertical" className="h-1/2" />
         <Select>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-48">
             <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent>
@@ -70,9 +59,9 @@ const Navbar = () => {
             <SelectItem value="system">System</SelectItem>
           </SelectContent>
         </Select>
-        <Separator orientation="vertical" className="h-[60%]" />
+        <Separator orientation="vertical" className="h-1/2" />
         <Select>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-48">
             <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent>
@@ -81,12 +70,12 @@ const Navbar = () => {
             <SelectItem value="system">System</SelectItem>
           </SelectContent>
         </Select>
-        <Separator orientation="vertical" className="h-[60%]" />
+        <Separator orientation="vertical" className="h-1/2" />
         <Slider
           defaultValue={[50]}
           max={100}
           step={1}
-          className={`max-w-[250px] w-[60%]`}
+          className={`max-w-64 w-1/2`}
         />
       </div>
     </>
