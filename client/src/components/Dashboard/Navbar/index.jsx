@@ -15,8 +15,10 @@ import { Slider } from "@/components/ui/slider";
 
 import DropDownMenu from "@/components/DropDownMenu";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
   const notification = false;
   console.log(City.getCitiesOfCountry("IN"), "cities");
   return (
@@ -44,40 +46,42 @@ const Navbar = () => {
         </div>
       </header>
       <Separator className="bg-gray-500" />
-      <div className="text-white bg-black h-56 items-center align-center justify-between flex flex-row px-12">
-        <DropDownMenu />
-        <Separator orientation="vertical" className="h-[60%]" />
-        <DropDownMenu options={City.getCitiesOfCountry("IN")} />
-        <Separator orientation="vertical" className="h-1/2" />
-        <Select>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
-        <Separator orientation="vertical" className="h-1/2" />
-        <Select>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
-        <Separator orientation="vertical" className="h-1/2" />
-        <Slider
-          defaultValue={[50]}
-          max={100}
-          step={1}
-          className={`max-w-64 w-1/2`}
-        />
-      </div>
+      {location.pathname === "/dashboard" && (
+        <div className="text-white bg-black h-56 items-center align-center justify-between flex flex-row px-12">
+          <DropDownMenu />
+          <Separator orientation="vertical" className="h-[60%]" />
+          <DropDownMenu options={City.getCitiesOfCountry("IN")} />
+          <Separator orientation="vertical" className="h-1/2" />
+          <Select>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
+          <Separator orientation="vertical" className="h-1/2" />
+          <Select>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
+          <Separator orientation="vertical" className="h-1/2" />
+          <Slider
+            defaultValue={[50]}
+            max={100}
+            step={1}
+            className={`max-w-64 w-1/2`}
+          />
+        </div>
+      )}
     </>
   );
 };
