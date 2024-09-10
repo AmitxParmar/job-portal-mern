@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { City } from "country-state-city";
+/* import { City } from "country-state-city"; */
 import { Slider } from "@/components/ui/slider";
 
 import DropDownMenu from "@/components/DropDownMenu";
@@ -20,10 +20,10 @@ import { useLocation } from "react-router-dom";
 const Navbar = () => {
   const { pathname } = useLocation();
   const notification = false;
-  console.log(City.getCitiesOfCountry("IN"), "cities");
+  /* console.log(City.getCitiesOfCountry("IN"), "cities"); */
   return (
     <>
-      <header className="flex sticky justify-between items-center bg-black text-white p-4">
+      <header className="hidden lg:flex sticky justify-between items-center bg-black text-white p-4">
         {/*  Left Section (Navigation) */}
         <div className="flex items-center space-x-6">
           <div className="text-lg font-bold">Job Portal</div>
@@ -49,10 +49,10 @@ const Navbar = () => {
       </header>
       <Separator className="bg-gray-500" />
       {pathname === "/dashboard" && (
-        <div className="text-white bg-black lg:min-h-24 items-center align-center justify-between flex flex-row px-12">
+        <div className="text-white bg-black lg:min-h-24 items-center align-center justify-between lg:flex hidden flex-row px-12">
           <DropDownMenu />
-          <Separator orientation="vertical" className="h-[60%]" />
-          <DropDownMenu options={City.getCitiesOfCountry("IN")} />
+          <Separator orientation="vertical" className="h-1/2" />
+          {/* <DropDownMenu options={City.getCitiesOfCountry("IN")} /> */}
           <Separator orientation="vertical" className="h-1/2" />
           <Select>
             <SelectTrigger className="w-48">

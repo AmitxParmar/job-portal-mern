@@ -3,10 +3,13 @@ import Filters from "@/components/Dashboard/Filters";
 import JobCard from "@/components/Dashboard/JobCard";
 import Navbar from "@/components/Dashboard/Navbar";
 import Sidebar from "@/components/Dashboard/Sidebar";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+/* import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Settings } from "lucide-react";
-
+ */
 const Dashboard = () => {
   const { pathname } = useLocation();
 
@@ -136,14 +139,22 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="max-w-[1980px] transition-all duration-300 ease-in-out mx-auto flex flex-col max-h-screen scrollbar-thin bg-purple-50 min-h-screen">
+    <div className=" xl:max-w-[1980px] transition-all duration-300 ease-in-out mx-auto flex flex-col overflow-hidden max-h-screen scrollbar-thin bg-purple-50 min-h-screen">
       {/* Header */}
       <Navbar />
       {/* Main Content */}
       <div className="flex justify-around flex-1 overflow-y-hidden">
         {/* Left Sidebar */}
-        <Sidebar classNames={pathname === "/dashboard/profile" ? "w-1/4" : ""}>
-          {pathname === "/dashboard" && <Filters />}
+        <Sidebar
+          classNames={`hidden xl:block ${
+            pathname === "/dashboard/profile" ? "w-1/5" : ""
+          }`}
+        >
+          {pathname === "/dashboard" ? (
+            <Filters />
+          ) : pathname === "/dashboard/profile" ? (
+            <ProfileSidebar />
+          ) : null}
         </Sidebar>
 
         {/* Center Content */}
@@ -151,7 +162,7 @@ const Dashboard = () => {
           {/* Conditional Rendering for Dashboard and Profile */}
           {pathname === "/dashboard" ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 min-h-max pb-20 scrollbar-none pt-12 lg:px-6 scroll-smooth overflow-y-scroll lg:grid-cols-5 h-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 min-h-max pb-20 scrollbar-none pt-12 lg:px-6 scroll-smooth overflow-y-scroll lg:grid-cols-3 xl:grid-cols-5 gap-1 h-full">
                 {jobs.map((item) => (
                   <JobCard key={item} name={item} />
                 ))}
@@ -191,3 +202,27 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+function ProfileSidebar() {
+  const navigate = useNavigate();
+  return (
+    <div>
+      <Button
+        varient=""
+        onClick={() => navigate(-1)}
+        className="group transition-all duration-500 hover:scale-105 rounded-full px-4 py-2 border w-full hover:invert "
+      >
+        <ArrowLeft
+          className="transition-all duration-500 ease-in-out group-hover:-translate-x-8"
+          size={30}
+        />
+        <span className="ml-2">Back</span>
+      </Button>
+      <div className="overflow-hidden border grid grid-flow-row space-y-2 py-6 mt-4 px-3">
+        <div className="border border-black border-r-white rounded-full px-4 py-2 w-full relative left-[30%]">
+          Profile
+        </div>
+      </div>
+    </div>
+  );
+}

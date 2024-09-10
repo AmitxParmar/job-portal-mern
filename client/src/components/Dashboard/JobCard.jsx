@@ -40,7 +40,6 @@ const JobCard = ({ name = "default" }) => {
       "Node.js",
       "React",
       "Node.js",
-
       "React",
       "Node.js",
     ],
@@ -57,7 +56,7 @@ const JobCard = ({ name = "default" }) => {
 
   return (
     <>
-      <div className="p-2 border-l-8 border border-black max-h-[360px]  hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-full sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-white flex flex-col m-2">
+      <div className="p-2 w-[90%] mx-auto border-l-8 border border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-white flex flex-col m-2">
         <div className="bg-orange-100 border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
           <div className="flex flex-row justify-between items-center">
             <p className="text-sm rounded-full bg-white text-center align-center py-2 px-3 font-bold text-black">
@@ -95,26 +94,26 @@ const JobCard = ({ name = "default" }) => {
           </div>
 
           <button className="max-h-fit max-w-fit font-semibold px-4 transition-all duration-300 bg-black text-white p-2 rounded-full hover:bg-purple-500/30 hover:text-black">
-            <Drawer className="min-h-screen">
+            <Drawer className="min-h-screen max-w-screen">
               <DrawerTrigger asChild>
                 <Button variant="outline">Details</Button>
               </DrawerTrigger>
-              <DrawerContent className="h-[calc(100vh-10vh)]">
+              <DrawerContent className="h-[calc(100vh-10vh)] max-w-screen">
                 <DrawerHeader className={`w-fit`}>
                   <DrawerTitle>{jobData1.title}</DrawerTitle>
                   <DrawerDescription>{jobData1.employer}</DrawerDescription>
-                  <div className="grid grid-flow-col gap-2">
+                  <div className="grid grid-flow-col space-x-2 w-max overflow-auto">
                     {jobData1.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-gray-500 w-fit gap-2 rounded-full px-2 py-1 border border-black"
+                        className="w-fit gap-2 rounded-full px-2 py-1 border border-gray-500 scrollbar-none"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 </DrawerHeader>
-                <div className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-400 p-4 font-semibold text-gray-600 ">
+                <div className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full mx-auto text-center scrollbar-thumb-gray-400 p-4 font-semibold text-gray-600 ">
                   {jobData1.description}
                 </div>
                 <DrawerFooter>
