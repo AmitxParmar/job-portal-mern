@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const notification = false;
   console.log(City.getCitiesOfCountry("IN"), "cities");
   return (
@@ -36,18 +36,20 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <div className="text-sm">New York, NY</div>
           {/* <!-- Profile Icon --> */}
-          <div className="h-10 w-10 rounded-full bg-gray-600"></div>
           <Button className="rounded-full h-10 w-10 border border-white">
             <LucideSettings size={200} />
           </Button>
           <Button className="rounded-full border border-white h-10 w-10">
-            {notification ? <BellDotIcon size={20} /> : <Bell size={20} />}
+            {notification ? <BellDotIcon size={50} /> : <Bell size={20} />}
           </Button>
+          <Link to={`/dashboard/profile`}>
+            <div className="h-10 w-10 rounded-full bg-gray-600"></div>
+          </Link>
         </div>
       </header>
       <Separator className="bg-gray-500" />
-      {location.pathname === "/dashboard" && (
-        <div className="text-white bg-black h-56 items-center align-center justify-between flex flex-row px-12">
+      {pathname === "/dashboard" && (
+        <div className="text-white bg-black lg:min-h-24 items-center align-center justify-between flex flex-row px-12">
           <DropDownMenu />
           <Separator orientation="vertical" className="h-[60%]" />
           <DropDownMenu options={City.getCitiesOfCountry("IN")} />
