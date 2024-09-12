@@ -164,6 +164,6 @@
   }
 
   body {
-    @apply bg-background text-foreground overflow-y-hidden;
+    @apply overflow-auto;
   }
 }

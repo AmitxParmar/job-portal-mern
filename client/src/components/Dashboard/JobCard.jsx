@@ -12,7 +12,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-const JobCard = ({ name = "default" }) => {
+const JobCard = ({ name }) => {
   const jobData1 = {
     _id: "64e5cd73a9b51c1234567890",
     employer: "64e5bcd5a9b51c1234567890", // ObjectId of the employer (user)
@@ -56,7 +56,7 @@ const JobCard = ({ name = "default" }) => {
 
   return (
     <>
-      <div className="p-2 w-[90%] mx-auto border-l-8 border border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-white flex flex-col m-2">
+      <div className="p-2 mx-auto border-l-8 border border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-white flex flex-col m-2">
         <div className="bg-orange-100 border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
           <div className="flex flex-row justify-between items-center">
             <p className="text-sm rounded-full bg-white text-center align-center py-2 px-3 font-bold text-black">

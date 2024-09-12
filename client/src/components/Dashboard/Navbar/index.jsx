@@ -22,8 +22,8 @@ const Navbar = () => {
   const notification = false;
   /* console.log(City.getCitiesOfCountry("IN"), "cities"); */
   return (
-    <>
-      <header className="hidden lg:flex sticky justify-between items-center bg-black text-white p-4">
+    <div className="sticky inset-x-0 inset-0 h-fit">
+      <header className="hidden lg:flex sticky top-0 justify-between items-center bg-black text-white p-4">
         {/*  Left Section (Navigation) */}
         <div className="flex items-center space-x-6">
           <div className="text-lg font-bold">Job Portal</div>
@@ -36,11 +36,11 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <div className="text-sm">New York, NY</div>
           {/* <!-- Profile Icon --> */}
-          <Button className="rounded-full h-10 w-10 border border-white">
-            <LucideSettings size={200} />
+          <Button size="icon" className="rounded-full border border-white">
+            <LucideSettings size={20} />
           </Button>
-          <Button className="rounded-full border border-white h-10 w-10">
-            {notification ? <BellDotIcon size={50} /> : <Bell size={20} />}
+          <Button size="icon" className="rounded-full border border-white">
+            {notification ? <BellDotIcon size={20} /> : <Bell size={20} />}
           </Button>
           <Link to={`/dashboard/profile`}>
             <div className="h-10 w-10 rounded-full bg-gray-600"></div>
@@ -84,7 +84,7 @@ const Navbar = () => {
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

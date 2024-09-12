@@ -6,7 +6,7 @@ import ShowcaseSection from "@/components/Landing/ShowcaseSection";
 const Home = () => {
   return (
     <>
-      <section>
+      <section className="">
         <LogoGrid />
       </section>
       <section>
