@@ -16,8 +16,8 @@ function App() {
 
         <Routes>
           <Route index path="/" element={<Home />} />
-          <Route path="dashboard" element={<Dashboard />}>
-            <Route path="profile" element={<Profile />} />
+          <Route path="dashboard/*" element={<Dashboard />}>
+            <Route path="profile/*" element={<Profile />} />
             <Route path="applied-jobs" element={<AppliedJobs />} />
             <Route path="employer" element={<AdminDashboard />} />
           </Route>

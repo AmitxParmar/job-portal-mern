@@ -23,6 +23,11 @@ module.exports = {
         helvetica: ["Helvetica Neue", "sans-serif"],
       },
       colors: {
+        applied: "#3b82f6", // blue
+        reviewing: "#fbbf24", // yellow
+        interview: "#4ade80", // green
+        hired: "#22c55e", // light green
+        rejected: "#ef4444", // red
         heading: "#471C3D",
         muave: "#ED4A60",
         light: "#FFFFFF",
