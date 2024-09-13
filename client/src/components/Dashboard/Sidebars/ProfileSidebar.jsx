@@ -1,8 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@headlessui/react";
 import { profileMenu } from "@/constants";
-import { Link } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Container from "../Container";
 
 const ProfileSidebar = () => {
@@ -13,7 +12,7 @@ const ProfileSidebar = () => {
       <Button
         varient="outline"
         onClick={() => navigate("/dashboard")}
-        className="group transition-all flex flex-row items-center place-items-center text-center duration-500 hover:scale-105 rounded-full px-4 py-2 justify-center border w-full hover:invert "
+        className="group transition-all flex flex-row items-center place-items-center text-center duration-500 hover:scale-105 rounded-full hover:bg-white px-4 py-2 justify-center border w-full hover:invert "
       >
         <ArrowLeft
           className="transition-all duration-500 ease-in-out group-hover:-translate-x-8"

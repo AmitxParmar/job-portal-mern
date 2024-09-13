@@ -63,12 +63,13 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
-      ) : pathname === "/dashboard/profile" ? ( // Updated to use ternary operator for clarity
-        <div className="flex flex-row h-[calc(100vh-11vh)]">
+      ) : pathname.startsWith("/dashboard/") ? ( // Updated to use ternary operator for clarity
+        <div className="flex flex-row h-full max-h-[calc(100vh-11vh)]">
           <ProfileSidebar />
-          <Container className={`mb-0 pb-0`}>
+          <Container className={`ml-3 max-h-full w-full`}>
             <Outlet />
           </Container>
+          <Container className={`ml-3 mr-6 w-56 max-h-full`}></Container>
         </div>
       ) : null}
     </>

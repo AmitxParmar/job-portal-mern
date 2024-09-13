@@ -17,17 +17,17 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)", "sans-serif"],
+        grotesk: ["var(--font-grotesk)", "sans-serif"],
+        helvetica: ["Helvetica Neue", "sans-serif"],
+      },
       colors: {
         heading: "#471C3D",
         muave: "#ED4A60",
         light: "#FFFFFF",
         textColor: {
           default: "#2C2C2C",
-        },
-        fontFamily: {
-          inter: ["var(--font-inter)", "sans-serif"],
-          grotesk: ["var(--font-grotesk)", "sans-serif"],
-          helvetica: ["Helvetica Neue", "sans-serif"],
         },
         animation: {
           "spin-slow": "spin 4s linear infinite",

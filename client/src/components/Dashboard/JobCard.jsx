@@ -71,23 +71,34 @@ const JobCard = ({ name }) => {
           </div>
           <div className="mt-2">
             <p className="text-gray-500">Amazon</p>
-            <h3 className="text-3xl font-semibold ">{name}</h3>
+            <h3 className="text-3xl font-medium font-grotesk">{name}</h3>
           </div>
-          <div className="bottom overflow-hidden flex-grow flex flex-col justify-end">
-            <div className="flex flex-row-reverse flex-wrap gap-1 justify-stretch">
-              <span className="px-3 font-bold py-2 border border-black shadow-sm rounded-full text-xs">
-                Part time
-              </span>
-              <span className="border-black px-3 font-bold py-2 border  shadow-sm rounded-full text-xs">
-                Senior Level
-              </span>
-              <span className="border-black px-3 font-bold py-2 border  shadow-sm rounded-full text-xs">
-                Remote
-              </span>
-              <span className="border-black px-3 font-bold py-2 border  shadow-sm rounded-full text-xs">
-                Full time
-              </span>
-            </div>
+
+          <div className="flex py-1 h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 font-grotesk font-bold">
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              JavaScript
+            </span>
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              Senior Work
+            </span>
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              Project Work
+            </span>
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              Distant
+            </span>
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              Distant
+            </span>
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              Distant
+            </span>
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              Distant
+            </span>
+            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+              Distant
+            </span>
           </div>
         </div>
         <div className="px-4 items-center flex flex-row justify-between">
