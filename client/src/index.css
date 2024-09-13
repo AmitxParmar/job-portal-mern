@@ -164,6 +164,6 @@
   }
 
   body {
-    @apply overflow-auto;
+    @apply overflow-auto bg-red-200/30;
   }
 }

@@ -62,7 +62,10 @@ const JobCard = ({ name }) => {
             <p className="text-sm rounded-full bg-white text-center align-center py-2 px-3 font-bold text-black">
               20 May, 2023
             </p>
-            <Button className="bg-white rounded-full p-3 hover:bg-purple-500/30">
+            <Button
+              size="icon"
+              className="bg-white rounded-full p-3 hover:bg-purple-500/30"
+            >
               <Bookmark size={20} fill="black" />
             </Button>
           </div>
@@ -93,7 +96,7 @@ const JobCard = ({ name }) => {
             <div className="text-gray-500">San Francisco, CA</div>
           </div>
 
-          <button className="max-h-fit max-w-fit font-semibold px-4 transition-all duration-300 bg-black text-white p-2 rounded-full hover:bg-purple-500/30 hover:text-black">
+          <div className="max-h-fit max-w-fit font-semibold px-4 transition-all duration-300 bg-black text-white p-2 rounded-full hover:bg-purple-500/30 hover:text-black">
             <Drawer className="min-h-screen max-w-screen">
               <DrawerTrigger asChild>
                 <Button variant="outline">Details</Button>
@@ -133,7 +136,7 @@ const JobCard = ({ name }) => {
                 </DrawerFooter>
               </DrawerContent>
             </Drawer>
-          </button>
+          </div>
         </div>
       </div>
     </>

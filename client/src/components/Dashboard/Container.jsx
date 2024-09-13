@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-const Sidebar = ({ children, className }) => {
+const Container = ({ children, className }) => {
   return (
     <div
       className={cn(
@@ -13,4 +13,4 @@ const Sidebar = ({ children, className }) => {
   );
 };
 
-export default Sidebar;
+export default Container;

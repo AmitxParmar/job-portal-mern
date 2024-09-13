@@ -1,18 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Filters from "@/components/Dashboard/Filters";
 import JobCard from "@/components/Dashboard/JobCard";
-import Navbar from "@/components/Dashboard/Navbar";
-import Sidebar from "@/components/Dashboard/Sidebar";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import { profileMenu } from "@/constants";
-import DashboardLayout from "@/components/Dashboard/DashboardLayout";
-/* import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Settings } from "lucide-react";
- */
+import Container from "@/components/Dashboard/Container";
+import DashboardSidebar from "@/components/Dashboard/Sidebars/DashboardSidebar";
+import ProfileSidebar from "@/components/Dashboard/Sidebars/ProfileSidebar";
+
 const Dashboard = () => {
   const { pathname } = useLocation();
 
@@ -59,31 +50,28 @@ const Dashboard = () => {
     "Backend Developer",
     "Software Engineer",
     "Product Manager",
-    "Data Scientist",
-    "UX Designer",
-    "Backend Developer",
-    "UX Designer",
-    "Backend Developer",
-    "Software Engineer",
-    "Product Manager",
   ];
 
   return (
-    <DashboardLayout>
+    <>
       {pathname === "/dashboard" ? (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2  scrollbar-none scroll-smooth overflow-hidden lg:grid-cols-3 xl:grid-cols-5 gap-1">
+        <div className="flex flex-row h-[calc(100vh-18vh)]">
+          <DashboardSidebar />
+          <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll lg:grid-cols-3 xl:grid-cols-5 gap-3 px-4">
             {jobs.map((item) => (
-              <JobCard key={item} name={item} />
+              <JobCard key={item + Math.random() * 10000} name={item} />
             ))}
           </div>
-        </>
-      ) : (
-        <Sidebar>
-          <Outlet /> This will render nested profile routes
-        </Sidebar>
-      )}
-    </DashboardLayout>
+        </div>
+      ) : pathname === "/dashboard/profile" ? ( // Updated to use ternary operator for clarity
+        <div className="flex flex-row h-[calc(100vh-11vh)]">
+          <ProfileSidebar />
+          <Container className={`mb-0 pb-0`}>
+            <Outlet />
+          </Container>
+        </div>
+      ) : null}
+    </>
   );
 };
 
