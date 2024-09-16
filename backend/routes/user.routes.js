@@ -8,10 +8,10 @@ import {
 /* import { protect } from "../middleware/auth.middleware.js"; */
 
 const router = express.Router();
-
-router.get("/profile", /* protect, */ getUserProfile);
-router.put("/profile", /* protect, */ updateUserProfile);
-router.delete("/account", /* protect, */ deleteUserAccount);
-router.put("/change-password", /* protect, */ changePassword);
+router.get("/", getAllJobSeekers);
+router.get("/get-user/:id", /* protect, */ getUserProfile);
+router.put("/update-user/:id", /* protect, */ updateUserProfile);
+router.delete("/delete/:id", /* protect, */ deleteUserAccount);
+router.put("/change-password/:id", /* protect, */ changePassword);
 
 export default router;

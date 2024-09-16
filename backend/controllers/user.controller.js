@@ -14,8 +14,29 @@ export const getUserProfile = async (req, res, next) => {
 };
 
 // Update User Profile
-import User from "../models/User.js";
-import { createError } from "../utils/error.js";
+export const getAllJobSeekers = async (req, res, next) => {
+  const { page = 1, limit = 10 } = req.query; // Get pagination parameters from query
+  const skip = (page - 1) * limit; // Calculate the number of documents to skip
+
+  try {
+    const users = await User.find({ role: "jobSeeker" })
+      .skip(skip)
+      .limit(Number(limit))
+      .select("-password"); // Exclude password from the response
+
+    const totalUsers = await User.countDocuments({ role: "jobSeeker" }); // Count total job-seekers
+    const totalPages = Math.ceil(totalUsers / limit); // Calculate total pages
+
+    res.status(200).json({
+      users,
+      totalPages,
+      currentPage: Number(page),
+      totalUsers,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const updateUserProfile = async (req, res, next) => {
   try {
