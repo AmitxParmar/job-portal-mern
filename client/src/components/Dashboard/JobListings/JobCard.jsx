@@ -56,8 +56,8 @@ const JobCard = ({ name }) => {
 
   return (
     <>
-      <div className="p-2 mx-auto border-l-8 border border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-white flex flex-col m-2">
-        <div className="bg-orange-100 border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
+      <div className="p-2 mx-auto border-l-8 border border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
+        <div className="bg-cyan-200  border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
           <div className="flex flex-row justify-between items-center">
             <p className="text-sm rounded-full bg-white text-center align-center py-2 px-3 font-bold text-black">
               20 May, 2023
@@ -107,16 +107,20 @@ const JobCard = ({ name }) => {
             <div className="text-gray-500">San Francisco, CA</div>
           </div>
 
-          <div className="max-h-fit max-w-fit font-semibold px-4 transition-all duration-300 bg-black text-white p-2 rounded-full hover:bg-purple-500/30 hover:text-black">
+          <div className="max-h-fit max-w-fit font-semibold px-4 transition-all duration-300 bg-black text-white p-2 rounded-full hover:bg-cyan-200 hover:text-black">
             <Drawer className="min-h-screen max-w-screen">
               <DrawerTrigger asChild>
                 <Button variant="outline">Details</Button>
               </DrawerTrigger>
-              <DrawerContent className="h-[calc(100vh-10vh)] max-w-screen">
+              <DrawerContent className="h-[calc(100vh-10vh)] px-28 max-w-screen bg-muted">
                 <DrawerHeader className={`w-fit`}>
-                  <DrawerTitle>{jobData1.title}</DrawerTitle>
-                  <DrawerDescription>{jobData1.employer}</DrawerDescription>
-                  <div className="grid grid-flow-col space-x-2 w-max overflow-auto">
+                  <DrawerTitle className="text-4xl">
+                    {jobData1.title}
+                  </DrawerTitle>
+                  <DrawerDescription className="text-xl">
+                    {"Amazon" ?? jobData1.employer}
+                  </DrawerDescription>
+                  <div className="grid grid-flow-col my-2 space-x-2 w-max overflow-auto">
                     {jobData1.tags.map((tag) => (
                       <span
                         key={tag}
@@ -127,7 +131,7 @@ const JobCard = ({ name }) => {
                     ))}
                   </div>
                 </DrawerHeader>
-                <div className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full mx-auto text-center scrollbar-thumb-gray-400 p-4 font-semibold text-gray-600 ">
+                <div className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full mx-auto text-center scrollbar-thumb-gray-400  p-4 font-semibold">
                   {jobData1.description}
                 </div>
                 <DrawerFooter>

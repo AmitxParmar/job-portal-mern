@@ -1,11 +1,11 @@
 const profileMenu = [
   {
     name: "Profile",
-    path: "/dashboard/profile",
+    path: "/dashboard/settings",
   },
   {
     name: "Applied Jobs",
-    path: "/dashboard/applied-jobs",
+    path: "/dashboard/settings/applied-jobs",
   },
 ];
 

@@ -1,25 +1,30 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Profile from "./components/Dashboard/Profile";
-import AppliedJobs from "./components/Dashboard/AppliedJobs";
-import Navbar from "./components/Dashboard/Navbar";
+import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
+import Navbar from "./components/Dashboard/common/Navbar";
 import AdminDashboard from "./pages/AdminDashboard";
 
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./components/Dashboard/Settings/Profile";
+import Settings from "./components/Dashboard/Settings";
+import JobListings from "./components/Dashboard/JobListings";
 
 function App() {
   return (
     <Router>
-      <div className="max-h-screen h-screen flex flex-col max-w-[1980px] mx-auto">
+      <div className="max-h-screen h-screen min-h-screen flex flex-col max-w-[1980px] mx-auto justify-start">
         <Navbar />
 
         <Routes>
-          <Route index path="/" element={<Home />} />
-          <Route path="dashboard/*" element={<Dashboard />}>
-            <Route path="profile/*" element={<Profile />} />
-            <Route path="applied-jobs" element={<AppliedJobs />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard/*" element={<Dashboard />}>
             <Route path="employer" element={<AdminDashboard />} />
+            <Route index element={<JobListings />} />
+          </Route>
+          <Route path="/dashboard/settings/*" element={<Settings />}>
+            <Route index element={<Profile />} />
+            <Route path="applied-jobs" element={<AppliedJobs />} />
           </Route>
         </Routes>
       </div>

@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Container from "../common/Container";
 
 const invoices = [
   // Renamed to applications
@@ -71,43 +72,47 @@ const statusClasses = {
 
 export default function TableDemo() {
   return (
-    <Table>
-      <TableCaption>A list of your recently applied jobs.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Logo</TableHead>
-          <TableHead>Apply For</TableHead>
-          <TableHead>Job Type</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="text-right">Apply Date</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.logo}>
-            {" "}
-            <TableCell className="font-medium">
-              <img
-                src={invoice.logo}
-                alt={invoice.applyFor}
-                className="w-10 h-10"
-              />{" "}
-            </TableCell>
-            <TableCell>{invoice.applyFor}</TableCell>
-            <TableCell>{invoice.jobType}</TableCell>
-            <TableCell>
-              <span
-                className={`rounded-full text-center px-4 py-2 border ${
-                  statusClasses[invoice.status.toLowerCase()]
-                }`}
-              >
-                {invoice.status}
-              </span>
-            </TableCell>
-            <TableCell className="text-right">{invoice.apply}</TableCell>
+    <Container
+      className={`max-w-screen-2xl font-semibold w-screen px-3 mx-6 py-12 `}
+    >
+      <Table>
+        <TableCaption>A list of your recently applied jobs.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Logo</TableHead>
+            <TableHead>Apply For</TableHead>
+            <TableHead>Job Type</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="text-right">Apply Date</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {invoices.map((invoice) => (
+            <TableRow key={invoice.logo}>
+              {" "}
+              <TableCell className="font-medium">
+                <img
+                  src={invoice.logo}
+                  alt={invoice.applyFor}
+                  className="w-10 h-10"
+                />{" "}
+              </TableCell>
+              <TableCell>{invoice.applyFor}</TableCell>
+              <TableCell>{invoice.jobType}</TableCell>
+              <TableCell>
+                <span
+                  className={`rounded-full font-semibold text-white text-center px-4 py-2 tracking-wide border ${
+                    statusClasses[invoice.status.toLowerCase()]
+                  }`}
+                >
+                  {invoice.status}
+                </span>
+              </TableCell>
+              <TableCell className="text-right">{invoice.apply}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Container>
   );
 }

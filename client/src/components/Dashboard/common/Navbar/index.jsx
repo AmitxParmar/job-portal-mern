@@ -28,7 +28,9 @@ const Navbar = () => {
         <div className="flex items-center space-x-6">
           <div className="text-lg font-bold">Job Portal</div>
           <nav className="space-x-4">
-            <Link to="/dashboard">Find job</Link>
+            <Link to="/dashboard" className="border-b-8 border-b-blue-600">
+              Find job
+            </Link>
           </nav>
         </div>
 
@@ -42,7 +44,7 @@ const Navbar = () => {
           <Button size="icon" className="rounded-full border border-white">
             {notification ? <BellDotIcon size={20} /> : <Bell size={20} />}
           </Button>
-          <Link to={`/dashboard/profile`}>
+          <Link to={`/dashboard/settings`}>
             <div className="h-10 w-10 rounded-full bg-gray-600"></div>
           </Link>
         </div>

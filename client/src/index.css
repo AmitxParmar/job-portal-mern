@@ -108,11 +108,15 @@
   font-style: normal;
 }
 
+:root {
+  --font-grotesk: CabinetGrotesk-Variable;
+  --font-inter: Inter-VariableFont_opsz, wght;
+  --font-helvetica: 'Helvetica';
+}
+
 @layer base {
   :root {
-    --font-grotesk: CabinetGrotesk-Variable;
-    --font-inter: Inter-VariableFont_opsz, wght;
-    --font-helvetica: 'Helvetica';
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -174,6 +178,8 @@
   }
 
   body {
-    @apply overflow-auto bg-red-200/30 font-inter;
+    @apply bg-background text-primary font-inter !antialiased;
   }
+
+  div {}
 }

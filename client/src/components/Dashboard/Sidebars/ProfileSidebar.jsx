@@ -2,13 +2,13 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@headlessui/react";
 import { profileMenu } from "@/constants";
 import { useNavigate, Link } from "react-router-dom";
-import Container from "../Container";
+import Container from "../common/Container";
 
 const ProfileSidebar = () => {
   const navigate = useNavigate();
-  console.log("ProfileSidebar!!!!!!!");
+
   return (
-    <Container className="max-h-full w-56">
+    <Container className="w-56 min-w-56">
       <Button
         varient="outline"
         onClick={() => navigate("/dashboard")}

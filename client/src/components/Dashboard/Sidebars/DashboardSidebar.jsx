@@ -1,5 +1,5 @@
 import Filters from "@/components/Dashboard/Filters";
-import Container from "@/components/Dashboard/Container";
+import Container from "@/components/Dashboard/common/Container";
 
 const DashboardSidebar = () => {
   return (
