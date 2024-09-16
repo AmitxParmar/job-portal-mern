@@ -33,10 +33,10 @@ app.get("/", (req, res) => {
 });
 
 // Route handlers
+app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/jobs", jobsRouter);
 app.use("/api/invitecode", inviteCodeRouter);
-app.use("/api/user", userRouter);
 app.use("/api/applications", applicationRouter);
 
 // Connect to MongoDB

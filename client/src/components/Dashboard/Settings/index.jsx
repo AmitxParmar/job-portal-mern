@@ -1,5 +1,5 @@
 import Resume from "../common/Resume";
-import ProfileSidebar from "../Sidebars/ProfileSidebar";
+import ProfileSidebar from "../Sidebars/SettingsSidebar";
 import { Outlet } from "react-router-dom";
 
 const Settings = () => {

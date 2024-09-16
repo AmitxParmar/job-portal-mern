@@ -1,9 +1,8 @@
-import React from "react";
 import Container from "./Container";
 
 const Resume = () => {
   return (
-    <Container className={`min-w-96 w-96`}>
+    <Container className={`min-w-96 px-6 w-96`}>
       <div className="my-5">
         <img
           src="https://via.placeholder.com/150"

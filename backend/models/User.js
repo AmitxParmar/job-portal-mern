@@ -2,7 +2,6 @@ import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 
 const userSchema = new Schema({
-  username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: {
@@ -11,25 +10,46 @@ const userSchema = new Schema({
     default: "jobSeeker",
   },
   isVerified: { type: Boolean, default: false },
-  inviteCodeUsed: { type: Schema.Types.ObjectId, ref: "InviteCode" }, // Tracks the invite code used
+  inviteCodeUsed: { type: Schema.Types.ObjectId, ref: "InviteCode" },
   profile: {
+    profilePic: { type: String },
+    fullname: { type: String, required: true },
     bio: { type: String },
+    contact: { type: String },
+    designation: { type: String },
+    address: { type: String },
     skills: [{ type: String }],
     resumeUrl: { type: String },
-    portfolioLinks: [{ type: String }],
+    profileLinks: {
+      linkedIn: { type: String },
+      github: { type: String },
+      other: {
+        platform: { type: String },
+        url: { type: String },
+      },
+    },
+    projects: [
+      {
+        title: { type: String, required: true },
+        subtitle: { type: String },
+        endDate: { type: Date },
+        description: { type: String },
+      },
+    ],
     experience: [
       {
-        company: String,
-        position: String,
-        duration: String,
-        description: String,
+        jobTitle: { type: String, required: true },
+        employer: { type: String, required: true },
+        startDate: { type: Date, required: true },
+        endDate: { type: Date },
+        description: { type: String },
       },
     ],
     education: [
       {
-        institution: String,
-        degree: String,
-        yearOfGraduation: String,
+        institution: { type: String, required: true },
+        degree: { type: String, required: true },
+        yearOfGraduation: { type: String, required: true },
       },
     ],
   },

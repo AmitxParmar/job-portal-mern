@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@headlessui/react";
-import { profileMenu } from "@/constants";
+import { profileMenu } from "@/constants.jsx";
 import { useNavigate, Link } from "react-router-dom";
 import Container from "../common/Container";
 
