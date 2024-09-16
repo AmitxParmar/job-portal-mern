@@ -36,7 +36,7 @@ router.delete(
 
 // Route to bookmark a job (job seeker only)
 router.post(
-  "/:id/bookmark",
+  "/:id/bookmark-job",
   /* verifyToken,
   verifyRole("jobSeeker"), */
   bookmarkJob

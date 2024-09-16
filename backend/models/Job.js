@@ -19,8 +19,8 @@ const jobSchema = new Schema({
   description: { type: String, required: true },
   location: { type: locationSchema, required: true },
   salaryRange: {
-    min: { type: Number },
-    max: { type: Number },
+    min: { type: String },
+    max: { type: String },
   },
   tags: [{ type: String }],
   socials: {
@@ -28,16 +28,12 @@ const jobSchema = new Schema({
     twitter: { type: String },
     website: { type: String },
   },
-  salaryRange: {
-    min: { type: Number },
-    max: { type: Number },
-    frequency: {
-      type: String,
-      enum: ["hourly", "monthly", "yearly"],
-      required: true,
-    },
+  frequency: {
+    type: String,
+    enum: ["hourly", "monthly", "yearly"],
+    required: true,
+    default: "yearly",
   },
-
   skillsRequired: [{ type: String }],
   postedAt: { type: Date, default: Date.now },
   applicants: [{ type: Schema.Types.ObjectId, ref: "User" }],

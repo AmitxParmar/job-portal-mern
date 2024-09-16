@@ -1,16 +1,9 @@
-import { Outlet, useLocation } from "react-router-dom";
-import JobCard from "@/components/Dashboard/JobListings/JobCard";
-import Container from "@/components/Dashboard/common/Container";
+import { Outlet } from "react-router-dom";
 import DashboardSidebar from "@/components/Dashboard/Sidebars/DashboardSidebar";
-import ProfileSidebar from "@/components/Dashboard/Sidebars/SettingsSidebar";
-import Settings from "@/components/Dashboard/Settings";
 
 const Dashboard = () => {
-  const { pathname } = useLocation();
-
   return (
     <>
-      {/*  {pathname === "/dashboard" ? ( */}
       <div className="flex flex-row justify-around h-[calc(100vh-18vh)]">
         <DashboardSidebar />
         <Outlet />

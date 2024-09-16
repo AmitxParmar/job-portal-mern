@@ -12,55 +12,28 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-const JobCard = ({ name }) => {
-  const jobData1 = {
-    _id: "64e5cd73a9b51c1234567890",
-    employer: "64e5bcd5a9b51c1234567890", // ObjectId of the employer (user)
-    title: "Software Engineer",
-    description:
-      "Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.Develop and maintain web applications using modern JavaScript frameworks.",
-    location: {
-      _id: "64e5d123a9b51c1234567890", // Unique ID for location
-      city: "San Francisco",
-      state: "CA",
-      country: "USA",
-    },
-    salaryRange: {
-      min: 90000,
-      max: 120000,
-      frequency: "yearly",
-    },
-    tags: [
-      "JavaScript",
-      "React",
-      "Node.js",
-      "React",
-      "Node.js",
-      "React",
-      "Node.js",
-      "React",
-      "Node.js",
-      "React",
-      "Node.js",
-    ],
-    socials: {
-      linkedin: "https://linkedin.com/company/example",
-      twitter: "https://twitter.com/example",
-      website: "https://example.com",
-    },
-    skillsRequired: ["JavaScript", "React", "Node.js", "Git"],
-    postedAt: "2024-09-01T12:34:56.789Z",
-    applicants: ["64e5c3b8a9b51c1234567890", "64e5c4d1a9b51c1234567891"], // Array of applicant ObjectIds
-    status: "open",
-  };
-
+const JobCard = ({
+  job: {
+    employer,
+    title,
+    description,
+    location,
+    salary,
+    tags,
+    frequency,
+    skillsRequired,
+    applicants,
+    status,
+    postedAt,
+  },
+}) => {
   return (
     <>
       <div className="p-2 mx-auto border-l-8 border border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
         <div className="bg-cyan-200  border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
           <div className="flex flex-row justify-between items-center">
             <p className="text-sm rounded-full bg-white text-center align-center py-2 px-3 font-bold text-black">
-              20 May, 2023
+              {postedAt}
             </p>
             <Button
               size="icon"
@@ -70,41 +43,30 @@ const JobCard = ({ name }) => {
             </Button>
           </div>
           <div className="mt-2">
-            <p className="text-gray-500">Amazon</p>
-            <h3 className="text-3xl font-medium font-grotesk">{name}</h3>
+            <p className="text-gray-500">{employer}</p>
+            <h3 className="text-3xl font-medium font-grotesk">{title}</h3>
           </div>
 
           <div className="flex py-1 h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 font-grotesk font-bold">
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              JavaScript
-            </span>
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              Senior Work
-            </span>
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              Project Work
-            </span>
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              Distant
-            </span>
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              Distant
-            </span>
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              Distant
-            </span>
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              Distant
-            </span>
-            <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
-              Distant
-            </span>
+            {skillsRequired ? (
+              skillsRequired.map((skill) => (
+                <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+                  {skill}
+                </span>
+              ))
+            ) : (
+              <>Loading</>
+            )}
           </div>
         </div>
         <div className="px-4 items-center flex flex-row justify-between">
-          <div className="grid grid-rows-2">
-            <div className=" font-bold text-gray-700">$250/hr</div>
-            <div className="text-gray-500">San Francisco, CA</div>
+          <div className="grid grid-rows-2 w-full truncate">
+            <div className=" font-bold text-gray-700">
+              ${salary.min}-{salary.max}/{frequency}
+            </div>
+            <div className="text-gray-500">
+              {location.city},{location.state},{location.country}
+            </div>
           </div>
 
           <div className="max-h-fit max-w-fit font-semibold px-4 transition-all duration-300 bg-black text-white p-2 rounded-full hover:bg-cyan-200 hover:text-black">
@@ -114,25 +76,23 @@ const JobCard = ({ name }) => {
               </DrawerTrigger>
               <DrawerContent className="h-[calc(100vh-10vh)] px-28 max-w-screen bg-muted">
                 <DrawerHeader className={`w-fit`}>
-                  <DrawerTitle className="text-4xl">
-                    {jobData1.title}
-                  </DrawerTitle>
+                  <DrawerTitle className="text-4xl">{title}</DrawerTitle>
                   <DrawerDescription className="text-xl">
-                    {"Amazon" ?? jobData1.employer}
+                    {employer}
                   </DrawerDescription>
                   <div className="grid grid-flow-col my-2 space-x-2 w-max overflow-auto">
-                    {jobData1.tags.map((tag) => (
+                    {skillsRequired.map((skill) => (
                       <span
-                        key={tag}
+                        key={skill}
                         className="w-fit gap-2 rounded-full px-2 py-1 border border-gray-500 scrollbar-none"
                       >
-                        {tag}
+                        {skill}
                       </span>
                     ))}
                   </div>
                 </DrawerHeader>
                 <div className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full mx-auto text-center scrollbar-thumb-gray-400  p-4 font-semibold">
-                  {jobData1.description}
+                  {description}
                 </div>
                 <DrawerFooter>
                   <Button

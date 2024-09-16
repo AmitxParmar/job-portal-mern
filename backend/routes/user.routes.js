@@ -4,6 +4,7 @@ import {
   updateUserProfile,
   deleteUserAccount,
   changePassword,
+  getAllJobSeekers,
 } from "../controllers/user.controller.js";
 /* import { protect } from "../middleware/auth.middleware.js"; */
 

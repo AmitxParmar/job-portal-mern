@@ -31,3 +31,8 @@ export const deleteJob = async (jobId) => {
   const { data } = await axios.delete(`${BASE_URL}/${jobId}`);
   return data;
 };
+
+export const bookmarkJob = async (jobId) => {
+  const { data } = await axios.post(`${BASE_URL}/${jobId}/bookmark-job`);
+  return data;
+};
