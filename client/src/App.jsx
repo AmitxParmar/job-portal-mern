@@ -7,9 +7,10 @@ import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
 import Navbar from "./components/Dashboard/common/Navbar";
 import Profile from "./components/Dashboard/Settings/Profile";
 import Settings from "./components/Dashboard/Settings";
-import JobListings from "./components/Dashboard/JobListings";
+
 import RoleBasedRoute from "./ProtectedRoutes/RoleBasedRoute";
 import EmployerDashboard from "./components/Dashboard/EmployerDashboard";
+import JobListings from "./components/Dashboard/JobListings";
 
 function App() {
   return (

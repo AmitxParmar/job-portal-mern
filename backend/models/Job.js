@@ -38,6 +38,12 @@ const jobSchema = new Schema({
   postedAt: { type: Date, default: Date.now },
   applicants: [{ type: Schema.Types.ObjectId, ref: "User" }],
   status: { type: String, enum: ["open", "closed"], default: "open" },
+  jobType: {
+    type: String,
+    enum: ["full time", "part time", "internship"],
+    required: true,
+    default: "full time",
+  },
 });
 
 export default model("Job", jobSchema);

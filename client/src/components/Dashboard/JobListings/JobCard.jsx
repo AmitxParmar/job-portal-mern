@@ -38,7 +38,7 @@ const JobCard = ({
             </p>
             <Button
               size="icon"
-              className="bg-white rounded-full p-3 hover:bg-purple-500/30"
+              className="bg-white rounded-full p-3 hover:invert"
             >
               <Bookmark size={20} fill="black" />
             </Button>

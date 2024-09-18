@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const RoleBasedRoute = ({ allowedRoles, fallbackPath }) => {
   const userRole = "jobSeeker";
-
+  console.log(process.env.VITE_API_URL);
   if (allowedRoles.includes(userRole)) {
     return <Outlet />;
   } else {

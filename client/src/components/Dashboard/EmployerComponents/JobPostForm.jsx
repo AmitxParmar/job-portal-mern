@@ -17,6 +17,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Plus } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { X } from "lucide-react";
 
 const JobPostForm = ({ onSubmit, onCancel }) => {
   const form = useForm();
@@ -144,6 +147,29 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
 
         <FormField
           control={form.control}
+          name="jobType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Job Type</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select job type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="full time">Full Time</SelectItem>
+                  <SelectItem value="part time">Part Time</SelectItem>
+                  <SelectItem value="internship">Internship</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="skillsRequired"
           render={({ field }) => (
             <FormItem>
@@ -159,11 +185,24 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
           )}
         />
 
-        <div className="flex justify-end space-x-4">
-          <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
+        <div className="grid grid-flow-col-dense gap-2">
+          <Button
+            variant="outline"
+            className="text-lg flex flex-row justify-center rounded-full gap-2 h-9 font-medium"
+            onClick={onCancel}
+          >
+            <X />
+            <Separator orientation />
+            <span>Cancel</span>
           </Button>
-          <Button type="submit">Post Job</Button>
+          <Button
+            type="submit"
+            className="text-lg flex flex-row justify-center rounded-full gap-2 h-9 font-medium"
+          >
+            <Plus />
+            <Separator orientation />
+            <span>Post A Job</span>
+          </Button>
         </div>
       </form>
     </Form>
