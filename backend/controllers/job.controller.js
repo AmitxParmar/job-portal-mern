@@ -5,14 +5,19 @@ import { createError } from "../utils/error.js";
 export const createJob = async (req, res, next) => {
   try {
     const {
+      employer, // This is assumed to be the employer ID
       title,
       description,
-      company,
-      salary,
       location,
-      jobType,
-      requirements,
-      employer, // This is assumed to be the employer ID
+      company,
+      salaryRange,
+      tags,
+      socials,
+      frequency,
+      skillsRequired,
+      postedAt,
+      applicants,
+      status,
     } = req.body;
 
     const newJob = new Job({
@@ -24,6 +29,14 @@ export const createJob = async (req, res, next) => {
       jobType,
       requirements,
       employer, // Set the employer field with the userId from the request
+      salaryRange,
+      tags,
+      socials,
+      frequency,
+      skillsRequired,
+      postedAt,
+      applicants,
+      status,
     });
 
     const savedJob = await newJob.save();
@@ -232,7 +245,22 @@ export const getJobApplications = async (req, res, next) => {
       );
     }
 
-    res.status(200).json(job.applications);
+    res.status(200).json(job.applicants);
+  } catch (error) {
+    next(error);
+  }
+};
+// Get all job listings by a specific employer
+export const getAllJobListingsByEmployer = async (req, res, next) => {
+  try {
+    const employerId = req.params.id; // Assuming the employer ID is passed as a URL parameter
+    const jobs = await Job.find({ employer: employerId }); // Find jobs where the employer matches the employer ID
+
+    if (!jobs.length) {
+      return next(createError(404, "No job listings found for this employer!"));
+    }
+
+    res.status(200).json(jobs);
   } catch (error) {
     next(error);
   }

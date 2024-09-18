@@ -17,9 +17,7 @@ import { Edit3 } from "lucide-react";
 import { useState } from "react";
 import { useRef } from "react";
 import { Check } from "lucide-react";
-import { Crosshair } from "lucide-react";
-import { Cross } from "lucide-react";
-import { CrossIcon } from "lucide-react";
+
 import { X } from "lucide-react";
 
 const PersonalInfo = () => {
@@ -54,7 +52,7 @@ const PersonalInfo = () => {
       <div className="border h-full p-4 m-4 rounded-xl flex flex-row">
         <div className="flex gap-4 items-center justify-start py-4 w-1/2  flex-row">
           <img
-            src={previewUrl ? previewUrl : "https://via.placeholder.com/150"}
+            src={previewUrl ?? "https://via.placeholder.com/150"}
             alt="profile"
             className="w-28 p-2 h-28 rounded-full"
           />

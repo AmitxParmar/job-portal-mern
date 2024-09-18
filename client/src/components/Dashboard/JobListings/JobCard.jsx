@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button } from "@headlessui/react";
 import { Bookmark } from "lucide-react";
 
@@ -50,7 +51,10 @@ const JobCard = ({
           <div className="flex py-1 h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 font-grotesk font-bold">
             {skillsRequired ? (
               skillsRequired.map((skill) => (
-                <span className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap">
+                <span
+                  key={skill}
+                  className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap"
+                >
                   {skill}
                 </span>
               ))
@@ -116,6 +120,29 @@ const JobCard = ({
       </div>
     </>
   );
+};
+
+JobCard.propTypes = {
+  job: PropTypes.shape({
+    employer: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      city: PropTypes.string.isRequired,
+      state: PropTypes.string.isRequired,
+      country: PropTypes.string.isRequired,
+    }).isRequired,
+    salary: PropTypes.shape({
+      min: PropTypes.string.isRequired,
+      max: PropTypes.string.isRequired,
+    }).isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    frequency: PropTypes.string.isRequired,
+    skillsRequired: PropTypes.arrayOf(PropTypes.string),
+    applicants: PropTypes.number,
+    status: PropTypes.string,
+    postedAt: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default JobCard;

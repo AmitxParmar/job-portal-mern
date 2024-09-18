@@ -9,6 +9,7 @@ import {
   getBookmarkedJobs,
   applyForJob,
   getJobApplications,
+  getAllJobListingsByEmployer,
 } from "../controllers/job.controller.js";
 /* import { verifyToken, verifyRole } from "../middleware/authMiddleware.js"; */
 
@@ -68,5 +69,7 @@ router.get(
   verifyRole("employer"), */
   getJobApplications
 );
+// Route to get all job listings by a specific employer
+router.get("/employer/:id/jobs", getAllJobListingsByEmployer);
 
 export default router;

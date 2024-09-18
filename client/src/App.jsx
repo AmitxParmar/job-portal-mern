@@ -1,14 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
-import Navbar from "./components/Dashboard/common/Navbar";
-import AdminDashboard from "./pages/AdminDashboard";
-
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+
+import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
+import Navbar from "./components/Dashboard/common/Navbar";
 import Profile from "./components/Dashboard/Settings/Profile";
 import Settings from "./components/Dashboard/Settings";
 import JobListings from "./components/Dashboard/JobListings";
+import RoleBasedRoute from "./ProtectedRoutes/RoleBasedRoute";
+import EmployerDashboard from "./components/Dashboard/EmployerDashboard";
 
 function App() {
   return (
@@ -19,8 +20,26 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard/*" element={<Dashboard />}>
-            <Route path="employer" element={<AdminDashboard />} />
-            <Route index element={<JobListings />} />
+            <Route
+              element={
+                <RoleBasedRoute
+                  allowedRoles={["employer"]}
+                  fallbackPath="/dashboard"
+                />
+              }
+            >
+              <Route path="employer" element={<EmployerDashboard />} />
+            </Route>
+            <Route
+              element={
+                <RoleBasedRoute
+                  allowedRoles={["jobSeeker"]}
+                  fallbackPath="/dashboard"
+                />
+              }
+            >
+              <Route index element={<JobListings />} />
+            </Route>
           </Route>
           <Route path="/dashboard/settings/*" element={<Settings />}>
             <Route index element={<Profile />} />

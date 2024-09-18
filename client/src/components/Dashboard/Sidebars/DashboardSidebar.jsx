@@ -3,9 +3,11 @@ import Container from "@/components/Dashboard/common/Container";
 import AdminNav from "./AdminNav";
 
 const DashboardSidebar = () => {
-  const role = "jobSeeker";
+  const role = "employer";
   return (
-    <Container>{role === "jobSeeker" ? <Filters /> : <AdminNav />}</Container>
+    <Container className={``}>
+      {role === "jobSeeker" ? <Filters /> : <AdminNav />}
+    </Container>
   );
 };
 
