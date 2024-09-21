@@ -2,8 +2,8 @@ import PropTypes from "prop-types"; // Import PropTypes
 import { Navigate, Outlet } from "react-router-dom";
 
 const RoleBasedRoute = ({ allowedRoles, fallbackPath }) => {
-  const userRole = "jobSeeker";
-  console.log(process.env.VITE_API_URL);
+  const userRole = "employer";
+
   if (allowedRoles.includes(userRole)) {
     return <Outlet />;
   } else {

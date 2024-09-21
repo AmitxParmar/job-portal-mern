@@ -1,11 +1,9 @@
 import Resume from "../common/Resume";
-import ProfileSidebar from "../Sidebars/SettingsSidebar";
 import { Outlet } from "react-router-dom";
 
 const Settings = () => {
   return (
-    <div className="flex flex-row justify-center h-[calc(100vh-13px)] py-4 px-5">
-      <ProfileSidebar />
+    <div className="flex flex-row justify-center h-full py-4 px-5">
       <Outlet />
       <Resume />
     </div>

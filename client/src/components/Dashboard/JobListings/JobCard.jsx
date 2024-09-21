@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-import { Button } from "@headlessui/react";
 import { Bookmark } from "lucide-react";
-
 import {
   Drawer,
   DrawerClose,
@@ -12,6 +10,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Clock } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { BookmarkCheck } from "lucide-react";
+import moment from "moment";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const JobCard = ({
   job: {
@@ -26,78 +30,132 @@ const JobCard = ({
     applicants,
     status,
     postedAt,
+    combinedField,
   },
 }) => {
+  const formatSalary = (value) => {
+    if (value >= 10000000) {
+      return `${Math.floor(value / 10000000)}Cr`;
+    } else if (value >= 100000) {
+      return `${Math.floor(value / 100000)}L`;
+    } else {
+      return `${value.toLocaleString("en-IN")}₹`;
+    }
+  };
+
   return (
     <>
-      <div className="p-2 mx-auto border-l-8 border border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
-        <div className="bg-cyan-200  border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
+      <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
+        <div className="bg-cyan-200 border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
           <div className="flex flex-row justify-between items-center">
-            <p className="text-sm rounded-full bg-white text-center align-center py-2 px-3 font-bold text-black">
-              {postedAt}
-            </p>
+            <span className="text-sm rounded-full bg-white text-center align-center w-fit flex flex-row items-center py-2 px-3 font-bold text-black">
+              <span>
+                <Clock className="w-4 h-4 align-baseline mr-2" />
+              </span>
+              <span>{moment(postedAt).fromNow()}</span>
+            </span>
             <Button
               size="icon"
-              className="bg-white rounded-full p-3 hover:invert"
+              className="bg-white rounded-full p-1.5 hover:invert"
             >
-              <Bookmark size={20} fill="black" />
+              <Bookmark fill="black" />
             </Button>
           </div>
           <div className="mt-2">
-            <p className="text-gray-500">{employer}</p>
-            <h3 className="text-3xl font-medium font-grotesk">{title}</h3>
+            <p className="text-gray-500">{employer._id}</p>
+            <h3 className="text-3xl font-medium font-grotesk tracking-normal leading-none">
+              {title}
+            </h3>
           </div>
 
-          <div className="flex py-1 h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 font-grotesk font-bold">
-            {skillsRequired ? (
-              skillsRequired.map((skill) => (
-                <span
+          <div className="flex h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 py-4 font-grotesk font-bold">
+            {skillsRequired &&
+              Object.values(combinedField).map((skill) => (
+                <Badge
                   key={skill}
-                  className="px-3 font-semibold bg-background py-2 border border-black h-fit shadow-sm rounded-full text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap"
+                  className="px-3 !font-grotesk font-bold  py-2 border border-black h-fit shadow-sm rounded-full tracking-wider leading-none text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap"
                 >
                   {skill}
-                </span>
-              ))
-            ) : (
-              <>Loading</>
-            )}
+                </Badge>
+              ))}
           </div>
         </div>
         <div className="px-4 items-center flex flex-row justify-between">
-          <div className="grid grid-rows-2 w-full truncate">
-            <div className=" font-bold text-gray-700">
-              ${salary.min}-{salary.max}/{frequency}
+          <div className="grid grid-flow-row leading-none truncate">
+            <div className="font-bold h-fit text-gray-700">
+              {formatSalary(salary.min)} - {formatSalary(salary.max)} /{" "}
+              {frequency}
             </div>
-            <div className="text-gray-500">
-              {location.city},{location.state},{location.country}
+            <div className="text-gray-400 h-fit font-bold  text-sm">
+              {location.city}, {location.state}
             </div>
           </div>
 
-          <div className="max-h-fit max-w-fit font-semibold px-4 transition-all duration-300 bg-black text-white p-2 rounded-full hover:bg-cyan-200 hover:text-black">
+          <div className="">
             <Drawer className="min-h-screen max-w-screen">
               <DrawerTrigger asChild>
-                <Button variant="outline">Details</Button>
+                <Button
+                  className="max-h-fit hover:invert border-primary max-w-fit font-semibold rounded-full "
+                  variant="outline"
+                >
+                  Details
+                </Button>
               </DrawerTrigger>
               <DrawerContent className="h-[calc(100vh-10vh)] px-28 max-w-screen bg-muted">
-                <DrawerHeader className={`w-fit`}>
-                  <DrawerTitle className="text-4xl">{title}</DrawerTitle>
-                  <DrawerDescription className="text-xl">
-                    {employer}
-                  </DrawerDescription>
-                  <div className="grid grid-flow-col my-2 space-x-2 w-max overflow-auto">
-                    {skillsRequired.map((skill) => (
-                      <span
-                        key={skill}
-                        className="w-fit gap-2 rounded-full px-2 py-1 border border-gray-500 scrollbar-none"
+                <DrawerHeader className={`w-full px-56`}>
+                  <DrawerHeader className="grid grid-cols-2 w-full">
+                    <div className="grid grid-flow-row-dense justify-start">
+                      <DrawerTitle className="text-4xl">{title}</DrawerTitle>
+                      <div className="flex">
+                        <div className="mr-4 p-1">
+                          <img
+                            src="/google.png"
+                            alt="Company Logo"
+                            className="h-20 w-20"
+                          />
+                        </div>
+                        <div className="grid grid-row-2 items-center">
+                          <div className="flex text-lg items-center">
+                            <span className="text-blue-600 font-bold">
+                              {"Google"}
+                            </span>
+                            {"  -  "}
+                            <span>
+                              <MapPin />{" "}
+                            </span>
+                            <span>
+                              {location.city},{location.state}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {skillsRequired.map((skill) => (
+                              <Badge
+                                key={skill}
+                                className=" rounded-full text-xs"
+                              >
+                                {skill}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid justify-end gap-5 grid-flow-col-dense">
+                      <Button className="bg-cyan-400/50 w-fit px-6 text-lg h-12">
+                        Apply Now
+                      </Button>
+                      <Button
+                        size="icon"
+                        className="bg-cyan-400/50 px-6 text-lg h-12"
                       >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+                        <BookmarkCheck />
+                      </Button>
+                    </div>
+                  </DrawerHeader>
                 </DrawerHeader>
-                <div className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full mx-auto text-center scrollbar-thumb-gray-400  p-4 font-semibold">
+                <DrawerDescription className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full mx-auto  scrollbar-thumb-gray-400 p-4 font-semibold">
                   {description}
-                </div>
+                </DrawerDescription>
                 <DrawerFooter>
                   <Button
                     className={`bg-purple-500/30 rounded-md px-8 py-2 font-semibold border border-black`}
@@ -142,6 +200,7 @@ JobCard.propTypes = {
     applicants: PropTypes.number,
     status: PropTypes.string,
     postedAt: PropTypes.string.isRequired,
+    combinedField: PropTypes.string.isRequired,
   }).isRequired,
 };
 

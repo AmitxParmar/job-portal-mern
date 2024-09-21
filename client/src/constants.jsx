@@ -5,17 +5,17 @@ import { User } from "lucide-react";
 const profileMenu = [
   {
     name: "Profile",
-    path: "/dashboard/settings",
+    path: "/settings",
     icon: <User />,
   },
   {
     name: "Applied Jobs",
-    path: "/dashboard/settings/applied-jobs",
+    path: "/settings/applied-jobs",
     icon: <Briefcase />,
   },
   {
     name: "Bookmarks",
-    path: "/dashboard/settings/bookmarks",
+    path: "/settings/bookmarks",
     icon: <Bookmark />,
   },
 ];

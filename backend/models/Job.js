@@ -44,6 +44,16 @@ const jobSchema = new Schema({
     required: true,
     default: "full time",
   },
+  workFrom: {
+    type: String,
+    enum: ["remote", "on-site", "hybrid"],
+    default: "on-site",
+  },
+  experience: {
+    type: String,
+    enum: ["entry-level", "mid-level", "senior-level"],
+    required: true,
+  },
 });
 
 export default model("Job", jobSchema);

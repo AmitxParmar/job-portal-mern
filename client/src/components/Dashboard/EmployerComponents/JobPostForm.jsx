@@ -20,6 +20,7 @@ import {
 import { Plus } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { X } from "lucide-react";
+import QuillEditor from "../common/QuillEditor";
 
 const JobPostForm = ({ onSubmit, onCancel }) => {
   const form = useForm();
@@ -52,10 +53,11 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
             <FormItem>
               <FormLabel>Job Description</FormLabel>
               <FormControl>
-                <Input
+                <QuillEditor />
+                {/* <Input
                   placeholder="Describe the job role and responsibilities"
                   {...field}
-                />
+                /> */}
               </FormControl>
               <FormMessage />
             </FormItem>

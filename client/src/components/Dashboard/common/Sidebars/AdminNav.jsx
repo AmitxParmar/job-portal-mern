@@ -9,10 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import JobPostForm from "../EmployerComponents/JobPostForm";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createJob } from "@/services/JobServices";
+import JobPostForm from "../../EmployerComponents/JobPostForm";
 
 const AdminNav = () => {
   const queryClient = useQueryClient();

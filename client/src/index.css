@@ -178,7 +178,7 @@
   }
 
   body {
-    @apply bg-background text-primary font-inter !antialiased;
+    @apply bg-muted text-primary font-inter !antialiased;
   }
 
   div {}

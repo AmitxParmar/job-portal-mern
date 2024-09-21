@@ -1,7 +1,6 @@
 import express from "express";
 import {
   createJob,
-  getAllJobs,
   getJobById,
   updateJob,
   deleteJob,
@@ -10,6 +9,7 @@ import {
   applyForJob,
   getJobApplications,
   getAllJobListingsByEmployer,
+  searchJobs,
 } from "../controllers/job.controller.js";
 /* import { verifyToken, verifyRole } from "../middleware/authMiddleware.js"; */
 
@@ -19,7 +19,7 @@ const router = express.Router();
 router.post("/create", /* verifyToken, verifyRole("employer"), */ createJob);
 
 // Route to get all available jobs (public)
-router.get("/", getAllJobs);
+router.get("/", searchJobs);
 
 // Route to get a single job by its ID (public)
 router.get("/:id", getJobById);

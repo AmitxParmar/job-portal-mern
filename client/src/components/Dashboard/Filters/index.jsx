@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup } from "@/components/ui/radio-group";
-import { Separator } from "@/components/ui/separator";
-import { Slider } from "@/components/ui/slider";
-import { RadioGroupItem } from "@radix-ui/react-radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import { useState } from "react";
 
 const Filters = () => {
@@ -13,7 +12,7 @@ const Filters = () => {
     title: "",
     location: "",
     minSalary: 0,
-    maxSalary: 100000,
+    maxSalary: 1000000,
     skillsRequired: [],
     status: "all",
     postedAfter: null,
@@ -22,10 +21,6 @@ const Filters = () => {
 
   const handleInputChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
-  };
-
-  const handleSalaryChange = (value) => {
-    setFilters({ ...filters, minSalary: value[0], maxSalary: value[1] });
   };
 
   const handleSkillChange = (skill) => {
@@ -77,21 +72,6 @@ const Filters = () => {
         </div>
 
         <div>
-          <Label>Salary Range</Label>
-          <Slider
-            min={0}
-            max={100000}
-            step={1000}
-            value={[filters.minSalary, filters.maxSalary]}
-            onValueChange={handleSalaryChange}
-          />
-          <div className="flex justify-between text-sm mt-1">
-            <span>${filters.minSalary}</span>
-            <span>${filters.maxSalary}</span>
-          </div>
-        </div>
-
-        <div>
           <Label>Skills Required</Label>
           <div className="space-y-2">
             {["React", "Node.js", "Python", "Java", "JavaScript"].map(
@@ -131,18 +111,18 @@ const Filters = () => {
 
         <div>
           <Label>Posted After</Label>
-          {/*    <DatePicker
+          <DatePicker
             selected={filters.postedAfter}
             onSelect={(date) => handleDateChange(date, "postedAfter")}
-          /> */}
+          />
         </div>
 
         <div>
           <Label>Posted Before</Label>
-          {/* <DatePicker
+          <DatePicker
             selected={filters.postedBefore}
             onSelect={(date) => handleDateChange(date, "postedBefore")}
-          /> */}
+          />
         </div>
 
         <Button onClick={handleApplyFilters} className="w-full">

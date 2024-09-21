@@ -47,7 +47,7 @@ export const createJob = async (req, res, next) => {
 };
 
 // Get all jobs
-export const getAllJobs = async (req, res, next) => {
+export const searchJobs = async (req, res, next) => {
   try {
     const {
       title,
@@ -58,10 +58,14 @@ export const getAllJobs = async (req, res, next) => {
       status,
       postedAfter,
       postedBefore,
+      jobType,
+      employerName, // New filter to search by employer's full name
+      employerSkills, // New filter to search by employer's skills
     } = req.query;
 
     const filter = {};
 
+    // Job-specific filters
     if (title) filter.title = { $regex: title, $options: "i" };
     if (location) filter.location = { $regex: location, $options: "i" };
     if (minSalary) filter["salaryRange.min"] = { $gte: Number(minSalary) };
@@ -72,14 +76,53 @@ export const getAllJobs = async (req, res, next) => {
     if (postedAfter) filter.postedAt = { $gte: new Date(postedAfter) };
     if (postedBefore)
       filter.postedAt = { ...filter.postedAt, $lte: new Date(postedBefore) };
+    if (jobType) filter.jobType = jobType;
 
-    const jobs = await Job.find(filter);
-    res.status(200).json(jobs);
+    // If employer-specific filters (name or skills) are provided
+    if (employerName || employerSkills) {
+      const employerFilter = {};
+
+      // Employer name filter (case insensitive)
+      if (employerName)
+        employerFilter["profile.fullname"] = {
+          $regex: employerName,
+          $options: "i",
+        };
+
+      // Employer skills filter
+      if (employerSkills)
+        employerFilter["profile.skills"] = { $in: employerSkills.split(",") };
+
+      // Find employers based on profile filters
+      const employers = await User.find(employerFilter).select("_id");
+      const employerIds = employers.map((employer) => employer._id);
+
+      // If employer-specific filters are applied, include them in job filtering
+      filter.employer = { $in: employerIds };
+    }
+
+    // Fetch jobs based on all filters
+    const jobs = await Job.find(filter).populate(
+      "employer",
+      "profile.fullname profile.skills"
+    );
+
+    // Combine requiredSkills, jobType, workFrom, and experience into one field
+    const combinedJobs = jobs.map((job) => ({
+      ...job.toObject(),
+      combinedField: {
+        requiredSkills: job.skillsRequired[0] || null,
+        jobType: job.jobType,
+        workFrom: job.workFrom,
+        experience: job.experience,
+      },
+    }));
+
+    res.status(200).json(combinedJobs);
   } catch (error) {
     next(error);
   }
 };
-
 // Get a single job by ID
 export const getJobById = async (req, res, next) => {
   try {
