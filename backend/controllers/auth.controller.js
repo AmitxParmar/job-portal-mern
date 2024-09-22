@@ -58,6 +58,7 @@ export const register = [
 export const login = [
   authRateLimiter, // Apply rate limiting middleware
   async (req, res, next) => {
+    console.log("login invoked");
     try {
       const { username, email, password } = req.body;
 
@@ -81,7 +82,7 @@ export const login = [
           role: user.role,
         },
         process.env.JWT_SECRET || "defaultSecret",
-        { expiresIn: "1h" }
+        { expiresIn: "30d" } // Changed expiration time to 30 days
       );
 
       // Set secure cookie options
@@ -102,9 +103,37 @@ export const login = [
           },
           token, // Optionally exclude this if using only cookies
         });
+      console.log("login successs!!!!");
     } catch (error) {
       console.error("Login error:", error.message);
       next(createError(500, "Internal Server Error"));
     }
   },
 ];
+
+// Forget Password Function
+export const forgetPassword = async (req, res, next) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) return next(createError(404, "User not found"));
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update user's password
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password has been successfully updated.",
+    });
+  } catch (error) {
+    console.error("Forget password error:", error);
+    next(createError(500, "Internal Server Error"));
+  }
+};

@@ -37,3 +37,11 @@ export const changePassword = async (userId, passwords) => {
   );
   return data;
 };
+// Fetch user password reset link caution:NOT SAFE
+export const passwordReset = async (email, newPassword) => {
+  const { data } = await axiosInstance.post(`${BASE_URL}/forget-password`, {
+    email,
+    newPassword,
+  });
+  return data;
+};

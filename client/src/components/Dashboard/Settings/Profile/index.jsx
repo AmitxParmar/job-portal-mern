@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "../../common/Container";
 import PersonalInfo from "./PersonalInfo";
+import ProfessionalDetails from "./ProfessionalDetails";
 
 const Profile = () => {
   return (
@@ -20,6 +21,7 @@ const Profile = () => {
           <PersonalInfo />
         </TabsContent>
         <TabsContent className="" value="professional-details">
+          <ProfessionalDetails />
           2. Professional Details Skills: profile.skills Experience:
           profile.experience Education: profile.education Resume:
           profile.resumeUrl Portfolio Links: profile.portfolioLinks

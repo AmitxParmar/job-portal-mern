@@ -4,7 +4,7 @@ import { createError } from "../utils/error.js";
 // Get User Profile
 export const getUserProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.params.id).select("-password");
     if (!user) return next(createError(404, "User not found!"));
 
     res.status(200).json(user);
@@ -40,30 +40,40 @@ export const getAllJobSeekers = async (req, res, next) => {
 
 export const updateUserProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.params.id); //NOTE: temporary query, change it to user later
     if (!user) return next(createError(404, "User not found!"));
 
     const updatedData = {
-      profilePic: req.body.profilePic || user.profile.profilePic,
-      fullname: req.body.fullname || user.profile.fullname,
-      bio: req.body.bio || user.profile.bio,
-      contact: req.body.contact || user.profile.contact,
-      designation: req.body.designation || user.profile.designation,
-      address: req.body.address || user.profile.address,
-      skills: req.body.skills || user.profile.skills,
-      profileLinks: {
-        linkedIn:
-          req.body.profileLinks?.linkedIn || user.profile.profileLinks.linkedIn,
-        github:
-          req.body.profileLinks?.github || user.profile.profileLinks.github,
-        other: req.body.profileLinks?.other || user.profile.profileLinks.other,
+      profile: {
+        profilePic: req.body.profilePic || user.profile.profilePic,
+        fullName: req.body.fullName || user.profile.fullName,
+        bio: req.body.bio || user.profile.bio,
+        contact: req.body.contact || user.profile.contact,
+        designation: req.body.designation || user.profile.designation,
+        address: req.body.address || user.profile.address,
+        skills: req.body.skills || user.profile.skills,
+        profileLinks: {
+          linkedIn:
+            req.body.profileLinks?.linkedIn ||
+            user.profile.profileLinks.linkedIn,
+          github:
+            req.body.profileLinks?.github || user.profile.profileLinks.github,
+          other: {
+            platform:
+              req.body.profileLinks?.other?.platform ||
+              user.profile.profileLinks.other.platform,
+            url:
+              req.body.profileLinks?.other?.url ||
+              user.profile.profileLinks.other.url,
+          },
+        },
+        projects: req.body.projects || user.profile.projects,
+        experience: req.body.experience || user.profile.experience,
+        education: req.body.education || user.profile.education,
       },
-      projects: req.body.projects || user.profile.projects,
-      experience: req.body.experience || user.profile.experience,
-      education: req.body.education || user.profile.education,
     };
 
-    user.profile = { ...user.profile, ...updatedData };
+    user.profile = { ...user.profile, ...updatedData.profile };
     const updatedUser = await user.save();
 
     // Remove sensitive information before sending response

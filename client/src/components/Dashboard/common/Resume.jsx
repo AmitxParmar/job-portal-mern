@@ -1,6 +1,12 @@
+import PropTypes from "prop-types";
+import { Badge } from "@/components/ui/badge";
 import Container from "./Container";
 
-const Resume = () => {
+const Resume = ({ user }) => {
+  const {
+    profile: { fullName, bio, skills, projects, experience, education },
+  } = user;
+
   return (
     <Container className={`min-w-96 px-6 w-96`}>
       <div className="my-5">
@@ -9,110 +15,117 @@ const Resume = () => {
           alt="profile"
           className="rounded-full h-32 w-32 mx-auto bg-black"
         />
-        <p className="text-center text-xl font-bold">John Doe</p>
+        <p className="text-center text-xl font-bold">{fullName}</p>
       </div>
       <div className="border-b pb-4">
         <h2 className="text-xl font-semibold">Bio</h2>
-        <p className="text-gray-700 mt-2">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          vitae pulvinar eros.
-        </p>
+        <p className="text-gray-700 mt-2">{bio}</p>
       </div>
 
       {/* <!-- Skills Section --> */}
       <div className="border-b pb-4">
         <h2 className="text-xl font-semibold">Skills</h2>
         <ul className="mt-2 space-y-2">
-          <li className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full inline-block">
-            JavaScript
-          </li>
-          <li className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full inline-block">
-            React
-          </li>
-          <li className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full inline-block">
-            Node.js
-          </li>
+          {skills.map((skill, index) => (
+            <Badge key={index} className=" px-3 py-1 rounded-full inline-block">
+              {skill}
+            </Badge>
+          ))}
         </ul>
-      </div>
-
-      {/* <!-- Resume Section --> */}
-      <div className="border-b pb-4">
-        <h2 className="text-xl font-semibold">Resume</h2>
-        <a
-          href="https://example.com/resume"
-          target="_blank"
-          className="text-blue-500 underline"
-        >
-          View Resume
-        </a>
       </div>
 
       {/* <!-- Portfolio Links Section --> */}
       <div className="border-b pb-4">
-        <h2 className="text-xl font-semibold">Portfolio Links</h2>
+        <h2 className="text-xl font-semibold">Projects</h2>
         <ul className="mt-2 space-y-2">
-          <li>
-            <a
-              href="https://example.com/portfolio1"
-              target="_blank"
-              className="text-blue-500 underline"
-            >
-              Portfolio 1
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://example.com/portfolio2"
-              target="_blank"
-              className="text-blue-500 underline"
-            >
-              Portfolio 2
-            </a>
-          </li>
+          {projects.map((project, index) => (
+            <li key={index}>
+              <h3 className="font-semibold">{project.title}</h3>
+              <p className="text-gray-600">{project.description}</p>
+              <p className="text-gray-500">
+                Skills: {project.skills.join(", ")}
+              </p>
+              <p className="text-gray-500">
+                End Date: {new Date(project.endDate).toLocaleDateString()}
+              </p>
+              <a
+                href={project.url}
+                target="_blank"
+                className="text-blue-500 underline"
+              >
+                View Project
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
 
       {/* <!-- Experience Section --> */}
       <div className="border-b pb-4">
         <h2 className="text-xl font-semibold">Experience</h2>
-        <div className="mt-2">
-          <h3 className="font-semibold">Company A</h3>
-          <p className="text-gray-600">
-            Software Engineer (Jan 2020 - Dec 2021)
-          </p>
-          <p className="text-gray-700">
-            Worked on building full-stack web applications using React and
-            Node.js.
-          </p>
-        </div>
-        <div className="mt-4">
-          <h3 className="font-semibold">Company B</h3>
-          <p className="text-gray-600">
-            Frontend Developer (Feb 2018 - Dec 2019)
-          </p>
-          <p className="text-gray-700">
-            Focused on creating responsive UI components using React and
-            Tailwind CSS.
-          </p>
-        </div>
+        {experience.map((exp, index) => (
+          <div key={index} className="mt-2">
+            <h3 className="font-semibold">
+              {exp.jobTitle} at {exp.employer}
+            </h3>
+            <p className="text-gray-600">
+              {new Date(exp.startDate).toLocaleDateString()} -{" "}
+              {new Date(exp.endDate).toLocaleDateString()}
+            </p>
+            <p className="text-gray-700">{exp.description}</p>
+          </div>
+        ))}
       </div>
 
       {/* <!-- Education Section --> */}
       <div>
         <h2 className="text-xl font-semibold">Education</h2>
-        <div className="mt-2">
-          <h3 className="font-semibold">University X</h3>
-          <p className="text-gray-600">Bachelor's in Computer Science (2022)</p>
-        </div>
-        <div className="mt-4">
-          <h3 className="font-semibold">University Y</h3>
-          <p className="text-gray-600">
-            Master's in Software Engineering (2024)
-          </p>
-        </div>
+        {education.map((edu, index) => (
+          <div key={index} className="mt-2">
+            <h3 className="font-semibold">{edu.institution}</h3>
+            <p className="text-gray-600">
+              {edu.degree} ({edu.yearOfGraduation})
+            </p>
+          </div>
+        ))}
       </div>
     </Container>
   );
+};
+
+Resume.propTypes = {
+  user: PropTypes.shape({
+    profile: PropTypes.shape({
+      fullName: PropTypes.string.isRequired,
+      bio: PropTypes.string.isRequired,
+      skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+      projects: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          description: PropTypes.string.isRequired,
+          skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+          endDate: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+      experience: PropTypes.arrayOf(
+        PropTypes.shape({
+          jobTitle: PropTypes.string.isRequired,
+          employer: PropTypes.string.isRequired,
+          startDate: PropTypes.string.isRequired,
+          endDate: PropTypes.string.isRequired,
+          description: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+      education: PropTypes.arrayOf(
+        PropTypes.shape({
+          institution: PropTypes.string.isRequired,
+          degree: PropTypes.string.isRequired,
+          yearOfGraduation: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default Resume;

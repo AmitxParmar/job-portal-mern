@@ -1,9 +1,8 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-
 const userSchema = new Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  email: { type: String, unique: true },
+  password: { type: String },
   role: {
     type: String,
     enum: ["admin", "employer", "jobSeeker"],
@@ -13,13 +12,12 @@ const userSchema = new Schema({
   inviteCodeUsed: { type: Schema.Types.ObjectId, ref: "InviteCode" },
   profile: {
     profilePic: { type: String },
-    fullname: { type: String, required: true },
+    fullName: { type: String },
     bio: { type: String },
     contact: { type: String },
     designation: { type: String },
     address: { type: String },
     skills: [{ type: String }],
-    resumeUrl: { type: String },
     profileLinks: {
       linkedIn: { type: String },
       github: { type: String },
@@ -30,29 +28,32 @@ const userSchema = new Schema({
     },
     projects: [
       {
-        title: { type: String, required: true },
-        subtitle: { type: String },
+        title: { type: String },
+        skills: [{ type: String }],
         endDate: { type: Date },
         description: { type: String },
+        url: { type: String },
+        repository: { type: String },
       },
     ],
     experience: [
       {
-        jobTitle: { type: String, required: true },
-        employer: { type: String, required: true },
-        startDate: { type: Date, required: true },
+        jobTitle: { type: String },
+        employer: { type: String },
+        startDate: { type: Date },
         endDate: { type: Date },
         description: { type: String },
       },
     ],
     education: [
       {
-        institution: { type: String, required: true },
-        degree: { type: String, required: true },
-        yearOfGraduation: { type: String, required: true },
+        institution: { type: String },
+        degree: { type: String },
+        yearOfGraduation: { type: String },
       },
     ],
   },
+  bookmarkedJobs: [{ type: Schema.Types.ObjectId, ref: "Job" }], // Added bookmarkedJobs field
   createdAt: { type: Date, default: Date.now },
 });
 
