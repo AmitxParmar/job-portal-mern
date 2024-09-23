@@ -20,4 +20,30 @@ const profileMenu = [
   },
 ];
 
-export { profileMenu };
+const achievements = {
+  name: [
+    "Students",
+    "Global Opportunities",
+    "Organization",
+    "Colleges / Universities",
+  ],
+  achievement: [
+    {
+      name: "$400K",
+      target: "highest grad CTC",
+    },
+    {
+      name: "1M+",
+      target: "worldwide",
+    },
+    {
+      name: "$30M+",
+      target: "per year",
+    },
+    {
+      name: "42%",
+      target: "average time saved",
+    },
+  ],
+};
+export { profileMenu, achievements };

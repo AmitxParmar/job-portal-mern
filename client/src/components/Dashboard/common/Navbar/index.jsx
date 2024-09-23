@@ -13,9 +13,11 @@ const Navbar = ({ userRole }) => {
       <header className="hidden lg:flex sticky top-0 justify-between items-center bg-black text-white p-4">
         {/*  Left Section (Navigation) */}
         <div className="flex items-center space-x-6">
-          <div className="text-lg font-bold">Job Portal</div>
-          <nav className="space-x-4">
-            <Link to="/dashboard" className="border-b-8 border-b-blue-600">
+          <div className="font-xl font-grotesk text-muted border py-2 px-6 bg-foreground rounded-xl font-black tracking-wider w-fit border-x-red-400 border-y-cyan-400 hover:invert cursor-pointer">
+            HIRECROWD
+          </div>
+          <nav className="space-x-4 font-semibold font-grotesk">
+            <Link to="/dashboard" className="">
               Find job
             </Link>
           </nav>

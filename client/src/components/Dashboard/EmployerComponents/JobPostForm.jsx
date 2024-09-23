@@ -17,13 +17,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { X } from "lucide-react";
+
 import QuillEditor from "../common/QuillEditor";
+import { useRef } from "react";
 
 const JobPostForm = ({ onSubmit, onCancel }) => {
   const form = useForm();
+  const quillRef = useRef();
 
   const handleSubmit = (data) => {
     onSubmit(data);
@@ -31,7 +33,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 ">
         <FormField
           control={form.control}
           name="title"
@@ -53,11 +55,12 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
             <FormItem>
               <FormLabel>Job Description</FormLabel>
               <FormControl>
-                <QuillEditor />
-                {/* <Input
+                <QuillEditor
+                  className={`h-auto`}
+                  value={field.value}
+                  onChange={field.onChange}
                   placeholder="Describe the job role and responsibilities"
-                  {...field}
-                /> */}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

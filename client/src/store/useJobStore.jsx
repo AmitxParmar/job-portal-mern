@@ -1,7 +1,6 @@
 import create from "zustand";
 
-export const useStore = create((set) => ({
-  user: {},
+export const useJobStore = create((set) => ({
   token: null,
   filters: {
     title: "",
@@ -16,7 +15,7 @@ export const useStore = create((set) => ({
   jobs: [],
 
   // Actions
-  setUser: (user) => set({ user }),
+
   setToken: (token) => set({ token }),
   setFilters: (filters) =>
     set((state) => ({

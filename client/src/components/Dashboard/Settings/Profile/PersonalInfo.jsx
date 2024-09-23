@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Edit } from "lucide-react";
+import { Edit, Camera, Edit3, Check, X } from "lucide-react"; // Combined icons import
 import {
   Dialog,
   DialogClose,
@@ -12,17 +12,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Camera } from "lucide-react";
-import { Edit3 } from "lucide-react";
-import { useState } from "react";
-import { useRef } from "react";
-import { Check } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types"; // Import PropTypes for prop validation
 
-import { X } from "lucide-react";
-
-const PersonalInfo = () => {
+const PersonalInfo = ({ profile }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (profile?.image) {
+      // Optional chaining to avoid errors
+      setPreviewUrl(profile.image); // Set initial preview URL from profile if available
+    }
+  }, [profile?.image]); // Only depend on profile.image to avoid infinite loop
 
   const handleFileChange = (event) => {
     event.preventDefault();
@@ -188,6 +190,13 @@ const PersonalInfo = () => {
       </div>
     </>
   );
+};
+
+// PropTypes validation
+PersonalInfo.propTypes = {
+  profile: PropTypes.shape({
+    image: PropTypes.string,
+  }),
 };
 
 export default PersonalInfo;

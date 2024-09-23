@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import Resume from "../common/Resume";
 import { Outlet } from "react-router-dom";
-import { fetchUserById } from "@/services/userService";
+import { fetchUserById } from "@/services/userServices";
+import Resume from "../common/Resume";
 
 const Settings = () => {
   const userId = "66ccb1ecb5e4de35acdbb80d";
@@ -20,7 +20,7 @@ const Settings = () => {
   console.log(user);
   return (
     <div className="flex flex-row justify-center h-full py-4 px-5">
-      <Outlet context={{ user }} />
+      <Outlet />
       <Resume user={user} />
     </div>
   );

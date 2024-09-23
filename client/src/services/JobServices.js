@@ -13,7 +13,7 @@ export const fetchJobById = async (jobId) => {
   const { data } = await axiosInstance.get(`${BASE_URL}/${jobId}`);
   return data;
 };
-
+/* ================= FOR ONLY RECRUITER ============================= */
 // Create new job
 export const createJob = async (jobData) => {
   const { data } = await axiosInstance.post(`${BASE_URL}`, jobData);
@@ -32,6 +32,7 @@ export const deleteJob = async (jobId) => {
   return data;
 };
 
+/* BOTH ROLE */
 export const bookmarkJob = async (jobId) => {
   const { data } = await axiosInstance.post(
     `${BASE_URL}/${jobId}/bookmark-job`

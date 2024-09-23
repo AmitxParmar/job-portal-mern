@@ -1,6 +1,5 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "react-quill/dist/quill.bubble.css";
 import PropTypes from "prop-types";
 
 const QuillEditor = ({
@@ -9,8 +8,8 @@ const QuillEditor = ({
   placeholder,
   theme = "snow",
   modules = {},
-  formats = [],
   readOnly = false,
+  className,
   ...props
 }) => {
   const defaultModules = {
@@ -26,16 +25,18 @@ const QuillEditor = ({
   const mergedModules = { ...defaultModules, ...modules };
 
   return (
-    <ReactQuill
-      theme={theme}
-      modules={mergedModules}
-      formats={formats}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      readOnly={readOnly}
-      {...props}
-    />
+    <div className="">
+      <ReactQuill
+        className={className}
+        theme={theme}
+        modules={mergedModules}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        readOnly={readOnly}
+        {...props}
+      />
+    </div>
   );
 };
 
@@ -47,6 +48,7 @@ QuillEditor.propTypes = {
   modules: PropTypes.object,
   formats: PropTypes.array,
   readOnly: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default QuillEditor;

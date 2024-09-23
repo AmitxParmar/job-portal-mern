@@ -12,14 +12,14 @@ import { useEffect } from "react";
 import { loginUser } from "./services/authServices";
 
 function App() {
-  useEffect(() => {
+  /*  useEffect(() => {
     const login = async () => {
       return await loginUser("amitparmar901@gmail.com", "1212");
     };
     const { data } = login();
     console.log("loginnnnnnnnnnnnn", data);
-  }, []); // This will run only once on load
-  const role = "jobSeeker"; // jobSeeker or employer
+  }, []); // This will run only once on load */
+  const role = "employer"; // jobSeeker or employer
   return (
     <Router>
       <div className="">

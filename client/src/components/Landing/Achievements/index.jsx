@@ -8,37 +8,11 @@ import { Autoplay, EffectFade } from "swiper";
 import "swiper/css";
 import "swiper/css/bundle";
 import { memo } from "react";
+import { achievements } from "@/constants";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-export const achievements = {
-  name: [
-    "Students",
-    "Global Opportunities",
-    "Organization",
-    "Colleges / Universities",
-  ],
-  achievement: [
-    {
-      name: "$400K",
-      target: "highest grad CTC",
-    },
-    {
-      name: "1M+",
-      target: "worldwide",
-    },
-    {
-      name: "$30M+",
-      target: "per year",
-    },
-    {
-      name: "42%",
-      target: "average time saved",
-    },
-  ],
-};
 
 const Achievements = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);

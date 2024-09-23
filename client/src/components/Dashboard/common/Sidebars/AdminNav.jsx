@@ -35,14 +35,16 @@ const AdminNav = () => {
             Post a Job
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] lg:max-w-screen-xl max-h-screen overflow-auto">
           <DialogHeader>
             <DialogTitle>Post a New Job</DialogTitle>
             <DialogDescription>
               Fill out the form below to post a new job listing.
             </DialogDescription>
           </DialogHeader>
-          <JobPostForm onSubmit={handleJobSubmit} onCancel={() => {}} />
+          <div className="">
+            <JobPostForm onSubmit={handleJobSubmit} onCancel={() => {}} />
+          </div>
         </DialogContent>
       </Dialog>
       {profileMenu.map((item) => (

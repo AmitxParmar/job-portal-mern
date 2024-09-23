@@ -2,8 +2,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "../../common/Container";
 import PersonalInfo from "./PersonalInfo";
 import ProfessionalDetails from "./ProfessionalDetails";
+import useUserStore from "@/store/useUserStore";
 
 const Profile = () => {
+  const user = useUserStore((state) => state.user);
   return (
     <Tabs
       defaultValue="personal-details"

@@ -1,4 +1,4 @@
-import { fetchUserById } from "@/services/userService";
+import { fetchUserById } from "@/services/userServices";
 import { useQuery } from "@tanstack/react-query";
 
 const useUser = (userId) => {
