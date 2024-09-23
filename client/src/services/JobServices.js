@@ -16,7 +16,7 @@ export const fetchJobById = async (jobId) => {
 /* ================= FOR ONLY RECRUITER ============================= */
 // Create new job
 export const createJob = async (jobData) => {
-  const { data } = await axiosInstance.post(`${BASE_URL}`, jobData);
+  const { data } = await axiosInstance.post(`${BASE_URL}/create`, jobData);
   return data;
 };
 

@@ -105,7 +105,7 @@ Resume.propTypes = {
           description: PropTypes.string.isRequired,
           skills: PropTypes.arrayOf(PropTypes.string).isRequired,
           endDate: PropTypes.string.isRequired,
-          url: PropTypes.string.isRequired,
+          url: PropTypes.string, // Made optional
         })
       ).isRequired,
       experience: PropTypes.arrayOf(

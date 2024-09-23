@@ -21,11 +21,10 @@ import { Plus, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 import QuillEditor from "../common/QuillEditor";
-import { useRef } from "react";
+import PropTypes from "prop-types";
 
 const JobPostForm = ({ onSubmit, onCancel }) => {
   const form = useForm();
-  const quillRef = useRef();
 
   const handleSubmit = (data) => {
     onSubmit(data);
@@ -71,7 +70,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
           )}
         />
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <FormField
             control={form.control}
             name="location.city"
@@ -79,7 +78,11 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormItem>
                 <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ""} />
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter city"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -88,12 +91,33 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
 
           <FormField
             control={form.control}
+            name="location.state"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>State</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter state"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="location.country"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ""} />
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter country"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,7 +133,12 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormItem>
                 <FormLabel>Minimum Salary</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} value={field.value || ""} />
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter minimum salary"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,60 +152,121 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormItem>
                 <FormLabel>Maximum Salary</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} value={field.value || ""} />
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter maximum salary"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+        <div className="grid grid-cols-4 gap-4">
+          <FormField
+            control={form.control}
+            name="frequency"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Salary Frequency</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select frequency" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="hourly">Hourly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                    <SelectItem value="yearly">Yearly</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="frequency"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Salary Frequency</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value || ""}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select frequency" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="hourly">Hourly</SelectItem>
-                  <SelectItem value="monthly">Monthly</SelectItem>
-                  <SelectItem value="yearly">Yearly</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="jobType"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job Type</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value || ""}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select job type" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="full time">Full Time</SelectItem>
-                  <SelectItem value="part time">Part Time</SelectItem>
-                  <SelectItem value="internship">Internship</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
+          <FormField
+            control={form.control}
+            name="jobType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Job Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select job type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="full time">Full Time</SelectItem>
+                    <SelectItem value="part time">Part Time</SelectItem>
+                    <SelectItem value="internship">Internship</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="workFrom"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Work From</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select work option" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="remote">Remote</SelectItem>
+                    <SelectItem value="onsite">Onsite</SelectItem>
+                    <SelectItem value="hybrid">Hybrid</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="experience"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Experience Level</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select experience level" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="entry-level">Entry Level</SelectItem>
+                    <SelectItem value="mid-level">Mid Level</SelectItem>
+                    <SelectItem value="senior-level">Senior Level</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="skillsRequired"
@@ -223,6 +313,11 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
       </form>
     </Form>
   );
+};
+
+JobPostForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default JobPostForm;

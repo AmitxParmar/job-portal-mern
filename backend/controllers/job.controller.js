@@ -5,35 +5,41 @@ import { createError } from "../utils/error.js";
 export const createJob = async (req, res, next) => {
   try {
     const {
-      employer, // This is assumed to be the employer ID
+      employer = "66ccb1ecb5e4de35acdbb80d", // This is assumed to be the employer ID
       title,
       description,
       location,
-      company,
       salaryRange,
       tags,
       socials,
       frequency,
-      skillsRequired,
-      postedAt,
+      skillsRequired, // This will be a string like "js, ts, java"
+      jobType, // Default value
+      workFrom, // Default value
+      experience, // Required field
+      postedAt, // Default to current date
       applicants,
       status,
     } = req.body;
 
+    // Convert skillsRequired from a string to an array
+    const skillsArray = skillsRequired
+      ? skillsRequired.split(",").map((skill) => skill.trim())
+      : [];
+
     const newJob = new Job({
+      employer, // Set the employer field with the userId from the request
       title,
       description,
-      company,
-      salary,
       location,
-      jobType,
-      requirements,
-      employer, // Set the employer field with the userId from the request
       salaryRange,
       tags,
       socials,
       frequency,
-      skillsRequired,
+      skillsRequired: skillsArray, // Store the array in the database
+      jobType,
+      workFrom,
+      experience,
       postedAt,
       applicants,
       status,

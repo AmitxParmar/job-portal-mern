@@ -16,6 +16,7 @@ import { BookmarkCheck } from "lucide-react";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { BookmarkIcon } from "lucide-react";
 
 const JobCard = ({
   job: {
@@ -23,7 +24,7 @@ const JobCard = ({
     title,
     description,
     location,
-    salary,
+    salaryRange,
     tags,
     frequency,
     skillsRequired,
@@ -42,7 +43,7 @@ const JobCard = ({
       return `${value.toLocaleString("en-IN")}₹`;
     }
   };
-
+  console.log(employer);
   return (
     <>
       <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
@@ -83,8 +84,8 @@ const JobCard = ({
         <div className="px-4 items-center flex flex-row justify-between">
           <div className="grid grid-flow-row leading-none truncate">
             <div className="font-bold h-fit text-gray-700">
-              {formatSalary(salary.min)} - {formatSalary(salary.max)} /{" "}
-              {frequency}
+              {formatSalary(salaryRange.min)} - {formatSalary(salaryRange.max)}{" "}
+              / {frequency}
             </div>
             <div className="text-gray-400 h-fit font-bold  text-sm">
               {location.city}, {location.state}
@@ -101,8 +102,8 @@ const JobCard = ({
                   Details
                 </Button>
               </DrawerTrigger>
-              <DrawerContent className="h-[calc(100vh-10vh)] px-28 max-w-screen bg-muted">
-                <DrawerHeader className={`w-full px-56`}>
+              <DrawerContent className="h-[calc(100vh-10vh)] px-4 lg:px-28 max-w-screen bg-muted">
+                <DrawerHeader className={`w-full px-6 lg:px-20`}>
                   <DrawerHeader className="grid grid-cols-2 w-full">
                     <div className="grid grid-flow-row-dense justify-start">
                       <DrawerTitle className="text-4xl">{title}</DrawerTitle>
@@ -140,25 +141,23 @@ const JobCard = ({
                         </div>
                       </div>
                     </div>
-                    <div className="grid justify-end gap-5 grid-flow-col-dense">
-                      <Button className="bg-cyan-400/50 w-fit px-6 text-lg h-12">
+                    <div className="grid justify-end gap-1 lg:gap-5 grid-flow-col-dense">
+                      <Button className="w-fit px-6 text-lg font-grotesk fonr-semibold h-12">
                         Apply Now
                       </Button>
-                      <Button
-                        size="icon"
-                        className="bg-cyan-400/50 px-6 text-lg h-12"
-                      >
-                        <BookmarkCheck />
+                      <Button size="icon" className="h-12 w-12">
+                        <BookmarkIcon />
                       </Button>
                     </div>
                   </DrawerHeader>
                 </DrawerHeader>
-                <DrawerDescription className="overflow-y-auto leading-9 scrollbar-thin scrollbar-thumb-rounded-full mx-auto  scrollbar-thumb-gray-400 p-4 font-semibold">
-                  {description}
-                </DrawerDescription>
+                <DrawerDescription
+                  className="overflow-y-auto text-md text-black scrollbar-thin scrollbar-thumb-rounded-full w-full mx-auto scrollbar-thumb-gray-400 p-4 "
+                  dangerouslySetInnerHTML={{ __html: description }}
+                />
                 <DrawerFooter>
                   <Button
-                    className={`bg-purple-500/30 rounded-md px-8 py-2 font-semibold border border-black`}
+                    className={`rounded-md px-8 py-2 font-semibold border border-black`}
                   >
                     Apply
                   </Button>
@@ -182,7 +181,7 @@ const JobCard = ({
 
 JobCard.propTypes = {
   job: PropTypes.shape({
-    employer: PropTypes.string.isRequired,
+    employer: PropTypes.string,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.shape({
@@ -190,7 +189,7 @@ JobCard.propTypes = {
       state: PropTypes.string.isRequired,
       country: PropTypes.string.isRequired,
     }).isRequired,
-    salary: PropTypes.shape({
+    salaryRange: PropTypes.shape({
       min: PropTypes.string.isRequired,
       max: PropTypes.string.isRequired,
     }).isRequired,

@@ -35,13 +35,16 @@ const SettingsSidebar = () => {
           <Link
             key={item.name}
             to={item.path}
-            className={`border w-full text-center mx-auto rounded-full px-4 text-black border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
+            className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
               location.pathname === item.path
                 ? "border-black invert scale-15"
                 : ""
             }`}
           >
-            {item.name}
+            <span className="flex flex-row items-center  p-1">
+              <span className="mr-3 ">{item.icon}</span>
+              <span className="">{item.name}</span>
+            </span>
           </Link>
         ))}
       </div>

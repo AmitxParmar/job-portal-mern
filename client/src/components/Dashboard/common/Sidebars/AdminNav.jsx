@@ -1,5 +1,5 @@
 import { profileMenu } from "@/constants";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // Added useLocation for location.pathname
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,11 +16,20 @@ import JobPostForm from "../../EmployerComponents/JobPostForm";
 import { useState } from "react";
 
 const AdminNav = () => {
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false); // Use state to manage dialog open/close
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: createJob, // Specify mutation function
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["jobs"]);
+    },
+  });
 
-  const handleJobSubmit = (data) => {
-    console.log("Job submitted:", data);
-    // Here you would typically send this data to your backend
+  const handleJobSubmit = (jobData) => {
+    console.log("Job submitted:", jobData);
+    mutation.mutate(jobData);
   };
 
   return (
@@ -45,7 +54,7 @@ const AdminNav = () => {
             <JobPostForm
               onSubmit={(data) => {
                 handleJobSubmit(data);
-                setOpen(false); // Close dialog on successful submit
+                setOpen(false);
               }}
               onCancel={() => setOpen(false)}
             />
@@ -57,9 +66,7 @@ const AdminNav = () => {
           key={item.name}
           to={item.path}
           className={`border w-full text-center mx-auto rounded-full px-4 text-black border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
-            location.pathname === item.path
-              ? "border-black invert scale-15"
-              : ""
+            pathname === item.path ? "border-black invert scale-15" : ""
           }`}
         >
           {item.name}

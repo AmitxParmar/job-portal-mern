@@ -29,7 +29,7 @@ const HeaderFilter = ({ userRole }) => {
             <Search className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
             <Input
               placeholder={`eg. Full-stack Developer`}
-              className={`w-fit text-background border-none focus-visible:ring-0 `}
+              className={`w-fit text-background border-none focus-visible:ring-0`}
             />
             <ChevronDown className="inline text-white h-4 w-4" />
           </div>
