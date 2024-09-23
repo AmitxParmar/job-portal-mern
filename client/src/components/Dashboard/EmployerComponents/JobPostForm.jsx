@@ -41,7 +41,11 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
             <FormItem>
               <FormLabel>Job Title</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Senior Software Engineer" {...field} />
+                <Input
+                  placeholder="e.g. Senior Software Engineer"
+                  {...field}
+                  value={field.value || ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -57,7 +61,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormControl>
                 <QuillEditor
                   className={`h-auto`}
-                  value={field.value}
+                  value={field.value || ""}
                   onChange={field.onChange}
                   placeholder="Describe the job role and responsibilities"
                 />
@@ -75,7 +79,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormItem>
                 <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ""} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +93,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormItem>
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ""} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -105,7 +109,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormItem>
                 <FormLabel>Minimum Salary</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input type="number" {...field} value={field.value || ""} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,7 +123,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
               <FormItem>
                 <FormLabel>Maximum Salary</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input type="number" {...field} value={field.value || ""} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -133,7 +137,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Salary Frequency</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value || ""}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select frequency" />
@@ -156,7 +160,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Job Type</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value || ""}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select job type" />
@@ -180,7 +184,11 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
             <FormItem>
               <FormLabel>Required Skills (comma-separated)</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="e.g. React, Node.js, MongoDB" />
+                <Input
+                  {...field}
+                  placeholder="e.g. React, Node.js, MongoDB"
+                  value={field.value || ""}
+                />
               </FormControl>
               <FormDescription>
                 Enter skills separated by commas
@@ -194,7 +202,10 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
           <Button
             variant="outline"
             className="text-lg flex flex-row justify-center rounded-full gap-2 h-9 font-medium"
-            onClick={onCancel}
+            onClick={(e) => {
+              e.preventDefault(); // Prevent form submission
+              onCancel();
+            }}
           >
             <X />
             <Separator orientation />
