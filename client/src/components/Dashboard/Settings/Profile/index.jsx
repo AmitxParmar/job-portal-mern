@@ -1,37 +1,46 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "../../common/Container";
-import PersonalInfo from "./PersonalInfo";
 import ProfessionalDetails from "./ProfessionalDetails";
-import useUserStore from "@/store/useUserStore";
+import { useOutletContext } from "react-router-dom";
+import PersonalInfo from "./PersonalInfo";
+import { UserRoundPen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 const Profile = () => {
-  const user = useUserStore((state) => state.user);
+  const { user } = useOutletContext();
+
   return (
     <Tabs
       defaultValue="personal-details"
-      className="px-6 overflow-hidden max-h-screen h-full w-full"
+      className="px-6 overflow-  max-h-screen h-full w-full"
     >
       <TabsList className="">
-        <TabsTrigger value="personal-details">Personal Infomation</TabsTrigger>
-        <TabsTrigger value="professional-details">
+        <TabsTrigger
+          className="flex text-background gap-2"
+          value="personal-details"
+        >
+          <UserRoundPen size={20} />
+          <span className="">Personal Infomastion</span>
+        </TabsTrigger>
+        <TabsTrigger
+          className="flex text-background gap-2"
+          value="professional-details"
+        >
+          <BookOpen size={20} />
           Professional Details
         </TabsTrigger>
-        <TabsTrigger value="account-details">Account Details</TabsTrigger>
+        {/* <TabsTrigger value="account-details">Account Details</TabsTrigger> */}
       </TabsList>
-      <Container className={`w-full max-h-[90%] max-w-screen-2xl`}>
+      <Container
+        className={`w-full max-h-[90%] bg-background max-w-screen-2xl`}
+      >
         <TabsContent className="" value="personal-details">
-          <PersonalInfo />
+          <PersonalInfo user={user} />
         </TabsContent>
         <TabsContent className="" value="professional-details">
           <ProfessionalDetails />
-          2. Professional Details Skills: profile.skills Experience:
-          profile.experience Education: profile.education Resume:
-          profile.resumeUrl Portfolio Links: profile.portfolioLinks
         </TabsContent>
-        <TabsContent value="account-details">
-          3. Account Details Role: role Is Verified: isVerified Invite Code
-          Used: inviteCodeUsed
-        </TabsContent>
+        {/* s */}
       </Container>
     </Tabs>
   );

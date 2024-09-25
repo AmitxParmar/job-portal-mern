@@ -43,7 +43,7 @@ const JobCard = ({
       return `${value.toLocaleString("en-IN")}₹`;
     }
   };
-  console.log(employer);
+
   return (
     <>
       <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">

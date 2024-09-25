@@ -13,11 +13,11 @@ export const createJob = async (req, res, next) => {
       tags,
       socials,
       frequency,
-      skillsRequired, // This will be a string like "js, ts, java"
-      jobType, // Default value
-      workFrom, // Default value
-      experience, // Required field
-      postedAt, // Default to current date
+      skillsRequired,
+      jobType,
+      workFrom,
+      experience,
+      postedAt,
       applicants,
       status,
     } = req.body;
@@ -28,7 +28,7 @@ export const createJob = async (req, res, next) => {
       : [];
 
     const newJob = new Job({
-      employer, // Set the employer field with the userId from the request
+      employer,
       title,
       description,
       location,
@@ -36,7 +36,7 @@ export const createJob = async (req, res, next) => {
       tags,
       socials,
       frequency,
-      skillsRequired: skillsArray, // Store the array in the database
+      skillsRequired: skillsArray,
       jobType,
       workFrom,
       experience,

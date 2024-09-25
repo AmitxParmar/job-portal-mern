@@ -9,7 +9,6 @@ const JobListings = () => {
     queryKey: ["jobs"],
     queryFn: () => fetchJobs(), // Pass a function to fetchJobs
   });
-  console.log("JobListing", data);
 
   if (isError) return <div className="text-red-500 text-5xl">{error}</div>;
   return (

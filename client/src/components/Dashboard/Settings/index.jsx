@@ -2,11 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
 import { fetchUserById } from "@/services/userServices";
 import Resume from "../common/Resume";
-import useUserStore from "@/store/useUserStore";
 
 const Settings = () => {
-  const setUser = useUserStore((state) => state.setUser);
-
   const userId = "66ccb1ecb5e4de35acdbb80d";
   const {
     data: user,
@@ -15,10 +12,9 @@ const Settings = () => {
   } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUserById(userId),
-    onSuccess: (data) => {
-      setUser(data); // Add data to zustand after fetched
-    },
   });
+
+  console.log("user fetched Settings.jsx", user);
 
   if (isLoading)
     return (
@@ -28,10 +24,9 @@ const Settings = () => {
     );
   if (error) return <div>Error fetching user data</div>;
 
-  console.log(user);
   return (
-    <div className="flex flex-row justify-center h-full py-4 px-5">
-      <Outlet />
+    <div className="flex flex-row justify-center h-full py-4">
+      {!isLoading && <Outlet context={{ user }} />}
       <Resume user={user} />
     </div>
   );

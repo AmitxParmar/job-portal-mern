@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   Accordion,
   AccordionContent,
@@ -7,251 +8,366 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { DatePicker } from "@/components/ui/date-picker"; // Importing the shadcn datepicker
+import { DatePicker } from "@/components/ui/date-picker";
+import QuillEditor from "../../common/QuillEditor";
 
 const ProfessionalDetails = () => {
   const [projects, setProjects] = useState([]);
-  const [experience, setExperience] = useState([]);
   const [education, setEducation] = useState([]);
+  const [experience, setExperience] = useState([]);
+  const [activeSection, setActiveSection] = useState("");
 
-  const addProject = (newProject) => {
-    setProjects([...projects, newProject]);
-  };
+  const form = useForm();
 
-  const addExperience = (newExperience) => {
-    setExperience([...experience, newExperience]);
-  };
-
-  const addEducation = (newEducation) => {
-    setEducation([...education, newEducation]);
-  };
-
-  const editItem = (section, index, updatedItem) => {
-    switch (section) {
+  const onSubmit = (data) => {
+    switch (activeSection) {
       case "projects":
-        setProjects(
-          projects.map((item, i) => (i === index ? updatedItem : item))
-        );
-        break;
-      case "experience":
-        setExperience(
-          experience.map((item, i) => (i === index ? updatedItem : item))
-        );
+        setProjects([...projects, data]);
         break;
       case "education":
-        setEducation(
-          education.map((item, i) => (i === index ? updatedItem : item))
-        );
+        setEducation([...education, data]);
         break;
+      case "experience":
+        setExperience([...experience, data]);
+        break;
+    }
+    form.reset();
+  };
+
+  const renderForm = () => {
+    switch (activeSection) {
+      case "projects":
+        return (
+          <>
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Project Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter project title" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="skills"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Skills (comma-separated)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter skills" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>End Date</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <QuillEditor
+                      placeholder="Enter project description"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>URL</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter project URL" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="repository"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Repository</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter repository URL" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </>
+        );
+      case "education":
+        return (
+          <>
+            <FormField
+              control={form.control}
+              name="institution"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Institution</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter institution" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="degree"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Degree</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter degree" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="yearOfGraduation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Year of Graduation</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter year of graduation" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </>
+        );
+      case "experience":
+        return (
+          <>
+            <FormField
+              control={form.control}
+              name="jobTitle"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter job title" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="employer"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Employer</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter employer" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Start Date</FormLabel>
+                  <FormControl>
+                    <DatePicker {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>End Date</FormLabel>
+                  <FormControl>
+                    <DatePicker {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter job description" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </>
+        );
+      default:
+        return null;
     }
   };
 
-  const AddItemPopover = ({ onAdd, fields }) => {
-    const [formData, setFormData] = useState({});
-
-    const handleInputChange = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleDateChange = (name, date) => {
-      setFormData({ ...formData, [name]: date });
-    };
-
-    const handleSubmit = () => {
-      onAdd(formData);
-      setFormData({});
-    };
-
-    return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button>Add New</Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-80">
-          {fields.map((field) => (
-            <div key={field} className="mb-4">
-              <Label htmlFor={field}>{field}</Label>
-              {field === "endDate" ? (
-                <DatePicker
-                  id={field}
-                  name={field}
-                  selected={formData[field]}
-                  onChange={(date) => handleDateChange(field, date)}
-                />
-              ) : (
-                <Input
-                  id={field}
-                  name={field}
-                  value={formData[field] || ""}
-                  onChange={handleInputChange}
-                />
-              )}
-            </div>
-          ))}
-          <Button onClick={handleSubmit}>Add</Button>
-        </PopoverContent>
-      </Popover>
-    );
-  };
-
-  const EditItemPopover = ({ item, onEdit, fields }) => {
-    const [formData, setFormData] = useState(item);
-
-    const handleInputChange = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleDateChange = (name, date) => {
-      setFormData({ ...formData, [name]: date });
-    };
-
-    const handleSubmit = () => {
-      onEdit(formData);
-    };
-
-    return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button>Edit</Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-80">
-          {fields.map((field) => (
-            <div key={field} className="mb-4">
-              <Label htmlFor={field}>{field}</Label>
-              {field === "endDate" ? (
-                <DatePicker
-                  id={field}
-                  name={field}
-                  selected={formData[field]}
-                  onChange={(date) => handleDateChange(field, date)}
-                />
-              ) : (
-                <Input
-                  id={field}
-                  name={field}
-                  value={formData[field] || ""}
-                  onChange={handleInputChange}
-                />
-              )}
-            </div>
-          ))}
-          <Button onClick={handleSubmit}>Save</Button>
-        </PopoverContent>
-      </Popover>
-    );
-  };
-
   return (
-    <Accordion type="single" collapsible className="w-full">
-      <AccordionItem value="projects">
-        <AccordionTrigger>Projects</AccordionTrigger>
-        <AccordionContent>
-          {projects.map((project, index) => (
-            <div key={index} className="mb-4">
-              <h3>{project.title}</h3>
-              <p>Skills: {project.skills.join(", ")}</p>
-              <p>End Date: {project.endDate}</p>
-              <p>Description: {project.description}</p>
-              <p>URL: {project.url}</p>
-              <p>Repository: {project.repository}</p>
-              <EditItemPopover
-                item={project}
-                onEdit={(updatedProject) =>
-                  editItem("projects", index, updatedProject)
-                }
-                fields={[
-                  "title",
-                  "skills",
-                  "endDate",
-                  "description",
-                  "url",
-                  "repository",
-                ]}
-              />
-            </div>
-          ))}
-          <AddItemPopover
-            onAdd={addProject}
-            fields={[
-              "title",
-              "skills",
-              "endDate",
-              "description",
-              "url",
-              "repository",
-            ]}
-          />
-        </AccordionContent>
-      </AccordionItem>
-
-      <AccordionItem value="experience">
-        <AccordionTrigger>Experience</AccordionTrigger>
-        <AccordionContent>
-          {experience.map((exp, index) => (
-            <div key={index} className="mb-4">
-              <h3>{exp.jobTitle}</h3>
-              <p>Employer: {exp.employer}</p>
-              <p>Start Date: {exp.startDate}</p>
-              <p>End Date: {exp.endDate}</p>
-              <p>Description: {exp.description}</p>
-              <EditItemPopover
-                item={exp}
-                onEdit={(updatedExp) =>
-                  editItem("experience", index, updatedExp)
-                }
-                fields={[
-                  "jobTitle",
-                  "employer",
-                  "startDate",
-                  "endDate",
-                  "description",
-                ]}
-              />
-            </div>
-          ))}
-          <AddItemPopover
-            onAdd={addExperience}
-            fields={[
-              "jobTitle",
-              "employer",
-              "startDate",
-              "endDate",
-              "description",
-            ]}
-          />
-        </AccordionContent>
-      </AccordionItem>
-
-      <AccordionItem value="education">
-        <AccordionTrigger>Education</AccordionTrigger>
-        <AccordionContent>
-          {education.map((edu, index) => (
-            <div key={index} className="mb-4">
-              <h3>{edu.institution}</h3>
-              <p>Degree: {edu.degree}</p>
-              <p>Year of Graduation: {edu.yearOfGraduation}</p>
-              <EditItemPopover
-                item={edu}
-                onEdit={(updatedEdu) =>
-                  editItem("education", index, updatedEdu)
-                }
-                fields={["institution", "degree", "yearOfGraduation"]}
-              />
-            </div>
-          ))}
-          <AddItemPopover
-            onAdd={addEducation}
-            fields={["institution", "degree", "yearOfGraduation"]}
-          />
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <div className="w-full max-w-3xl mx-auto">
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="projects">
+          <AccordionTrigger>Projects</AccordionTrigger>
+          <AccordionContent>
+            {projects.map((project, index) => (
+              <div key={index} className="mb-2">
+                <h3 className="font-bold">{project.title}</h3>
+                <p>Skills: {project.skills.join(", ")}</p>
+                <p>End Date: {project.endDate}</p>
+                <p>{project.description}</p>
+                <p>
+                  URL:{" "}
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {project.url}
+                  </a>
+                </p>
+                <p>
+                  Repository:{" "}
+                  <a
+                    href={project.repository}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {project.repository}
+                  </a>
+                </p>
+              </div>
+            ))}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button onClick={() => setActiveSection("projects")}>
+                  Add Project
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add New Project</DialogTitle>
+                </DialogHeader>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-4"
+                  >
+                    {renderForm()}
+                    <Button type="submit">Submit</Button>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="education">
+          <AccordionTrigger>Education</AccordionTrigger>
+          <AccordionContent>
+            {education.map((edu, index) => (
+              <div key={index} className="mb-2">
+                <h3 className="font-bold">{edu.institution}</h3>
+                <p>{edu.degree}</p>
+                <p>Year of Graduation: {edu.yearOfGraduation}</p>
+              </div>
+            ))}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button onClick={() => setActiveSection("education")}>
+                  Add Education
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add New Education</DialogTitle>
+                </DialogHeader>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                  >
+                    {renderForm()}
+                    <Button type="submit">Submit</Button>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="experience">
+          <AccordionTrigger>Experience</AccordionTrigger>
+          <AccordionContent>
+            {experience.map((exp, index) => (
+              <div key={index} className="mb-2">
+                <h3 className="font-bold">{exp.jobTitle}</h3>
+                <p>{exp.employer}</p>
+                <p>Start Date: {exp.startDate}</p>
+                <p>End Date: {exp.endDate}</p>
+                <p>{exp.description}</p>
+              </div>
+            ))}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button onClick={() => setActiveSection("experience")}>
+                  Add Experience
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add New Experience</DialogTitle>
+                </DialogHeader>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                  >
+                    {renderForm()}
+                    <Button type="submit">Submit</Button>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
   );
 };
 

@@ -17,7 +17,9 @@ const EmployerDashboard = () => {
     /*  <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll lg:grid-cols-3 xl:grid-cols-5 gap-3 px-4 w-screen"> */
     <div className="h-fit scrollbar-thin max-w-[764px] overflow-x-hidden overflow-y-scroll">
       <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
-        {jobs && jobs.map((job) => <JobCard key={job._id} job={job} />)}
+        {jobs?.map((job) => (
+          <JobCard key={job._id} job={job} />
+        ))}
         {isLoading
           ? Array.from({ length: 10 }, (_, index) => (
               <CardSkeleton key={index} />
