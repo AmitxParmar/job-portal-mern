@@ -1,5 +1,5 @@
 import Job from "../models/Job.js";
-import User from "../models/User.js";
+import { User } from "../models/User.js";
 import { createError } from "../utils/error.js";
 
 export const createJob = async (req, res, next) => {

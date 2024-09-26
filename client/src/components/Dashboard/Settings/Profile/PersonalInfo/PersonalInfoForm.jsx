@@ -12,6 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Edit } from "lucide-react";
 
 const PersonalInfoForm = ({
   form,
@@ -26,27 +27,30 @@ const PersonalInfoForm = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 w-full relative"
+          className="space-y-3 w-full relative"
         >
           <div className="m-0 p-0">
-            <div className="sticky top-0 text-2xl z-2 s">
-              Edit Personal Details
-            </div>
+            <h2 className="text-2xl flex items-center gap-4">
+              <span>
+                <Edit />
+              </span>
+              <span>Edit Personal Details</span>
+            </h2>
           </div>
           <Separator />
           <div className="space-y-6">
-            <div className="grid w-full grid-cols-1 my-3 items-center md:grid-cols-[1fr_auto] h-auto md:gap-6 xl:gap-8">
-              <div className="order-2 md:order-1 flex flex-col justify-around items-center h-full">
+            <div className="grid  my-3 items-center md:grid-cols-[1fr_auto] h-auto md:gap-6 xl:gap-8">
+              <div className="order-2 gap-3 md:order-1 flex flex-col justify-around items-center h-full">
                 <FormField
                   control={form.control}
                   name="fullName"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel>Full name</FormLabel>
+                      <FormLabel className="font-bold">Full name</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Full Name"
-                          className="h-12"
+                          className={`${form.error && `border-red-600`} h-12`}
                           {...field}
                         />
                       </FormControl>
@@ -56,10 +60,24 @@ const PersonalInfoForm = ({
                 />
                 <FormField
                   control={form.control}
+                  name="bio"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel className="font-bold">Bio</FormLabel>
+                      <FormControl>
+                        <Input placeholder="bio" className="h-12" {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
                   name="designation"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel>Designation</FormLabel>
+                      <FormLabel className="font-bold">Designation</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="designation"
@@ -108,10 +126,10 @@ const PersonalInfoForm = ({
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="contactEmail"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="font-bold">Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Email" className="h-12" {...field} />
                     </FormControl>
@@ -121,10 +139,10 @@ const PersonalInfoForm = ({
               />
               <FormField
                 control={form.control}
-                name="phone"
+                name="contact"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel className="font-bold">Phone</FormLabel>
                     <FormControl>
                       <Input placeholder="Phone" className="h-12" {...field} />
                     </FormControl>
@@ -137,7 +155,7 @@ const PersonalInfoForm = ({
                 name="address"
                 render={({ field }) => (
                   <FormItem className="col-span-2">
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel className="font-bold">Address</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Address"
@@ -160,7 +178,7 @@ const PersonalInfoForm = ({
                 name="linkedIn"
                 render={({ field }) => (
                   <FormItem className="my-3">
-                    <FormLabel>LinkedIn</FormLabel>
+                    <FormLabel className="font-bold">LinkedIn</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="LinkedIn"
@@ -177,7 +195,7 @@ const PersonalInfoForm = ({
                 name="github"
                 render={({ field }) => (
                   <FormItem className="my-3">
-                    <FormLabel>Github</FormLabel>
+                    <FormLabel className="font-bold">Github</FormLabel>
                     <FormControl>
                       <Input placeholder="Github" className="h-12" {...field} />
                     </FormControl>
@@ -190,7 +208,7 @@ const PersonalInfoForm = ({
                 name="other"
                 render={({ field }) => (
                   <FormItem className="my-3">
-                    <FormLabel>Other</FormLabel>
+                    <FormLabel className="font-bold">Other</FormLabel>
                     <FormControl>
                       <Input placeholder="Other" className="h-12" {...field} />
                     </FormControl>
@@ -198,7 +216,7 @@ const PersonalInfoForm = ({
                   </FormItem>
                 )}
               />
-              <div className="sticky items-center bg-background w-full border px-4 py-3 rounded-xl bottom-0 flex flex-row justify-end gap-5">
+              <div className="sticky bottom-0 flex flex-row justify-end gap-5">
                 <Button
                   type="submit"
                   className="text-lg flex flex-row justify-center rounded-full gap-2 h-12 font-medium"

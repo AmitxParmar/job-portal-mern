@@ -20,7 +20,7 @@ const Profile = () => {
           value="personal-details"
         >
           <UserRoundPen size={20} />
-          <span className="">Personal Infomastion</span>
+          <span className="">Personal Infomation</span>
         </TabsTrigger>
         <TabsTrigger
           className="flex text-background gap-2"

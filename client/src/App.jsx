@@ -8,7 +8,7 @@ import Settings from "./components/Dashboard/Settings";
 import Layout from "./components/Dashboard/common/Layout";
 
 import Bookmarks from "./components/Dashboard/Settings/Bookmarks";
-import { useEffect } from "react";
+
 import { loginUser } from "./services/authServices";
 
 function App() {

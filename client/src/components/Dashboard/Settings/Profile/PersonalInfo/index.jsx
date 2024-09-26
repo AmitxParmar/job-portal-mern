@@ -1,13 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Edit } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 import PersonalInfoForm from "./PersonalInfoForm";
-import { Camera } from "lucide-react";
 
 const PersonalInfo = ({ user }) => {
   const { profile } = user;
@@ -17,11 +13,12 @@ const PersonalInfo = ({ user }) => {
   const form = useForm({
     defaultValues: {
       fullName: profile?.fullName || "",
-      jobTitle: profile?.jobTitle || "",
-      email: profile?.contactEmail || "",
-      phone: profile?.contact || "",
+      bio: profile?.bio || "",
+      designation: profile?.designation || "",
+      contact: profile?.contact || "",
+      contactEmail: profile?.contactEmail || "",
       address: profile?.address || "",
-      linkedin: profile?.profileLinks?.linkedin || "",
+      linkedin: profile?.profileLinks?.linkedIn || "",
       github: profile?.profileLinks?.github || "",
       other: profile?.profileLinks?.other || "",
     },
@@ -86,6 +83,7 @@ PersonalInfo.propTypes = {
       fullName: PropTypes.string,
       bio: PropTypes.string,
       contact: PropTypes.string,
+      contactEmail: PropTypes.string,
       designation: PropTypes.string,
       address: PropTypes.string,
       skills: PropTypes.arrayOf(PropTypes.string),

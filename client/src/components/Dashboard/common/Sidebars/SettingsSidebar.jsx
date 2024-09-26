@@ -10,7 +10,7 @@ const SettingsSidebar = () => {
 
   return (
     <>
-      {location.pathname === "/settings" ? (
+      {location.pathname.startsWith("/settings") ? (
         <Button
           variant="outline" // Fixed typo from "varient" to "variant"
           onClick={() => navigate("/dashboard")}

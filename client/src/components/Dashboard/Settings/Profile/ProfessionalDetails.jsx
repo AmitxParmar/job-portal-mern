@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Accordion,
@@ -24,28 +24,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { DatePicker } from "@/components/ui/date-picker";
 import QuillEditor from "../../common/QuillEditor";
+import { useOutletContext } from "react-router-dom";
+import moment from "moment";
+import { Badge } from "@/components/ui/badge";
+import { Plus } from "lucide-react";
+import { Eye } from "lucide-react";
 
 const ProfessionalDetails = () => {
-  const [projects, setProjects] = useState([]);
-  const [education, setEducation] = useState([]);
-  const [experience, setExperience] = useState([]);
+  const { user } = useOutletContext();
+  const {
+    profile: { projects, education, experience },
+  } = user;
   const [activeSection, setActiveSection] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm();
 
   const onSubmit = (data) => {
-    switch (activeSection) {
-      case "projects":
-        setProjects([...projects, data]);
-        break;
-      case "education":
-        setEducation([...education, data]);
-        break;
-      case "experience":
-        setExperience([...experience, data]);
-        break;
-    }
-    form.reset();
+    window.alert(JSON.stringify(data));
+    console.log(":ProfessionalDetailss experiece, edu, projects", ...data);
+    setIsOpen(false);
   };
 
   const renderForm = () => {
@@ -97,6 +95,7 @@ const ProfessionalDetails = () => {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <QuillEditor
+                      className={``}
                       placeholder="Enter project description"
                       {...field}
                     />
@@ -242,44 +241,61 @@ const ProfessionalDetails = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <Accordion type="single" collapsible className="w-full">
+    <div className="w-full mx-auto">
+      <Accordion
+        type="single"
+        collapsible
+        className="px-12 border rounded-t-xl shadow-2xl "
+      >
         <AccordionItem value="projects">
-          <AccordionTrigger>Projects</AccordionTrigger>
-          <AccordionContent>
+          <AccordionTrigger className="px-4 rounded-t-2xl bg-muted border">
+            Projects
+          </AccordionTrigger>
+          <AccordionContent className="mt-2 gap-3 overflow grid-flow-dense bg-background">
             {projects.map((project, index) => (
-              <div key={index} className="mb-2">
-                <h3 className="font-bold">{project.title}</h3>
-                <p>Skills: {project.skills.join(", ")}</p>
-                <p>End Date: {project.endDate}</p>
-                <p>{project.description}</p>
-                <p>
-                  URL:{" "}
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.url}
-                  </a>
-                </p>
-                <p>
-                  Repository:{" "}
-                  <a
-                    href={project.repository}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.repository}
-                  </a>
-                </p>
-              </div>
+              <>
+                <div
+                  key={index}
+                  className="mb-2 bg-muted shadow-2xl border hover:bg-muted/50 py-4"
+                >
+                  <div className="grid grid-cols-2">
+                    <div className="float-left px-4">
+                      <h3 className="font-bold inline text-lg">
+                        {project.title},
+                      </h3>{" "}
+                      <p className="italic inline">
+                        {project?.skills?.map((skill, index) => (
+                          <span key={index}>
+                            {skill}
+                            {index < project.skills.length - 1 ? ", " : ""}
+                          </span>
+                        ))}
+                      </p>
+                      <p>
+                        <span className="text-gray-600">
+                          {project?.endDate
+                            ? moment(project?.endDate).format("MMMM-YYYY")
+                            : "N/A"}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="px-6 w-full flex items-center justify-end h-full">
+                      <Eye className="" />
+                    </div>
+                  </div>
+                </div>
+              </>
             ))}
-            <Dialog>
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
-                <Button onClick={() => setActiveSection("projects")}>
-                  Add Project
-                </Button>
+                <div className="h-14 flex justify-center rounded-b-xl bg-muted border items-center">
+                  <Button
+                    className="bg-black font-semibold "
+                    onClick={() => setActiveSection("projects")}
+                  >
+                    <Plus className="mr-2" /> Project
+                  </Button>
+                </div>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -321,7 +337,7 @@ const ProfessionalDetails = () => {
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
+                    className="space-y-4"
                   >
                     {renderForm()}
                     <Button type="submit">Submit</Button>
@@ -356,7 +372,7 @@ const ProfessionalDetails = () => {
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
+                    className="space-y-4"
                   >
                     {renderForm()}
                     <Button type="submit">Submit</Button>
