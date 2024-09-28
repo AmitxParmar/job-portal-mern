@@ -2,7 +2,7 @@ import { Bell, BellDotIcon, LucideSettings } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
-import HeaderFilter from "./Filter";
+import HeaderFilter from "./HeaderFilter";
 import PropTypes from "prop-types";
 import { cn } from "@/lib/utils";
 

@@ -1,18 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import JobCard from "./JobCard";
-import { fetchJobs } from "@/services/JobServices";
 import CardSkeleton from "./CardSkeleton";
 import { useFilters } from "@/hooks/useFilters";
 
 const JobListings = () => {
-  const { filters } = useFilters(); // Get the filter state
-  // Automatically refetches when filters change due to the queryKey dependency
-  const { data, isError, error, isLoading } = useQuery({
-    queryKey: ["jobs", filters], // Including filters as part of the query key
-    queryFn: () => fetchJobs(filters),
-    keepPreviousData: true, // Keeps the previous data while fetching new data
-    staleTime: 5000, // Optional: to avoid too frequent refetching
-  });
+  const { jobQuery } = useFilters();
+  const { data, isError, error, isLoading } = jobQuery;
+
   console.log(data, isError, error, isLoading);
   if (isError)
     return <div className="text-red-500 text-5xl">{error.message}</div>;

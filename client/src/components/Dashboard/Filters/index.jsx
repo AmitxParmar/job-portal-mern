@@ -26,9 +26,7 @@ const Filters = () => {
 
   const handleApplyFilters = () => {};
 
-  function onFilterChange() {
-    //debounce and send to the state manager to the central store.
-  }
+  function onFilterChange() {}
 
   return (
     <>

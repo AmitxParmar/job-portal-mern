@@ -10,9 +10,10 @@ import { Input } from "@/components/ui/input";
 import SearchDropdown from "@/components/SearchDropdown";
 import { MapPin, Search, ChevronDown, Briefcase } from "lucide-react";
 import { useFilters } from "@/hooks/useFilters";
+import PropTypes from "prop-types";
 
 const HeaderFilter = ({ userRole }) => {
-  const { filters, setFilter, clearFilters } = useFilters();
+  const { filters, setFilter } = useFilters();
   const { pathname } = useLocation(); // Get pathname from useLocation
 
   return (
@@ -92,6 +93,10 @@ const HeaderFilter = ({ userRole }) => {
       </div>
     )
   );
+};
+
+HeaderFilter.propTypes = {
+  userRole: PropTypes.oneOf(["employer", "jobSeeker"]).isRequired,
 };
 
 export default HeaderFilter;
