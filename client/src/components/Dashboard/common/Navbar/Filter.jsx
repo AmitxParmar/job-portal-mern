@@ -9,78 +9,88 @@ import { Input } from "@/components/ui/input";
 
 import SearchDropdown from "@/components/SearchDropdown";
 import { MapPin, Search, ChevronDown, Briefcase } from "lucide-react";
+import { useFilters } from "@/hooks/useFilters";
 
 const HeaderFilter = ({ userRole }) => {
+  const { filters, setFilter, clearFilters } = useFilters();
   const { pathname } = useLocation(); // Get pathname from useLocation
-  const [filters, setFilters] = useState({
-    minSalary: 0,
-    maxSalary: 1000000,
-  });
-
-  const handleSalaryChange = (value) => {
-    setFilters({ ...filters, minSalary: value[0], maxSalary: value[1] });
-  };
 
   return (
-    <div>
-      {pathname === "/dashboard" && userRole !== "employer" && (
-        <div className="bg-foreground lg:min-h-24 lg:flex hidden lg:flex-row lg:justify-between px-4 items-center">
-          <div className="grid items-center">
-            <Search className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
-            <Input
-              placeholder={`eg. Full-stack Developer`}
-              className={`w-fit text-background border-none focus-visible:ring-0`}
-            />
-            <ChevronDown className="inline text-white h-4 w-4" />
-          </div>
-          <Separator orientation="vertical" className="h-1/2" />
-          <SearchDropdown
-            items={City.getCitiesOfCountry("IN")}
-            placeholder={`eg. Ahmedabad`}
-            icon={
-              <MapPin className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
+    pathname === "/dashboard" &&
+    userRole !== "employer" && (
+      <div className="bg-foreground lg:min-h-24 lg:flex hidden lg:flex-row lg:justify-between px-4 items-center">
+        <div className="grid grid-flow-col-dense items-center">
+          <Search className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
+          <Input
+            placeholder={`eg. Full-stack Developer`}
+            className={`w-fit text-background bg-transparent placeholder:text-background/50 placeholder:font-semibold placeholder:text-lg border-none focus-visible:ring-0`}
+            onChange={(e) => setFilter({ ...filters, title: e.target.value })}
+          />
+          <ChevronDown className="inline text-white h-4 w-4" />
+        </div>
+        <Separator orientation="vertical" className="h-1/2" />
+        <SearchDropdown
+          items={City.getCitiesOfCountry("IN")}
+          placeholder={`eg. Ahmedabad`}
+          icon={
+            <MapPin className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
+          }
+          _onSelect={(city) =>
+            setFilter({ ...filters, location: city.toLowerCase() })
+          }
+          className={``}
+        />
+        <Separator orientation="vertical" className="h-1/2" />
+        <SearchDropdown
+          items={[
+            { id: "12", name: "Junior" },
+            { id: "23", name: "Senior" },
+            { id: "34", name: "Principal" },
+          ]}
+          placeholder={`eg. Junior`}
+          icon={
+            <Briefcase className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
+          }
+          className={``}
+          _onSelect={(e) =>
+            setFilter({ ...filters, experience: e.target.value })
+          }
+        />
+        <Separator orientation="vertical" className="h-1/2" />
+        <SearchDropdown
+          items={[
+            { id: "12", name: "Hourly" },
+            { id: "23", name: "Monthly" },
+            { id: "34", name: "Yearly" },
+          ]}
+          placeholder={`eg. Per Month`}
+          icon={<Search />}
+          className={``}
+          _onSelect={(e) => console.log(e)}
+        />
+        <Separator orientation="vertical" className="h-1/2" />
+        <div className="text-white">
+          <Label>Salary Range</Label>
+          <Slider
+            min={0}
+            max={1000000}
+            step={100000}
+            value={[filters.salaryMin || 0, filters.salaryMax || 1000000]}
+            onValueChange={(value) =>
+              setFilter({
+                ...filters,
+                salaryMin: value[0],
+                salaryMax: value[1],
+              })
             }
-            onSelect={(e) => console.log(e, "item selected")}
-            className={``}
           />
-          <Separator orientation="vertical" className="h-1/2" />
-          <SearchDropdown
-            items={[
-              { id: "12", name: "Junior" },
-              { id: "23", name: "Senior" },
-              { id: "34", name: "Principal" },
-            ]}
-            placeholder={`eg. Junior`}
-            icon={<Briefcase />}
-            className={``}
-            onSelect={(e) => console.log(e)}
-          />
-          <Separator orientation="vertical" className="h-1/2" />
-          <SearchDropdown
-            items={City.getCitiesOfCountry("IN")}
-            placeholder={`eg. Per Month`}
-            icon={<Search />}
-            className={``}
-            onSelect={(e) => console.log(e)}
-          />
-          <Separator orientation="vertical" className="h-1/2" />
-          <div className="w-auto">
-            <Label>Salary Range</Label>
-            <Slider
-              min={0}
-              max={100000}
-              step={1000}
-              value={[filters.minSalary, filters.maxSalary]}
-              onValueChange={handleSalaryChange}
-            />
-            <div className="flex justify-between text-sm mt-1">
-              <span>Rs.{filters.minSalary}</span>
-              <span>Rs.{filters.maxSalary}</span>
-            </div>
+          <div className="flex justify-between text-sm mt-1">
+            <span>Rs.{filters.minSalary}</span>
+            <span>Rs.{filters.maxSalary}</span>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    )
   );
 };
 

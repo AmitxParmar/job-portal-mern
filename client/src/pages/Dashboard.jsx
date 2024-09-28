@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const Dashboard = ({ userRole }) => {
   return (
     <>
-      <div className="flex flex-row justify-around h-[calc(100vh-18vh)] ">
+      <div className={``}>
         {userRole === "jobSeeker" ? (
           <JobListings />
         ) : (

@@ -24,23 +24,6 @@ const projectSchema = new Schema({
   repository: { type: String },
 });
 
-const profileSchema = new Schema({
-  profilePic: { type: String },
-  fullName: { type: String },
-  bio: { type: String },
-  contact: { type: String },
-  designation: { type: String },
-  address: { type: String },
-  skills: [{ type: String }],
-  profileLinks: {
-    linkedIn: { type: String },
-    github: { type: String },
-    other: {
-      platform: { type: String },
-      url: { type: String },
-    },
-  },
-});
 const userSchema = new Schema({
   email: { type: String, unique: true },
   password: { type: String },
@@ -53,8 +36,23 @@ const userSchema = new Schema({
   inviteCodeUsed: { type: Schema.Types.ObjectId, ref: "InviteCode" },
 
   // Reference to profile schema
-  profile: { type: Schema.Types.ObjectId, ref: "Profile" },
-
+  profilePic: { type: String },
+  fullName: { type: String },
+  bio: { type: String },
+  contact: { type: String },
+  contactEmail: { type: String },
+  designation: { type: String },
+  address: { type: String },
+  skills: [{ type: String }],
+  profileLinks: {
+    linkedIn: { type: String },
+    github: { type: String },
+    other: {
+      platform: { type: String },
+      url: { type: String },
+    },
+  },
+  company: { type: Schema.Types.ObjectId, ref: "Company" },
   // Array of references to project schema
   projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
 
@@ -71,7 +69,9 @@ const userSchema = new Schema({
 });
 
 // Match user entered password to hashed password in database
-userSchema.methods.matchPassword = async function (enteredPassword) {
+/* userSchema.methods.matchPassword = async function (enteredPassword) {
+  console.log("Entered password:", enteredPassword);
+  console.log("Stored password:", this.password);
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
@@ -84,7 +84,7 @@ userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
-export const Profile = model("Profile", profileSchema);
+ */
 export const Project = model("Project", projectSchema);
 export const Experience = model("Experience", experienceSchema);
 export const Education = model("Education", educationSchema);

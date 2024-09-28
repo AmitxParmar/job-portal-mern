@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import debounce from "lodash.debounce";
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value, delay = 300) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {

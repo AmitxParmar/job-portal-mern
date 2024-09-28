@@ -50,24 +50,36 @@ export const register = [
 ];
 
 export const login = [
-  authRateLimiter, // Optional middleware for rate-limiting
+  // authRateLimiter,
   async (req, res, next) => {
-    console.log("Login invoked");
+    console.log("Login attempt", {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     try {
       const { email, password } = req.body;
 
-      // Find user by email
-      const user = await User.findOne({ email });
-      if (!user) return next(createError(404, "User not found"));
-
-      // Check password
-      const isPasswordCorrect = await user.matchPassword(password);
-      if (!isPasswordCorrect) {
-        return next(createError(400, "Invalid email or password"));
+      // Validate input
+      if (!email || !password) {
+        return next(createError(400, "Email and password are required"));
       }
 
-      // Respond with user details (without token)
+      // Find user by email
+      const user = await User.findOne({ email }).select("+password");
+      if (!user) {
+        return next(createError(401, "Invalid credentials"));
+      }
+
+      // Check password
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return next(createError(401, "Invalid credentials"));
+      }
+
+      // Respond with user details (without sensitive information)
       res.status(200).json({
+        success: true,
         message: "Login successful",
         user: {
           id: user._id,
@@ -75,10 +87,11 @@ export const login = [
           role: user.role,
         },
       });
-      console.log("Login successful!");
+
+      console.log("Login successful for user:", user._id);
     } catch (error) {
-      console.error("Login error:", error.message);
-      next(createError(500, "Internal Server Error"));
+      console.error("Login error:", error);
+      next(createError(500, "An unexpected error occurred during login"));
     }
   },
 ];

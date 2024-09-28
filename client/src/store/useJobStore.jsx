@@ -1,44 +1,41 @@
 import create from "zustand";
 
-export const useJobStore = create((set) => ({
-  token: null,
+// Create Zustand store
+export const useFilterStore = create((set) => ({
   filters: {
+    company: "",
     title: "",
     location: "",
-    salaryRange: { min: "", max: "" },
-    skillsRequired: [],
-    status: "",
-    postedAfter: null,
-    postedBefore: null,
     jobType: "",
+    workFrom: "",
+    experience: "",
+    skills: "",
+    salaryMin: "",
+    salaryMax: "",
+    postedAfter: "",
+    status: "",
   },
-  jobs: [],
-
-  // Actions
-
-  setToken: (token) => set({ token }),
-  setFilters: (filters) =>
+  setFilter: (filterName, value) =>
     set((state) => ({
       filters: {
         ...state.filters,
-        ...filters,
+        [filterName]: value,
       },
     })),
-  setJobs: (jobs) => set({ jobs }),
-
   resetFilters: () =>
     set({
       filters: {
+        company: "",
         title: "",
         location: "",
-        salaryRange: { min: "", max: "" },
-        skillsRequired: [],
-        status: "",
-        postedAfter: null,
-        postedBefore: null,
         jobType: "",
+        workFrom: "",
+        experience: "",
+        skills: "",
+        salaryMin: "",
+        salaryMax: "",
+        postedAfter: "",
+        status: "",
       },
     }),
-
-  clearJobs: () => set({ jobs: [] }),
 }));

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/command";
 import { ChevronDown } from "lucide-react";
 
-const SearchDropdown = ({ placeholder, items, onSelect, icon }) => {
+const SearchDropdown = ({ placeholder, items, _onSelect, icon }) => {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -43,7 +43,7 @@ const SearchDropdown = ({ placeholder, items, onSelect, icon }) => {
           <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className=" p-0" align="start">
+      <PopoverContent className="p-0" align="start">
         <Command>
           <CommandInput
             placeholder={`Search ${placeholder.toLowerCase()}...`}
@@ -57,7 +57,7 @@ const SearchDropdown = ({ placeholder, items, onSelect, icon }) => {
                 <CommandItem
                   key={item.id}
                   onSelect={() => {
-                    onSelect(item);
+                    _onSelect(item.name);
                     setSearchValue(item.name); // Set the selected item name as the search value
                     setOpen(false);
                   }}
@@ -77,7 +77,7 @@ const SearchDropdown = ({ placeholder, items, onSelect, icon }) => {
 SearchDropdown.propTypes = {
   placeholder: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSelect: PropTypes.func.isRequired,
+  _onSelect: PropTypes.func.isRequired,
   icon: PropTypes.element,
 };
 

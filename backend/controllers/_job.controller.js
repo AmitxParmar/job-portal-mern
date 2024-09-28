@@ -5,7 +5,7 @@ import { createError } from "../utils/error.js";
 export const createJob = async (req, res, next) => {
   try {
     const {
-      employer = "66ccb1ecb5e4de35acdbb80d", // This is assumed to be the employer ID
+      employer,
       title,
       description,
       location,
@@ -46,6 +46,12 @@ export const createJob = async (req, res, next) => {
     });
 
     const savedJob = await newJob.save();
+
+    // Update the company's jobs array
+    await Company.findByIdAndUpdate(employer, {
+      $push: { jobs: savedJob._id },
+    });
+
     res.status(201).json(savedJob);
   } catch (error) {
     next(error);
@@ -67,13 +73,13 @@ export const searchJobs = async (req, res, next) => {
       jobType,
       employerName, // New filter to search by employer's full name
       employerSkills, // New filter to search by employer's skills
-    } = req.query;
-
+    } = req.params;
+    console.log(req.params);
     const filter = {};
 
     // Job-specific filters
     if (title) filter.title = { $regex: title, $options: "i" };
-    if (location) filter.location = { $regex: location, $options: "i" };
+    if (location) filter.location.city = { $regex: location, $options: "i" }; // Search by city
     if (minSalary) filter["salaryRange.min"] = { $gte: Number(minSalary) };
     if (maxSalary) filter["salaryRange.max"] = { $lte: Number(maxSalary) };
     if (skillsRequired)

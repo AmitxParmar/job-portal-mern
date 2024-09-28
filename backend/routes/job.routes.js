@@ -1,75 +1,15 @@
 import express from "express";
-import {
-  createJob,
-  getJobById,
-  updateJob,
-  deleteJob,
-  bookmarkJob,
-  getBookmarkedJobs,
-  applyForJob,
-  getJobApplications,
-  getAllJobListingsByEmployer,
-  searchJobs,
-} from "../controllers/job.controller.js";
-/* import { verifyToken, verifyRole } from "../middleware/authMiddleware.js"; */
+import { jobControllers } from "../controllers/user/job.controller.js";
+// import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Route to create a new job (employer only)
-router.post("/create", /* verifyToken, verifyRole("employer"), */ createJob);
-
-// Route to get all available jobs (public)
-router.get("/", searchJobs);
-
-// Route to get a single job by its ID (public)
-router.get("/:id", getJobById);
-
-// Route to update a job (employer only)
-router.put("/:id/update", /* verifyToken, verifyRole("employer"), */ updateJob);
-
-// Route to delete a job (employer only)
-router.delete(
-  "/:id/delete",
-  /* verifyToken,
-  verifyRole("employer"), */
-  deleteJob
-);
-
-// Route to bookmark a job (job seeker only)
-router.post(
-  "/:id/bookmark-job",
-  /* verifyToken,
-  verifyRole("jobSeeker"), */
-  bookmarkJob
-);
-
-// Get bookmarked jobs
-router.get("/bookmarks", getBookmarkedJobs);
-
-// Route to unbookmark a job (job seeker only)
-//router.post(
-// "/:id/unbookmark",
-//verifyToken,
-//  verifyRole("jobSeeker"),
-// unbookmarkJob
-//);
-
-// Route to apply for a job (job seeker only)
-router.post(
-  "/:id/apply",
-  /* verifyToken,
-  verifyRole("jobSeeker"), */
-  applyForJob
-);
-
-// Route to get all applications for a job (employer only)
-router.get(
-  "/:id/applications",
-  /* verifyToken,
-  verifyRole("employer"), */
-  getJobApplications
-);
-// Route to get all job listings by a specific employer
-router.get("/employer/:id/jobs", getAllJobListingsByEmployer);
+router.post("/", jobControllers.createJob);
+router.get("/", jobControllers.getAllJobs);
+router.get("/:id", jobControllers.getJobById);
+router.put("/:id", jobControllers.updateJob);
+router.delete("/:id", jobControllers.deleteJob);
+router.post("/:id/apply", jobControllers.applyForJob);
+router.get("/recruiter/jobs", jobControllers.getRecruiterJobs);
 
 export default router;

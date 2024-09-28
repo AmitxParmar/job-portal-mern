@@ -1,5 +1,5 @@
+import moment from "moment";
 import PropTypes from "prop-types";
-import { Bookmark } from "lucide-react";
 import {
   Drawer,
   DrawerClose,
@@ -10,13 +10,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Clock } from "lucide-react";
-import { MapPin } from "lucide-react";
-import { BookmarkCheck } from "lucide-react";
-import moment from "moment";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BookmarkIcon } from "lucide-react";
+import { Bookmark, BookmarkIcon, Clock, MapPin } from "lucide-react";
 
 const JobCard = ({
   job: {
@@ -25,10 +21,8 @@ const JobCard = ({
     description,
     location,
     salaryRange,
-    tags,
     frequency,
     skillsRequired,
-    applicants,
     status,
     postedAt,
     combinedField,
@@ -46,7 +40,7 @@ const JobCard = ({
 
   return (
     <>
-      <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-xl transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
+      <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
         <div className="bg-cyan-200 border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
           <div className="flex flex-row justify-between items-center">
             <span className="text-sm rounded-full bg-white text-center align-center w-fit flex flex-row items-center py-2 px-3 font-bold text-black">
@@ -71,7 +65,7 @@ const JobCard = ({
 
           <div className="flex h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 py-4 font-grotesk font-bold">
             {skillsRequired &&
-              Object.values(combinedField).map((skill) => (
+              Object.values(combinedField)?.map((skill) => (
                 <Badge
                   key={skill}
                   className="px-3 !font-grotesk font-bold  py-2 border border-black h-fit shadow-sm rounded-full tracking-wider leading-none text-xs max-w-[40%] truncate overflow-hidden whitespace-nowrap"
@@ -84,11 +78,11 @@ const JobCard = ({
         <div className="px-4 items-center flex flex-row justify-between">
           <div className="grid grid-flow-row leading-none truncate">
             <div className="font-bold h-fit text-gray-700">
-              {formatSalary(salaryRange.min)} - {formatSalary(salaryRange.max)}{" "}
-              / {frequency}
+              {formatSalary(salaryRange?.min)} -{" "}
+              {formatSalary(salaryRange?.max)} / {frequency}
             </div>
             <div className="text-gray-400 h-fit font-bold  text-sm">
-              {location.city}, {location.state}
+              {location?.city}, {location?.state}
             </div>
           </div>
 
@@ -125,11 +119,11 @@ const JobCard = ({
                               <MapPin />{" "}
                             </span>
                             <span>
-                              {location.city},{location.state}
+                              {location?.city},{location?.state}
                             </span>
                           </div>
                           <div className="flex flex-wrap gap-1">
-                            {skillsRequired.map((skill) => (
+                            {skillsRequired?.map((skill) => (
                               <Badge
                                 key={skill}
                                 className=" rounded-full text-xs"
@@ -196,10 +190,10 @@ JobCard.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string),
     frequency: PropTypes.string.isRequired,
     skillsRequired: PropTypes.arrayOf(PropTypes.string),
-    applicants: PropTypes.number,
+
     status: PropTypes.string,
     postedAt: PropTypes.string.isRequired,
-    combinedField: PropTypes.string.isRequired,
+    combinedField: PropTypes.shape({}).isRequired,
   }).isRequired,
 };
 

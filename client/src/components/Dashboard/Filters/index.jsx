@@ -1,76 +1,40 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-import { useState } from "react";
+import { useFilters } from "@/hooks/useFilters";
 
 const Filters = () => {
-  const [filters, setFilters] = useState({
-    title: "",
-    location: "",
-    minSalary: 0,
-    maxSalary: 1000000,
-    skillsRequired: [],
-    status: "all",
-    postedAfter: null,
-    postedBefore: null,
-  });
-
-  const handleInputChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
-  };
+  const { filters, setFilter, clearFilters } = useFilters();
 
   const handleSkillChange = (skill) => {
-    const updatedSkills = filters.skillsRequired.includes(skill)
-      ? filters.skillsRequired.filter((s) => s !== skill)
-      : [...filters.skillsRequired, skill];
-    setFilters({ ...filters, skillsRequired: updatedSkills });
+    const updatedSkills = filters?.skills?.includes(skill)
+      ? filters?.skills.filters((s) => s !== skill)
+      : [...filters.skills, skill];
+    setFilter({ ...filters, skills: updatedSkills });
   };
 
   const handleStatusChange = (value) => {
-    setFilters({ ...filters, status: value });
+    setFilter({ ...filters, status: value });
   };
 
   const handleDateChange = (date, type) => {
-    setFilters({ ...filters, [type]: date });
+    console.log("date", type, date);
+    setFilter({ ...filters, [type]: date });
   };
 
-  const handleApplyFilters = () => {
-    onFilterChange(filters);
-  };
+  const handleApplyFilters = () => {};
+
   function onFilterChange() {
     //debounce and send to the state manager to the central store.
   }
+
   return (
     <>
       <h2 className="text-xl font-semibold mb-4">Filters</h2>
 
       <div className="space-y-4">
-        <div>
-          <Label htmlFor="title">Job Title</Label>
-          <Input
-            id="title"
-            name="title"
-            value={filters.title}
-            onChange={handleInputChange}
-            placeholder="Search job titles"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="location">Location</Label>
-          <Input
-            id="location"
-            name="location"
-            value={filters.location}
-            onChange={handleInputChange}
-            placeholder="City, Country"
-          />
-        </div>
-
         <div>
           <Label>Skills Required</Label>
           <div className="space-y-2">
@@ -79,7 +43,7 @@ const Filters = () => {
                 <div key={skill} className="flex items-center">
                   <Checkbox
                     id={skill}
-                    checked={filters.skillsRequired.includes(skill)}
+                    checked={filters?.skills?.includes(skill)}
                     onCheckedChange={() => handleSkillChange(skill)}
                   />
                   <label htmlFor={skill} className="ml-2 text-sm">
@@ -125,6 +89,9 @@ const Filters = () => {
           />
         </div>
 
+        <Button onClick={() => clearFilters()} className="w-full">
+          Clear Filters
+        </Button>
         <Button onClick={handleApplyFilters} className="w-full">
           Apply Filters
         </Button>

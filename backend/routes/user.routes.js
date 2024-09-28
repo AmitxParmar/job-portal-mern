@@ -2,10 +2,11 @@ import express from "express";
 import {
   getUserProfile,
   updateUserAuthProfile,
+  updateProfile,
   deleteUserAccount,
   changePassword,
 } from "../controllers/user/user.controller.js";
-import { createOrUpdateProfile } from "../controllers/user/profile.controller.js";
+
 import {
   /* getEducation, */
   addEducation,
@@ -29,13 +30,14 @@ const router = express.Router();
 // User routes
 router.get("/:userId", getUserProfile);
 router.put("/:userId", updateUserAuthProfile);
+router.put("/:userId", updateProfile);
 router.delete("/:userId", deleteUserAccount);
 router.put("/:userId", changePassword);
 
-// Profile routes
+/* // Profile routes
 router.get("/:userId/profile", createOrUpdateProfile);
 router.put("/:userId/profile", createOrUpdateProfile);
-
+ */
 // Education routes
 /* router.get("/:userId/education", getEducation); */
 router.post("/:userId/education", addEducation);

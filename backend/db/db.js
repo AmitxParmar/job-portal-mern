@@ -1,4 +1,6 @@
 import { mongoose } from "mongoose";
+mongoose.set("debug", true);
+mongoose.set("strictPopulate", false);
 
 const connectDB = async () => {
   mongoose.set("debug", true);

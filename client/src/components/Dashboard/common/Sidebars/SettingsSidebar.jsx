@@ -1,12 +1,14 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { profileMenu } from "@/constants.jsx";
+import { profileMenu } from "@/constants/constants.jsx";
 import PostAJobButton from "../../EmployerComponents/PostAJobButton";
+import { Home } from "lucide-react";
 
 const SettingsSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Added useLocation to fix the disallowed MIME type issue
+  let role = "employer";
 
   return (
     <>
@@ -34,6 +36,23 @@ const SettingsSidebar = () => {
         <p className="text-center text-xl font-bold">John Doe</p>
       </div> */}
       <div className="font-grotesk font-semibold overflow-hidden rounded-xl flex flex-col space-y-2 py-6 mt-4 px-1">
+        {role === "employer" && (
+          <Link
+            to={"/dashboard"}
+            className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center min-w-max border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
+              location.pathname === "/dashboard"
+                ? "border-black invert scale-15"
+                : ""
+            }`}
+          >
+            <span className="flex flex-row items-center  p-1">
+              <span className="mr-3 ">
+                <Home />
+              </span>
+              <span className="">Dashboard</span>
+            </span>
+          </Link>
+        )}
         {profileMenu.map((item) => (
           <Link
             key={item.name}

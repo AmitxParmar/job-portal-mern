@@ -5,24 +5,22 @@ import Dashboard from "./pages/Dashboard";
 import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
 import Profile from "./components/Dashboard/Settings/Profile";
 import Settings from "./components/Dashboard/Settings";
-import Layout from "./components/Dashboard/common/Layout";
+import Layout from "./components/Dashboard/common/Layouts/Layout";
 
 import Bookmarks from "./components/Dashboard/Settings/Bookmarks";
 
-import { loginUser } from "./services/authServices";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
+import Navbar from "./components/Dashboard/common/Navbar";
 
 function App() {
-  /*  useEffect(() => {
-    const login = async () => {
-      return await loginUser("amitparmar901@gmail.com", "1212");
-    };
-    const { data } = login();
-    console.log("loginnnnnnnnnnnnn", data);
-  }, []); // This will run only once on load */
-  const role = "employer"; // jobSeeker or employer
+  const role = "jobSeeker"; // jobSeeker or employer
+  const isAuth = false;
   return (
     <Router>
       <div className="">
+        <Navbar isAuth={isAuth} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -45,6 +43,22 @@ function App() {
             <Route path="applied-jobs" element={<AppliedJobs />} />
             <Route path="bookmarks" element={<Bookmarks />} />
           </Route>
+          <Route
+            path="/login"
+            element={
+              <LoginRegisterLayout>
+                <Login />
+              </LoginRegisterLayout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <LoginRegisterLayout>
+                <Register />
+              </LoginRegisterLayout>
+            }
+          />
 
           <Route
             path="*"

@@ -8,7 +8,7 @@ import { Autoplay, EffectFade } from "swiper";
 import "swiper/css";
 import "swiper/css/bundle";
 import { memo } from "react";
-import { achievements } from "@/constants";
+import { achievements } from "@/constants/constants";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

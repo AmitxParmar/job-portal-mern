@@ -4,7 +4,9 @@ const BASE_URL = "/jobs";
 
 // Fetch all jobs
 export const fetchJobs = async (filters) => {
-  const { data } = await axiosInstance.get(`${BASE_URL}`);
+  const { data } = await axiosInstance.get(`${BASE_URL}`, {
+    params: filters,
+  });
   return data;
 };
 

@@ -9,7 +9,7 @@ const Sidebars = ({ userRole }) => {
 
   return (
     <>
-      <Container className={`sticky left-0 bg-card w-fit`}>
+      <Container className={`sticky ml-4 left-0 bg-card w-56`}>
         {pathname.startsWith("/settings") || userRole === "employer" ? (
           <SettingsSidebar />
         ) : userRole === "jobSeeker" ? (

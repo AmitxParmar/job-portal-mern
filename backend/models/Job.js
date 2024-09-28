@@ -1,23 +1,23 @@
 import { Schema, model } from "mongoose";
 
-const locationSchema = new Schema(
-  {
-    city: { type: String, required: true },
-    state: { type: String },
-    country: { type: String, required: true },
-  },
-  { _id: true }
-); // This ensures each location has its own unique ID
-
 const jobSchema = new Schema({
-  employer: {
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "Company",
+    required: true,
+  },
+  postedBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   title: { type: String, required: true },
   description: { type: String, required: true },
-  location: { type: locationSchema, required: true },
+  location: {
+    city: { type: String, required: true },
+    state: { type: String },
+    country: { type: String, required: true },
+  },
   salaryRange: {
     min: { type: String },
     max: { type: String },
