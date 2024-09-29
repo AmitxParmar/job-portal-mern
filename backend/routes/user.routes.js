@@ -1,30 +1,27 @@
-import express from "express";
 import {
-  getUserProfile,
-  updateUserAuthProfile,
-  updateProfile,
-  deleteUserAccount,
-  changePassword,
-} from "../controllers/user/user.controller.js";
-
-import {
-  /* getEducation, */
   addEducation,
-  updateEducation,
   removeEducation,
+  updateEducation,
 } from "../controllers/user/education.controller.js";
 import {
-  /* getExperience, */
   addExperience,
-  updateExperience,
   removeExperience,
+  updateExperience,
 } from "../controllers/user/experience.controller.js";
 import {
-  /* getProjects, */
   addProject,
-  updateProject,
   removeProject,
+  updateProject,
 } from "../controllers/user/projects.controller.js";
+import {
+  changePassword,
+  deleteUserAccount,
+  getUserProfile,
+  updateProfile,
+  updateUserAuthProfile,
+} from "../controllers/user/user.controller.js";
+
+import express from "express";
 
 const router = express.Router();
 // User routes
@@ -40,6 +37,7 @@ router.put("/:userId/profile", createOrUpdateProfile);
  */
 // Education routes
 /* router.get("/:userId/education", getEducation); */
+
 router.post("/:userId/education", addEducation);
 router.put("/:userId/education/:eduId", updateEducation);
 router.delete("/:userId/education/:eduId", removeEducation);

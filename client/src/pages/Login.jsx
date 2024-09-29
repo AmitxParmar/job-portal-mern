@@ -13,6 +13,9 @@ import { useForm } from "react-hook-form";
 import { loginUser } from "@/services/authServices";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { LogIn } from "lucide-react";
+import { LogInIcon } from "lucide-react";
+import { KeyRound } from "lucide-react";
 
 const Login = () => {
   const form = useForm();
@@ -33,8 +36,10 @@ const Login = () => {
   return (
     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-grotesk font-semibold tracking-tight">
-          Login to account
+        <h1 className="text-2xl flex items-center justify-center gap-4 font-grotesk font-semibold tracking-tight">
+          <span>Login to account </span>
+          <KeyRound />
+          {/* <LogInIcon /> */}
         </h1>
         <p className="text-sm font-grotesk font-medium tracking-normal text-muted-foreground">
           Enter your email and password below to login to your account

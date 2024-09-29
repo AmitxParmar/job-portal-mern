@@ -1,8 +1,7 @@
-import Resume from "../common/Resume";
-
-import { useQuery } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
+import Resume from "../common/Resume";
 import { fetchUserById } from "@/services/userServices";
+import { useQuery } from "@tanstack/react-query";
 
 const Settings = () => {
   const userId = "66ccb1ecb5e4de35acdbb80d";
@@ -17,18 +16,12 @@ const Settings = () => {
 
   console.log("user fetched Settings.jsx", user);
 
-  if (isLoading)
-    return (
-      <div className="flex flex-row justify-center h-full py-4 px-5">
-        Loading...
-      </div>
-    );
-  if (error) return <div>Error fetching user data</div>;
+  if (error) return <div className="text-5xl text-red-500">Error:{error}</div>;
 
   return (
     <div className="flex flex-row justify-center h-full py-4">
-      {!isLoading && <Outlet context={{ user }} />}
-      <Resume user={user} />
+      <Outlet context={{ user, isLoading }} />
+      {!isLoading && <Resume user={user} />}
     </div>
   );
 };

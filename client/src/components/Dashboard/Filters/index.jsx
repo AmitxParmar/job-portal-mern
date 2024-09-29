@@ -1,8 +1,10 @@
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Trash } from "lucide-react";
 import { useFilters } from "@/hooks/useFilters";
 
 const Filters = () => {
@@ -31,7 +33,6 @@ const Filters = () => {
   return (
     <>
       <h2 className="text-xl font-semibold mb-4">Filters</h2>
-
       <div className="space-y-4">
         <div>
           <Label>Skills Required</Label>
@@ -56,10 +57,6 @@ const Filters = () => {
         <div>
           <Label>Status</Label>
           <RadioGroup value={filters.status} onValueChange={handleStatusChange}>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="all" id="all" />
-              <Label htmlFor="all">All</Label>
-            </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="open" id="open" />
               <Label htmlFor="open">Open</Label>
@@ -87,10 +84,16 @@ const Filters = () => {
           />
         </div>
 
-        <Button onClick={() => clearFilters()} className="w-full">
-          Clear Filters
+        <Button
+          onClick={() => clearFilters()}
+          className="w-full group flex justify-around items-center rounded-3xl"
+        >
+          <span>Clear Filters</span>
+          <span className="group-hover:animate-bounce">
+            <Trash />
+          </span>
         </Button>
-        <Button onClick={handleApplyFilters} className="w-full">
+        <Button onClick={handleApplyFilters} className="w-full rounded-3xl">
           Apply Filters
         </Button>
       </div>

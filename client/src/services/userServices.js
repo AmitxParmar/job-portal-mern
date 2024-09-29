@@ -42,14 +42,14 @@ export const fetchUserProfile = async (userId) => {
 };
 
 // Update user profile
-export const updateUserProfile = async (userId, profileData) => {
+/* export const updateUserProfile = async (userId, profileData) => {
   const { data } = await axiosInstance.put(
     `${BASE_URL}/${userId}/profile`,
     profileData
   );
   return data;
 };
-
+ */
 // Add education
 export const addEducation = async (userId, educationData) => {
   const { data } = await axiosInstance.post(

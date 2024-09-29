@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import HeaderFilter from "./HeaderFilter";
 import PropTypes from "prop-types";
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 
-const Navbar = ({ userRole, isAuth }) => {
+const Navbar = ({ role, isAuth }) => {
   const notification = false;
 
   return (
@@ -20,7 +21,7 @@ const Navbar = ({ userRole, isAuth }) => {
           >
             HIRECROWD
           </Link>
-          {userRole === "jobSeeker" && (
+          {role === "jobSeeker" && (
             <nav className="space-x-4 font-semibold font-grotesk">
               <Link to="/dashboard" className="">
                 Find job
@@ -70,14 +71,15 @@ const Navbar = ({ userRole, isAuth }) => {
       </header>
       <Separator className="bg-gray-600" />
       <div className="sticky top-[64px] z-40 bg-foreground">
-        <HeaderFilter userRole={userRole} />
+        <HeaderFilter role={role} />
       </div>
     </div>
   );
 };
 
 Navbar.propTypes = {
-  userRole: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
   isAuth: PropTypes.bool.isRequired,
 };
-export default Navbar;
+
+export default memo(Navbar);

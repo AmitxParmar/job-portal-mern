@@ -1,13 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Container from "../../common/Container";
-import ProfessionalDetails from "./ProfessionalDetails";
-import { useOutletContext } from "react-router-dom";
-import PersonalInfo from "./PersonalInfo";
-import { UserRoundPen } from "lucide-react";
+
 import { BookOpen } from "lucide-react";
+import Container from "../../common/Container";
+import PersonalInfo from "./PersonalInfo";
+import ProfessionalDetails from "./ProfessionalDetails";
+import { UserRoundPen } from "lucide-react";
+import { useOutletContext } from "react-router-dom";
 
 const Profile = () => {
-  const { user } = useOutletContext();
+  const { user, isLoading } = useOutletContext();
 
   return (
     <Tabs
@@ -35,7 +36,7 @@ const Profile = () => {
         className={`w-full max-h-[90%] bg-background max-w-screen-2xl`}
       >
         <TabsContent className="" value="personal-details">
-          <PersonalInfo user={user} />
+          <PersonalInfo user={user} isLoading={isLoading} />
         </TabsContent>
         <TabsContent className="" value="professional-details">
           <ProfessionalDetails />

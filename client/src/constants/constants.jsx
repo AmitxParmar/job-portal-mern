@@ -1,6 +1,10 @@
-import { Briefcase } from "lucide-react";
 import { Bookmark } from "lucide-react";
+import { Briefcase } from "lucide-react";
+import { City } from "country-state-city";
 import { User } from "lucide-react";
+
+// cities constants array of object
+export const cities = City.getCitiesOfCountry("IN");
 
 const profileMenu = [
   {

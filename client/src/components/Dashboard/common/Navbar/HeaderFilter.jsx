@@ -1,37 +1,47 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { City } from "country-state-city";
+import {
+  Briefcase,
+  CalendarDays,
+  ChevronDown,
+  MapPin,
+  Search,
+} from "lucide-react";
+import { lazy, memo } from "react";
 
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-
-import SearchDropdown from "@/components/SearchDropdown";
-import { MapPin, Search, ChevronDown, Briefcase } from "lucide-react";
-import { useFilters } from "@/hooks/useFilters";
+import { Label } from "@/components/ui/label";
 import PropTypes from "prop-types";
+import { Slider } from "@/components/ui/slider";
+import { cities } from "@/constants/constants";
+import { useFilters } from "@/hooks/useFilters";
+import { useLocation } from "react-router-dom";
 
-const HeaderFilter = ({ userRole }) => {
+const SearchDropdown = lazy(() =>
+  import("../../../../components/SearchDropdown")
+);
+
+const DropdownList = lazy(() => import("../DropdownList"));
+
+const HeaderFilter = ({ role }) => {
   const { filters, setFilter } = useFilters();
   const { pathname } = useLocation(); // Get pathname from useLocation
 
   return (
     pathname === "/dashboard" &&
-    userRole !== "employer" && (
-      <div className="bg-foreground lg:min-h-24 lg:flex hidden lg:flex-row lg:justify-between px-4 items-center">
+    role !== "employer" && (
+      <div className="bg-foreground px-4 lg:min-h-24 lg:grid hidden lg:grid-flow-col items-center">
+        {/*  */}
         <div className="grid grid-flow-col-dense items-center">
           <Search className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
           <Input
             placeholder={`eg. Full-stack Developer`}
-            className={`w-fit text-background bg-transparent placeholder:text-background/50 placeholder:font-semibold placeholder:text-lg border-none focus-visible:ring-0`}
+            className={`w-full text-background bg-transparent placeholder:text-background/50 placeholder:font-semibold placeholder:text-lg border-none focus-visible:ring-0`}
             onChange={(e) => setFilter({ ...filters, title: e.target.value })}
           />
           <ChevronDown className="inline text-white h-4 w-4" />
         </div>
-        <Separator orientation="vertical" className="h-1/2" />
+        {/* Cities Filter */}
         <SearchDropdown
-          items={City.getCitiesOfCountry("IN")}
+          items={cities}
           placeholder={`eg. Ahmedabad`}
           icon={
             <MapPin className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
@@ -41,41 +51,33 @@ const HeaderFilter = ({ userRole }) => {
           }
           className={``}
         />
-        <Separator orientation="vertical" className="h-1/2" />
-        <SearchDropdown
-          items={[
-            { id: "12", name: "Junior" },
-            { id: "23", name: "Senior" },
-            { id: "34", name: "Principal" },
-          ]}
+        <DropdownList
+          items={["full time", "part time", "internship"]}
           placeholder={`eg. Junior`}
+          name={`jobType`}
           icon={
-            <Briefcase className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
+            <Briefcase className="text-white bg-black h-10 w-10 rounded-full border border-white p-1.5" />
           }
-          className={``}
-          _onSelect={(e) =>
-            setFilter({ ...filters, experience: e.target.value })
-          }
+          className={`bg-transparent border-0 text-background/50 text-lg`}
+          _onSelect={(experience) => setFilter({ ...filters, experience })}
         />
-        <Separator orientation="vertical" className="h-1/2" />
-        <SearchDropdown
-          items={[
-            { id: "12", name: "Hourly" },
-            { id: "23", name: "Monthly" },
-            { id: "34", name: "Yearly" },
-          ]}
+        <DropdownList
+          name={`frequency`}
+          items={["hourly", "monthly", "yearly"]}
           placeholder={`eg. Per Month`}
-          icon={<Search />}
-          className={``}
-          _onSelect={(e) => console.log(e)}
+          icon={
+            <CalendarDays className="text-white bg-black h-10 w-10 rounded-full border border-white p-1.5" />
+          }
+          className={`bg-transparent border-0 text-background/50 text-lg`}
+          _onSelect={(frequency) => setFilter({ ...filters, frequency })}
         />
-        <Separator orientation="vertical" className="h-1/2" />
-        <div className="text-white">
+        <div className="w-full text-white">
           <Label>Salary Range</Label>
           <Slider
+            className=""
             min={0}
             max={1000000}
-            step={100000}
+            step={1000}
             value={[filters.salaryMin || 0, filters.salaryMax || 1000000]}
             onValueChange={(value) =>
               setFilter({
@@ -86,8 +88,8 @@ const HeaderFilter = ({ userRole }) => {
             }
           />
           <div className="flex justify-between text-sm mt-1">
-            <span>Rs.{filters.minSalary}</span>
-            <span>Rs.{filters.maxSalary}</span>
+            <span>Rs.{filters.salaryMin || 0}</span>
+            <span>Rs.{filters.salaryMax || 1000000}</span>
           </div>
         </div>
       </div>
@@ -96,7 +98,7 @@ const HeaderFilter = ({ userRole }) => {
 };
 
 HeaderFilter.propTypes = {
-  userRole: PropTypes.oneOf(["employer", "jobSeeker"]).isRequired,
+  role: PropTypes.oneOf(["employer", "jobSeeker"]).isRequired,
 };
 
-export default HeaderFilter;
+export default memo(HeaderFilter);

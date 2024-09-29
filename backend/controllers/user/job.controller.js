@@ -1,6 +1,6 @@
+import { Company } from "../../models/Company.js";
 import Job from "../../models/Job.js";
 import { User } from "../../models/User.js";
-import { Company } from "../../models/Company.js";
 import { createError } from "../../utils/error.js";
 
 export const jobControllers = {
@@ -46,10 +46,12 @@ export const jobControllers = {
         jobType,
         workFrom,
         experience,
+        frequency,
         skills,
         salaryMin,
         salaryMax,
         postedAfter,
+        postedBefore,
         status,
         page = 1,
         limit = 10,
@@ -68,6 +70,7 @@ export const jobControllers = {
       if (jobType) filter.jobType = jobType;
       if (workFrom) filter.workFrom = workFrom;
       if (experience) filter.experience = experience;
+      if (frequency) filter.frequency = frequency;
       if (skills && skills.length > 0) {
         filter.skillsRequired = {
           $in: skills.split(",").map((skill) => new RegExp(skill.trim(), "i")),
@@ -76,6 +79,7 @@ export const jobControllers = {
       if (salaryMin) filter["salaryRange.min"] = { $gte: parseInt(salaryMin) };
       if (salaryMax) filter["salaryRange.max"] = { $lte: parseInt(salaryMax) };
       if (postedAfter) filter.postedAt = { $gte: new Date(postedAfter) };
+      if (postedBefore) filter.postedAt = { $lte: new Date(postedBefore) };
       if (status) filter.status = status;
 
       console.log("Constructed filter:", JSON.stringify(filter, null, 2));
@@ -114,10 +118,10 @@ export const jobControllers = {
         },
       }));
       res.status(200).json({
-        jobs,
         currentPage: parseInt(page),
         totalPages: Math.ceil(total / limit),
         totalJobs: total,
+        jobs,
       });
     } catch (err) {
       console.error("Error in getAllJobs:", err);

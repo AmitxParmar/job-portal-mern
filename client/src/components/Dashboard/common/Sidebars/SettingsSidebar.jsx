@@ -5,10 +5,9 @@ import { profileMenu } from "@/constants/constants.jsx";
 import PostAJobButton from "../../EmployerComponents/PostAJobButton";
 import { Home } from "lucide-react";
 
-const SettingsSidebar = () => {
+const SettingsSidebar = ({ role }) => {
   const navigate = useNavigate();
   const location = useLocation(); // Added useLocation to fix the disallowed MIME type issue
-  let role = "employer";
 
   return (
     <>

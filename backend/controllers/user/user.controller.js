@@ -4,12 +4,12 @@ import { createError } from "../../utils/error.js";
 // Get User Profile
 export const getUserProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.userId)
       .select("-password")
-      .populate("profile")
       .populate("projects")
       .populate("experience")
       .populate("education");
+    console.log(user);
     if (!user) return next(createError(404, "User not found!"));
 
     res.status(200).json(user);
@@ -28,13 +28,21 @@ export const updateUserAuthProfile = async (req, res, next) => {
       email: req.body.email || user.email,
       role: req.body.role || user.role,
       isVerified: req.body.isVerified || user.isVerified,
-      inviteCodeUsed: req.body.inviteUsed || user.inviteCodeUsed,
+      inviteCodeUsed: req.body.inviteCodeUsed || user.inviteCodeUsed,
+      profilePic: req.body.profilePic || user.profilePic,
+      fullName: req.body.fullName || user.fullName,
+      bio: req.body.bio || user.bio,
+      contact: req.body.contact || user.contact,
+      contactEmail: req.body.contactEmail || user.contactEmail,
+      designation: req.body.designation || user.designation,
+      address: req.body.address || user.address,
+      skills: req.body.skills || user.skills,
+      profileLinks: req.body.profileLinks || user.profileLinks,
+      company: req.body.company || user.company,
     };
 
-    user.email = updatedData.email;
-    user.role = updatedData.role;
-    user.isVerified = updatedData.isVerified;
-    user.inviteCodeUsed = updatedData.inviteCodeUsed;
+    // Update user fields
+    Object.assign(user, updatedData);
     const updatedUser = await user.save();
 
     // Remove sensitive information before sending response
@@ -54,19 +62,23 @@ export const updateProfile = async (req, res, next) => {
     if (!user) return next(createError(404, "User not found!"));
 
     // Update user profile fields
-    user.profilePic = req.body.profilePic || user.profilePic;
-    user.fullName = req.body.fullName || user.fullName;
-    user.bio = req.body.bio || user.bio;
-    user.contact = req.body.contact || user.contact;
-    user.contactEmail = req.body.contactEmail || user.contactEmail;
-    user.designation = req.body.designation || user.designation;
-    user.address = req.body.address || user.address;
-    user.skills = req.body.skills || user.skills;
-    user.profileLinks = req.body.profileLinks || user.profileLinks;
+    const updatedData = {
+      profilePic: req.body.profilePic || user.profilePic,
+      fullName: req.body.fullName || user.fullName,
+      bio: req.body.bio || user.bio,
+      contact: req.body.contact || user.contact,
+      contactEmail: req.body.contactEmail || user.contactEmail,
+      designation: req.body.designation || user.designation,
+      address: req.body.address || user.address,
+      skills: req.body.skills || user.skills,
+      profileLinks: req.body.profileLinks || user.profileLinks,
+    };
 
-    await user.save();
+    // Update user fields
+    Object.assign(user, updatedData);
+    const updatedUser = await user.save();
 
-    res.status(200).json(user);
+    res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
   }

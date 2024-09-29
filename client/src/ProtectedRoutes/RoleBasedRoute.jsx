@@ -2,9 +2,9 @@ import PropTypes from "prop-types"; // Import PropTypes
 import { Navigate, Outlet } from "react-router-dom";
 
 const RoleBasedRoute = ({ allowedRoles, fallbackPath }) => {
-  const userRole = "employer";
+  const role = "employer";
 
-  if (allowedRoles.includes(userRole)) {
+  if (allowedRoles.includes(role)) {
     return <Outlet />;
   } else {
     return <Navigate to={fallbackPath} replace />;

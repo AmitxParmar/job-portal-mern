@@ -1,5 +1,4 @@
-import moment from "moment";
-import PropTypes from "prop-types";
+import { Bookmark, BookmarkIcon, Clock, MapPin } from "lucide-react";
 import {
   Drawer,
   DrawerClose,
@@ -10,9 +9,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+
 import { Badge } from "@/components/ui/badge";
-import { Bookmark, BookmarkIcon, Clock, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import PropTypes from "prop-types";
+import { memo } from "react";
+import moment from "moment";
 
 const JobCard = ({
   job: {
@@ -43,7 +45,7 @@ const JobCard = ({
       <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
         <div className="bg-cyan-200 border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
           <div className="flex flex-row justify-between items-center">
-            <span className="text-sm rounded-full bg-white text-center align-center w-fit flex flex-row items-center py-2 px-3 font-bold text-black">
+            <span className="text-sm rounded-full bg-white/70 border-border shadow-xl text-center align-center w-fit flex flex-row items-center py-2 px-3 font-bold text-black">
               <span>
                 <Clock className="w-4 h-4 align-baseline mr-2" />
               </span>
@@ -197,4 +199,4 @@ JobCard.propTypes = {
   }).isRequired,
 };
 
-export default JobCard;
+export default memo(JobCard);

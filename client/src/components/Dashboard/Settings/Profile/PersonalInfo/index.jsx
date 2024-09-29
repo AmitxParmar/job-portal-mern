@@ -1,39 +1,39 @@
-import { useState, useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import PropTypes from "prop-types";
-import { Separator } from "@/components/ui/separator";
+import { useEffect, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import PersonalInfoForm from "./PersonalInfoForm";
+import PropTypes from "prop-types";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { updateUser } from "@/services/userServices";
+import { useForm } from "react-hook-form";
 
-const PersonalInfo = ({ user }) => {
-  const { profile } = user;
+const PersonalInfo = ({ user, isLoading }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
 
   const form = useForm({
     defaultValues: {
-      fullName: profile?.fullName || "",
-      bio: profile?.bio || "",
-      designation: profile?.designation || "",
-      contact: profile?.contact || "",
-      contactEmail: profile?.contactEmail || "",
-      address: profile?.address || "",
-      linkedin: profile?.profileLinks?.linkedIn || "",
-      github: profile?.profileLinks?.github || "",
-      other: profile?.profileLinks?.other || "",
+      fullName: user?.fullName || "",
+      bio: user?.bio || "",
+      designation: user?.designation || "",
+      contact: user?.contact || "",
+      contactEmail: user?.contactEmail || "",
+      address: user?.address || "",
+      linkedin: user?.profileLinks?.linkedIn || "",
+      github: user?.profileLinks?.github || "",
+      other: user?.profileLinks?.other || "",
     },
   });
 
   useEffect(() => {
-    if (profile?.profilePic) {
-      setPreviewUrl(profile.profilePic);
+    if (user?.profilePic) {
+      setPreviewUrl(user.profilePic);
     }
-  }, [profile?.profilePic]);
+  }, [user?.profilePic]);
 
   const handleFileChange = (event) => {
-    event.preventDefault();
     const file = event.target.files[0];
-
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -44,11 +44,22 @@ const PersonalInfo = ({ user }) => {
   };
 
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
-
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: updateUser, // Specify mutation function
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["jobs"]);
+    },
+  });
   const onSubmit = (data) => {
+    mutate(data, {
+      onSuccess: (s) => console.log("success", s),
+    });
     console.log(data);
+
     // Handle form submission
   };
 
@@ -60,15 +71,19 @@ const PersonalInfo = ({ user }) => {
         </h3>
         <Separator className="w-auto" />
       </div>
-      <div className="border w-fulls h-full p-4 m-4 rounded-xl flex flex-row">
-        <PersonalInfoForm
-          form={form}
-          onSubmit={onSubmit}
-          previewUrl={previewUrl}
-          handleButtonClick={handleButtonClick}
-          handleFileChange={handleFileChange}
-          fileInputRef={fileInputRef}
-        />
+      <div className="border w-full h-full p-4 m-4 rounded-xl flex flex-row">
+        {!isLoading ? (
+          <PersonalInfoForm
+            form={form}
+            onSubmit={onSubmit}
+            previewUrl={previewUrl}
+            handleButtonClick={handleButtonClick}
+            handleFileChange={handleFileChange}
+            fileInputRef={fileInputRef}
+          />
+        ) : (
+          <Skeleton className={`min-h-full min-w-full`} />
+        )}
       </div>
     </>
   );
@@ -78,60 +93,24 @@ PersonalInfo.propTypes = {
   user: PropTypes.shape({
     _id: PropTypes.string,
     email: PropTypes.string,
-    profile: PropTypes.shape({
-      profilePic: PropTypes.string,
-      fullName: PropTypes.string,
-      bio: PropTypes.string,
-      contact: PropTypes.string,
-      contactEmail: PropTypes.string,
-      designation: PropTypes.string,
-      address: PropTypes.string,
-      skills: PropTypes.arrayOf(PropTypes.string),
-      profileLinks: PropTypes.shape({
-        linkedIn: PropTypes.string,
-        github: PropTypes.string,
-        other: PropTypes.shape({
-          platform: PropTypes.string,
-          url: PropTypes.string,
-        }),
+    profilePic: PropTypes.string,
+    fullName: PropTypes.string,
+    bio: PropTypes.string,
+    contact: PropTypes.string,
+    contactEmail: PropTypes.string,
+    designation: PropTypes.string,
+    address: PropTypes.string,
+    skills: PropTypes.arrayOf(PropTypes.string),
+    profileLinks: PropTypes.shape({
+      linkedIn: PropTypes.string,
+      github: PropTypes.string,
+      other: PropTypes.shape({
+        platform: PropTypes.string,
+        url: PropTypes.string,
       }),
-      projects: PropTypes.arrayOf(
-        PropTypes.shape({
-          title: PropTypes.string,
-          skills: PropTypes.arrayOf(PropTypes.string),
-          endDate: PropTypes.oneOfType([
-            PropTypes.instanceOf(Date),
-            PropTypes.string,
-          ]), // Allowing both Date and String
-          description: PropTypes.string,
-          url: PropTypes.string,
-          repository: PropTypes.string,
-        })
-      ),
-      experience: PropTypes.arrayOf(
-        PropTypes.shape({
-          jobTitle: PropTypes.string,
-          employer: PropTypes.string,
-          startDate: PropTypes.oneOfType([
-            PropTypes.instanceOf(Date),
-            PropTypes.string,
-          ]), // Allowing both Date and String
-          endDate: PropTypes.oneOfType([
-            PropTypes.instanceOf(Date),
-            PropTypes.string,
-          ]), // Allowing both Date and String
-          description: PropTypes.string,
-        })
-      ),
-      education: PropTypes.arrayOf(
-        PropTypes.shape({
-          institution: PropTypes.string,
-          degree: PropTypes.string,
-          yearOfGraduation: PropTypes.string,
-        })
-      ),
     }),
   }),
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default PersonalInfo;

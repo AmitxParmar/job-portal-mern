@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
-import Ring from "./Loader";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade } from "swiper";
-
 import "swiper/css";
 import "swiper/css/bundle";
-import { memo } from "react";
+
+import { Autoplay, EffectFade } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { useEffect, useState } from "react";
+
+import Ring from "@/components/Dashboard/common/Loader/Loader";
 import { achievements } from "@/constants/constants";
+import { memo } from "react";
+import { motion } from "framer-motion";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

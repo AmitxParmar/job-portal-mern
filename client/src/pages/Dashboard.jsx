@@ -2,14 +2,14 @@ import JobListings from "@/components/Dashboard/JobListings";
 import EmployerDashboard from "@/components/Dashboard/EmployerDashboard";
 import PropTypes from "prop-types";
 
-const Dashboard = ({ userRole }) => {
+const Dashboard = ({ role }) => {
   return (
     <>
       <div className={``}>
-        {userRole === "jobSeeker" ? (
+        {role === "jobSeeker" ? (
           <JobListings />
         ) : (
-          userRole === "employer" && <EmployerDashboard />
+          role === "employer" && <EmployerDashboard />
         )}
       </div>
     </>
@@ -17,7 +17,7 @@ const Dashboard = ({ userRole }) => {
 };
 
 Dashboard.propTypes = {
-  userRole: PropTypes.oneOf(["jobSeeker", "employer"]).isRequired,
+  role: PropTypes.oneOf(["jobSeeker", "employer"]).isRequired,
 };
 
 export default Dashboard;

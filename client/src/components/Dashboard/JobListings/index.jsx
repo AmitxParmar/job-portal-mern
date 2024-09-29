@@ -1,6 +1,8 @@
-import JobCard from "./JobCard";
+import { lazy } from "react";
 import CardSkeleton from "./CardSkeleton";
 import { useFilters } from "@/hooks/useFilters";
+import { Suspense } from "react";
+const JobCard = lazy(() => import("./JobCard"));
 
 const JobListings = () => {
   const { jobQuery } = useFilters();
@@ -20,15 +22,17 @@ const JobListings = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
-      {data?.jobs?.length > 0 ? (
-        data?.jobs?.map((job) => <JobCard key={job._id} job={job} />)
-      ) : (
-        <div className="text-center absolute inset-x-0 inset-y-2/4 text-gray-500 font-grotesk text-xl">
-          No jobs found.
-        </div>
-      )}
-    </div>
+    <Suspense fallback={<div>Loading.::::</div>}>
+      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
+        {data?.jobs?.length > 0 ? (
+          data?.jobs?.map((job) => <JobCard key={job._id} job={job} />)
+        ) : (
+          <div className="text-center absolute inset-x-0 inset-y-2/4 text-gray-500 font-grotesk text-xl">
+            No jobs found.
+          </div>
+        )}
+      </div>
+    </Suspense>
   );
 };
 

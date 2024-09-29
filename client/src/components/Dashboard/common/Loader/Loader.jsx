@@ -1,8 +1,15 @@
-import styles from './loader.module.css'
+import PropTypes from "prop-types";
+import styles from "./loader.module.css";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function Ring({ color = "#ffffff", size = 80, className, style }) {
+export default function Ring({
+  color = "#ffffff",
+  size = 80,
+  className,
+  style,
+}) {
   const circles = [...Array(4)].map((_, index) => {
     return (
       <div
@@ -27,3 +34,9 @@ export default function Ring({ color = "#ffffff", size = 80, className, style })
     </div>
   );
 }
+Ring.propTypes = {
+  color: PropTypes.string,
+  size: PropTypes.number,
+  className: PropTypes.string,
+  style: PropTypes.object,
+};

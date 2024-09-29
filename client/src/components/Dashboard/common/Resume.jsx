@@ -1,11 +1,9 @@
-import PropTypes from "prop-types";
 import { Badge } from "@/components/ui/badge";
 import Container from "./Container";
+import PropTypes from "prop-types";
 
 const Resume = ({ user }) => {
-  const {
-    profile: { fullName, bio, skills, projects, experience, education },
-  } = user;
+  const { fullName, bio, skills, projects, experience, education } = user;
 
   return (
     <Container className={`min-w-96 bg-background px-6 w-96`}>
@@ -38,18 +36,18 @@ const Resume = ({ user }) => {
       <div className="border-b pb-4">
         <h2 className="text-xl font-semibold">Projects</h2>
         <ul className="mt-2 space-y-2">
-          {projects.map((project, index) => (
+          {projects?.map((project, index) => (
             <li key={index}>
-              <h3 className="font-semibold">{project.title}</h3>
-              <p className="text-gray-600">{project.description}</p>
+              <h3 className="font-semibold">{project?.title}</h3>
+              <p className="text-gray-600">{project?.description}</p>
               <p className="text-gray-500">
-                Skills: {project.skills.join(", ")}
+                Skills: {project?.skills.join(", ")}
               </p>
               <p className="text-gray-500">
-                End Date: {new Date(project.endDate).toLocaleDateString()}
+                End Date: {new Date(project?.endDate).toLocaleDateString()}
               </p>
               <a
-                href={project.url}
+                href={project?.url}
                 target="_blank"
                 className="text-blue-500 underline"
               >
@@ -63,14 +61,14 @@ const Resume = ({ user }) => {
       {/* <!-- Experience Section --> */}
       <div className="border-b pb-4">
         <h2 className="text-xl font-semibold">Experience</h2>
-        {experience.map((exp, index) => (
+        {experience?.map((exp, index) => (
           <div key={index} className="mt-2">
             <h3 className="font-semibold">
-              {exp.jobTitle} at {exp.employer}
+              {exp?.jobTitle} at {exp?.employer}
             </h3>
             <p className="text-gray-600">
-              {new Date(exp.startDate).toLocaleDateString()} -{" "}
-              {new Date(exp.endDate).toLocaleDateString()}
+              {new Date(exp?.startDate).toLocaleDateString()} -{" "}
+              {new Date(exp?.endDate).toLocaleDateString()}
             </p>
             <p className="text-gray-700">{exp.description}</p>
           </div>
@@ -80,11 +78,11 @@ const Resume = ({ user }) => {
       {/* <!-- Education Section --> */}
       <div>
         <h2 className="text-xl font-semibold">Education</h2>
-        {education.map((edu, index) => (
+        {education?.map((edu, index) => (
           <div key={index} className="mt-2">
             <h3 className="font-semibold">{edu.institution}</h3>
             <p className="text-gray-600">
-              {edu.degree} ({edu.yearOfGraduation})
+              {edu?.degree} ({edu?.yearOfGraduation})
             </p>
           </div>
         ))}
@@ -95,36 +93,34 @@ const Resume = ({ user }) => {
 
 Resume.propTypes = {
   user: PropTypes.shape({
-    profile: PropTypes.shape({
-      fullName: PropTypes.string.isRequired,
-      bio: PropTypes.string.isRequired,
-      skills: PropTypes.arrayOf(PropTypes.string).isRequired,
-      projects: PropTypes.arrayOf(
-        PropTypes.shape({
-          title: PropTypes.string.isRequired,
-          description: PropTypes.string.isRequired,
-          skills: PropTypes.arrayOf(PropTypes.string).isRequired,
-          endDate: PropTypes.string.isRequired,
-          url: PropTypes.string, // Made optional
-        })
-      ).isRequired,
-      experience: PropTypes.arrayOf(
-        PropTypes.shape({
-          jobTitle: PropTypes.string.isRequired,
-          employer: PropTypes.string.isRequired,
-          startDate: PropTypes.string.isRequired,
-          endDate: PropTypes.string.isRequired,
-          description: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-      education: PropTypes.arrayOf(
-        PropTypes.shape({
-          institution: PropTypes.string.isRequired,
-          degree: PropTypes.string.isRequired,
-          yearOfGraduation: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-    }).isRequired,
+    fullName: PropTypes.string.isRequired,
+    bio: PropTypes.string.isRequired,
+    skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+    projects: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+        endDate: PropTypes.string.isRequired,
+        url: PropTypes.string, // Made optional
+      })
+    ).isRequired,
+    experience: PropTypes.arrayOf(
+      PropTypes.shape({
+        jobTitle: PropTypes.string.isRequired,
+        employer: PropTypes.string.isRequired,
+        startDate: PropTypes.string.isRequired,
+        endDate: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    education: PropTypes.arrayOf(
+      PropTypes.shape({
+        institution: PropTypes.string.isRequired,
+        degree: PropTypes.string.isRequired,
+        yearOfGraduation: PropTypes.string.isRequired,
+      })
+    ).isRequired,
   }).isRequired,
 };
 

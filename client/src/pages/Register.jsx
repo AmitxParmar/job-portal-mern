@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@/services/authServices";
 import { useNavigate } from "react-router-dom";
+import { LucideUserPlus2 } from "lucide-react";
 
 const Register = () => {
   const form = useForm();
@@ -31,14 +32,15 @@ const Register = () => {
 
   return (
     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-      <div className="flex flex-col space-y-2 text-center">
+      <div className="flex flex-col w-full items-center justify-stretch space-y-2 text-center">
+        <LucideUserPlus2 size={50} className="" />
         <h1 className="text-2xl font-grotesk font-semibold tracking-tight">
           Create an account
         </h1>
         <p className="text-sm font-grotesk font-medium tracking-normal text-muted-foreground">
           Enter your email below to create your account
         </p>
-        <div className={"grid gap-6"}>
+        <div className="grid w-full gap-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)}>
               <div className="grid gap-2">
@@ -53,6 +55,7 @@ const Register = () => {
                           placeholder="example@example.com"
                           {...field}
                           value={field.value || ""}
+                          className=""
                         />
                       </FormControl>
                       <FormMessage />

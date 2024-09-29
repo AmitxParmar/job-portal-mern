@@ -1,12 +1,9 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -16,25 +13,27 @@ import {
 } from "@/components/ui/dialog";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/ui/date-picker";
-import QuillEditor from "../../common/QuillEditor";
-import { useOutletContext } from "react-router-dom";
-import moment from "moment";
+
 import { Badge } from "@/components/ui/badge";
-import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Eye } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Plus } from "lucide-react";
+import QuillEditor from "../../common/QuillEditor";
+import moment from "moment";
+import { useForm } from "react-hook-form";
+import { useOutletContext } from "react-router-dom";
+import { useState } from "react";
 
 const ProfessionalDetails = () => {
-  const { user } = useOutletContext();
-  const {
-    profile: { projects, education, experience },
-  } = user;
+  const { user, isLoading } = useOutletContext();
+  const { projects, education, experience } = user;
   const [activeSection, setActiveSection] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -240,6 +239,10 @@ const ProfessionalDetails = () => {
     }
   };
 
+  if (isLoading) {
+    return <div>Loading.::::::::::</div>;
+  }
+
   return (
     <div className="w-full mx-auto">
       <Accordion
@@ -252,7 +255,7 @@ const ProfessionalDetails = () => {
             Projects
           </AccordionTrigger>
           <AccordionContent className="mt-2 gap-3 overflow grid-flow-dense bg-background">
-            {projects.map((project, index) => (
+            {projects?.map((project, index) => (
               <>
                 <div
                   key={index}
