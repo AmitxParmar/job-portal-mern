@@ -1,9 +1,10 @@
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { ArrowLeft } from "lucide-react";
-import { profileMenu } from "@/constants/constants.jsx";
-import PostAJobButton from "../../EmployerComponents/PostAJobButton";
+import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
+import PostAJobButton from "../../EmployerComponents/PostAJobButton";
+import { profileMenu } from "@/constants/constants.jsx";
 
 const SettingsSidebar = ({ role }) => {
   const navigate = useNavigate();

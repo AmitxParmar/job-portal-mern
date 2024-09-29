@@ -1,13 +1,13 @@
-import { User, Project } from "../../models/User.js";
+import { Project, User } from "../../models/User.js";
 
 // Add a new project
 export const addProject = async (req, res) => {
   const { userId } = req.params;
   const projectData = req.body;
-
+  console.log(userId, projectData);
   try {
     // Create a new project
-    const newProject = new Projects(projectData);
+    const newProject = new Project(projectData);
     await newProject.save();
 
     // Add project reference to the user

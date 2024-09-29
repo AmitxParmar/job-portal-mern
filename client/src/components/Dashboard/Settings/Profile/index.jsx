@@ -33,7 +33,7 @@ const Profile = () => {
         {/* <TabsTrigger value="account-details">Account Details</TabsTrigger> */}
       </TabsList>
       <Container
-        className={`w-full max-h-[90%] bg-background max-w-screen-2xl`}
+        className={`w-full max-h-[90%] min-h-full bg-background max-w-screen-2xl`}
       >
         <TabsContent className="" value="personal-details">
           <PersonalInfo user={user} isLoading={isLoading} />

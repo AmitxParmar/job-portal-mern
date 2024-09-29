@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+
 import bcrypt from "bcryptjs";
 
 const educationSchema = new Schema({
@@ -52,6 +53,7 @@ const userSchema = new Schema({
       url: { type: String },
     },
   },
+
   company: { type: Schema.Types.ObjectId, ref: "Company" },
   // Array of references to project schema
   projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],

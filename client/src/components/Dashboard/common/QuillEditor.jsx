@@ -1,9 +1,10 @@
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
 import PropTypes from "prop-types";
+import ReactQuill from "react-quill";
 
 const QuillEditor = ({
-  value,
+  value = "",
   onChange,
   placeholder,
   theme = "snow",
@@ -41,7 +42,7 @@ const QuillEditor = ({
 };
 
 QuillEditor.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   theme: PropTypes.string,

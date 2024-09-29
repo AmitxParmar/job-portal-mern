@@ -5,24 +5,34 @@ import PersonalInfoForm from "./PersonalInfoForm";
 import PropTypes from "prop-types";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { updateUser } from "@/services/userServices";
+import { updateUserProfile } from "@/services/userServices";
 import { useForm } from "react-hook-form";
 
 const PersonalInfo = ({ user, isLoading }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
-
   const form = useForm({
     defaultValues: {
-      fullName: user?.fullName || "",
-      bio: user?.bio || "",
-      designation: user?.designation || "",
-      contact: user?.contact || "",
-      contactEmail: user?.contactEmail || "",
-      address: user?.address || "",
-      linkedin: user?.profileLinks?.linkedIn || "",
-      github: user?.profileLinks?.github || "",
-      other: user?.profileLinks?.other || "",
+      fullName: user?.fullName ?? "",
+      bio: user?.bio ?? "",
+      designation: user?.designation ?? "",
+      contact: user?.contact ?? "",
+      contactEmail: user?.contactEmail ?? "",
+      address: user?.address ?? "",
+      linkedin: user?.profileLinks?.linkedIn ?? "",
+      github: user?.profileLinks?.github ?? "",
+      other: user?.profileLinks?.other ?? "",
+    },
+    values: {
+      fullName: user?.fullName ?? "",
+      bio: user?.bio ?? "",
+      designation: user?.designation ?? "",
+      contact: user?.contact ?? "",
+      contactEmail: user?.contactEmail ?? "",
+      address: user?.address ?? "",
+      linkedin: user?.profileLinks?.linkedIn ?? "",
+      github: user?.profileLinks?.github ?? "",
+      other: user?.profileLinks?.other ?? "",
     },
   });
 
@@ -48,19 +58,20 @@ const PersonalInfo = ({ user, isLoading }) => {
   };
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: updateUser, // Specify mutation function
+    mutationFn: ({ userId, data }) => updateUserProfile(userId, data),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries(["jobs"]);
+      queryClient.invalidateQueries(["user", user._id]);
     },
   });
   const onSubmit = (data) => {
-    mutate(data, {
-      onSuccess: (s) => console.log("success", s),
-    });
+    mutate(
+      { userId: user._id, data },
+      {
+        onSuccess: (s) => console.log("success", s),
+      }
+    );
     console.log(data);
-
-    // Handle form submission
   };
 
   return (

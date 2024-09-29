@@ -1,9 +1,4 @@
-import PropTypes from "prop-types";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
-import { Camera, Edit3, Check } from "lucide-react";
-
+import { Camera, Check, Edit3 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -12,7 +7,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import PropTypes from "prop-types";
+import { Separator } from "@/components/ui/separator";
 
 const PersonalInfoForm = ({
   form,
@@ -123,7 +123,7 @@ const PersonalInfoForm = ({
                 </Button>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <FormField
                 control={form.control}
                 name="contactEmail"
@@ -154,11 +154,28 @@ const PersonalInfoForm = ({
                 control={form.control}
                 name="address"
                 render={({ field }) => (
-                  <FormItem className="col-span-2">
+                  <FormItem>
                     <FormLabel className="font-bold">Address</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Address"
+                        className="h-12"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="skills"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">Skills</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Skills (comma-separated)"
                         className="h-12"
                         {...field}
                       />

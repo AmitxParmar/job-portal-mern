@@ -181,5 +181,7 @@
     @apply bg-muted text-primary font-inter !antialiased;
   }
 
-  div {}
+  .bullet_list ul>li {
+    @apply list-disc ml-8
+  }
 }

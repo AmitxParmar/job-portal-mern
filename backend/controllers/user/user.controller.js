@@ -19,16 +19,38 @@ export const getUserProfile = async (req, res, next) => {
 };
 
 // Update User Profile
-export const updateUserAuthProfile = async (req, res, next) => {
+export const updateUserAuth = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return next(createError(404, "User not found!"));
 
-    const updatedData = {
+    const updatedAuthData = {
       email: req.body.email || user.email,
       role: req.body.role || user.role,
       isVerified: req.body.isVerified || user.isVerified,
       inviteCodeUsed: req.body.inviteCodeUsed || user.inviteCodeUsed,
+    };
+
+    // Update user auth fields
+    Object.assign(user, updatedAuthData);
+    const updatedUser = await user.save();
+
+    // Remove sensitive information before sending response
+    const { password, ...userWithoutPassword } = updatedUser.toObject();
+
+    res.status(200).json(userWithoutPassword);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Update User Profile
+export const updateProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) return next(createError(404, "User not found!"));
+
+    const updatedProfileData = {
       profilePic: req.body.profilePic || user.profilePic,
       fullName: req.body.fullName || user.fullName,
       bio: req.body.bio || user.bio,
@@ -41,41 +63,8 @@ export const updateUserAuthProfile = async (req, res, next) => {
       company: req.body.company || user.company,
     };
 
-    // Update user fields
-    Object.assign(user, updatedData);
-    const updatedUser = await user.save();
-
-    // Remove sensitive information before sending response
-    const { password, ...userWithoutPassword } = updatedUser.toObject();
-
-    res.status(200).json(userWithoutPassword);
-  } catch (error) {
-    next(error);
-  }
-};
-
-// update profile eg. profilePic,skills,contact
-export const updateProfile = async (req, res, next) => {
-  try {
-    const userId = req.params.userId;
-    const user = await User.findById(userId);
-    if (!user) return next(createError(404, "User not found!"));
-
     // Update user profile fields
-    const updatedData = {
-      profilePic: req.body.profilePic || user.profilePic,
-      fullName: req.body.fullName || user.fullName,
-      bio: req.body.bio || user.bio,
-      contact: req.body.contact || user.contact,
-      contactEmail: req.body.contactEmail || user.contactEmail,
-      designation: req.body.designation || user.designation,
-      address: req.body.address || user.address,
-      skills: req.body.skills || user.skills,
-      profileLinks: req.body.profileLinks || user.profileLinks,
-    };
-
-    // Update user fields
-    Object.assign(user, updatedData);
+    Object.assign(user, updatedProfileData);
     const updatedUser = await user.save();
 
     res.status(200).json(updatedUser);

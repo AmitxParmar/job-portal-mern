@@ -1,4 +1,4 @@
-import { User, Education } from "../../models/User.js";
+import { Education, User } from "../../models/User.js";
 
 export const addEducation = async (req, res) => {
   const { userId } = req.params;
@@ -44,15 +44,15 @@ export const updateEducation = async (req, res) => {
 };
 
 export const removeEducation = async (req, res) => {
-  const { userId, educationId } = req.params;
-
+  const { userId, eduId } = req.params;
+  console.log(req.params);
   try {
-    await Education.findByIdAndDelete(educationId);
+    await Education.findByIdAndDelete(eduId);
 
     // Remove education reference from user
     const user = await User.findByIdAndUpdate(
       userId,
-      { $pull: { education: educationId } },
+      { $pull: { education: eduId } },
       { new: true }
     );
 

@@ -18,7 +18,7 @@ import {
   deleteUserAccount,
   getUserProfile,
   updateProfile,
-  updateUserAuthProfile,
+  updateUserAuth,
 } from "../controllers/user/user.controller.js";
 
 import express from "express";
@@ -26,10 +26,10 @@ import express from "express";
 const router = express.Router();
 // User routes
 router.get("/:userId", getUserProfile);
-router.put("/:userId", updateUserAuthProfile);
-router.put("/:userId", updateProfile);
+router.put("/:userId/auth", updateUserAuth);
+router.put("/:userId/profile", updateProfile);
 router.delete("/:userId", deleteUserAccount);
-router.put("/:userId", changePassword);
+router.put("/:userId/password", changePassword);
 
 /* // Profile routes
 router.get("/:userId/profile", createOrUpdateProfile);

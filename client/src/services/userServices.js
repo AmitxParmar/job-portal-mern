@@ -4,10 +4,10 @@ import axiosInstance from "@/lib/axiosInstance";
 const BASE_URL = "/user";
 
 // Fetch all users
-export const fetchUsers = async () => {
+/* export const fetchUsers = async () => {
   const { data } = await axiosInstance.get(`${BASE_URL}`);
   return data;
-};
+}; */
 
 // Fetch single user by ID
 export const fetchUserById = async (userId) => {
@@ -16,8 +16,11 @@ export const fetchUserById = async (userId) => {
 };
 
 // Update user by ID
-export const updateUser = async (userId, userData) => {
-  const { data } = await axiosInstance.put(`${BASE_URL}/${userId}`, userData);
+export const updateUserProfile = async (userId, userData) => {
+  const { data } = await axiosInstance.put(
+    `${BASE_URL}/${userId}/profile`,
+    userData
+  );
   return data;
 };
 
@@ -27,29 +30,25 @@ export const deleteUser = async (userId) => {
   return data;
 };
 
+// Change user password
 export const changePassword = async (userId, passwords) => {
   const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/change-password`,
+    `${BASE_URL}/${userId}/password`,
     passwords // current and newPasword
   );
   return data;
 };
 
-// Fetch user profile
-export const fetchUserProfile = async (userId) => {
-  const { data } = await axiosInstance.get(`${BASE_URL}/${userId}/profile`);
-  return data;
-};
-
-// Update user profile
-/* export const updateUserProfile = async (userId, profileData) => {
+// Update user auth profile for updating email,password (there is already a route for update password),invitecode
+export const updateUserAuth = async (userId, authData) => {
   const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/profile`,
-    profileData
+    `${BASE_URL}/${userId}/auth`,
+    authData
   );
   return data;
 };
- */
+
+/* ------------------- EDUCATION ROUTES ------------------------ */
 // Add education
 export const addEducation = async (userId, educationData) => {
   const { data } = await axiosInstance.post(

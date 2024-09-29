@@ -1,17 +1,15 @@
-import JobListings from "@/components/Dashboard/JobListings";
 import EmployerDashboard from "@/components/Dashboard/EmployerDashboard";
+import JobListings from "@/components/Dashboard/JobListings";
 import PropTypes from "prop-types";
 
 const Dashboard = ({ role }) => {
   return (
     <>
-      <div className={``}>
-        {role === "jobSeeker" ? (
-          <JobListings />
-        ) : (
-          role === "employer" && <EmployerDashboard />
-        )}
-      </div>
+      {role === "jobSeeker" ? (
+        <JobListings />
+      ) : (
+        role === "employer" && <EmployerDashboard />
+      )}
     </>
   );
 };

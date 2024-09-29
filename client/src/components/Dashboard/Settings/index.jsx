@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const Settings = () => {
   const userId = "66ccb1ecb5e4de35acdbb80d";
+
   const {
     data: user,
     isLoading,
