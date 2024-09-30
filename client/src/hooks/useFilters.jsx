@@ -1,6 +1,6 @@
-import { useSearchParams } from "react-router-dom";
 import { fetchJobs } from "@/services/JobServices";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 
 export const useFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,12 +24,16 @@ export const useFilters = () => {
   const filters = Object.fromEntries(
     new URLSearchParams(searchParams.toString()).entries()
   );
-  const jobQuery = useQuery({
-    queryKey: ["jobs", filters], // Including filters as part of the query key
-    queryFn: () => fetchJobs(filters),
-    keepPreviousData: true, // Keeps the previous data while fetching new data, might use for infinite query
-    staleTime: 5000, // Optional: to avoid too frequent refetching
+
+  const jobQuery = useInfiniteQuery({
+    queryKey: ["jobs", filters],
+    queryFn: ({ pageParam = null }) =>
+      fetchJobs({ ...filters, cursor: pageParam }),
+    getNextPageParam: (lastPage) => lastPage.nextCursor || undefined,
+    keepPreviousData: true,
+    staleTime: 5000,
   });
+  console.log("useInfintiefilters", jobQuery?.data?.pages);
   return {
     jobQuery,
     filters,

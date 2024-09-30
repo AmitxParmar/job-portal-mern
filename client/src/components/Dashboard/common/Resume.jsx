@@ -91,18 +91,24 @@ const Resume = ({ user }) => {
       {/* <!-- Experience Section --> */}
       <div className="border-b pb-4">
         <h2 className="text-xl font-semibold">Experience</h2>
-        {experience?.map((exp, index) => (
-          <div key={index} className="mt-2">
-            <h3 className="font-semibold">
-              {exp?.jobTitle} at {exp?.employer}
-            </h3>
-            <p className="text-gray-600">
-              {new Date(exp?.startDate).toLocaleDateString()} -{" "}
-              {new Date(exp?.endDate).toLocaleDateString()}
-            </p>
-            <p className="text-gray-700">{exp?.description}</p>
-          </div>
-        ))}
+        <ul className="mt-2 text-sm space-y-2">
+          {experience?.map((exp, index) => (
+            <li key={index}>
+              <div className="flex flex-row flex-wrap">
+                <p className="font-semibold">{exp?.employer}</p>
+                <h3 className="font-semibold">{exp?.jobTitle}</h3>
+              </div>
+              <p className="">
+                {moment(exp?.startDate).format("MMM YYYY")} -{" "}
+                {moment(exp?.endDate).format("MMM YYYY")}
+              </p>
+              <p
+                className="bullet_list"
+                dangerouslySetInnerHTML={{ __html: exp?.description }}
+              ></p>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* <!-- Education Section --> */}

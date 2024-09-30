@@ -3,7 +3,7 @@ import { Experience, User } from "../../models/User.js";
 export const addExperience = async (req, res) => {
   const { userId } = req.params;
   const experienceData = req.body;
-
+  console.log("userExperience", req.body);
   try {
     // Create a new experience
     const newExperience = new Experience(experienceData);

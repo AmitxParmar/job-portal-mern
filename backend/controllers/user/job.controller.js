@@ -53,7 +53,7 @@ export const jobControllers = {
         postedAfter,
         postedBefore,
         status,
-        page = 1,
+        cursor = null,
         limit = 10,
         sortBy = "postedAt",
         sortOrder = "desc",
@@ -87,28 +87,32 @@ export const jobControllers = {
       const sort = {};
       sort[sortBy] = sortOrder === "asc" ? 1 : -1;
 
-      const skip = (page - 1) * limit;
+      const query = Job.find(filter)
+        .sort(sort)
+        .limit(parseInt(limit) + 1);
+
+      if (cursor) {
+        query.where("_id").gt(cursor);
+      }
 
       console.log(
         "Executing query with filter:",
         JSON.stringify(filter, null, 2)
       );
       console.log("Sort:", JSON.stringify(sort, null, 2));
-      console.log("Skip:", skip);
+      console.log("Cursor:", cursor);
       console.log("Limit:", parseInt(limit));
 
-      const _jobs = await Job.find(filter)
-        .sort(sort)
-        .skip(skip)
-        .limit(parseInt(limit))
+      const _jobs = await query
         .populate("company", "name logo")
         .populate("postedBy", "fullName");
 
       console.log("Query executed. Number of jobs found:", _jobs.length);
 
-      const total = await Job.countDocuments(filter);
+      const hasNextPage = _jobs.length > parseInt(limit);
+      const jobs = hasNextPage ? _jobs.slice(0, -1) : _jobs;
 
-      const jobs = _jobs.map((job) => ({
+      const formattedJobs = jobs.map((job) => ({
         ...job.toObject(),
         combinedField: {
           requiredSkills: job.skillsRequired[0] || null,
@@ -117,11 +121,10 @@ export const jobControllers = {
           experience: job.experience,
         },
       }));
+
       res.status(200).json({
-        currentPage: parseInt(page),
-        totalPages: Math.ceil(total / limit),
-        totalJobs: total,
-        jobs,
+        nextCursor: hasNextPage ? jobs[jobs.length - 1]._id : null,
+        jobs: formattedJobs,
       });
     } catch (err) {
       console.error("Error in getAllJobs:", err);

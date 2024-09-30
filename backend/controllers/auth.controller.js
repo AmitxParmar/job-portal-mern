@@ -1,7 +1,7 @@
-import { createRateLimiter } from "../middleware/rateLimiter.js";
 import { User } from "../models/User.js";
-import { createError } from "../utils/error.js";
 import bcrypt from "bcryptjs";
+import { createError } from "../utils/error.js";
+import { createRateLimiter } from "../middleware/rateLimiter.js";
 import jwt from "jsonwebtoken";
 
 const authRateLimiter = createRateLimiter({
@@ -77,6 +77,20 @@ export const login = [
         return next(createError(401, "Invalid credentials"));
       }
 
+      // Generate JWT token
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: "20d" }
+      );
+
+      // Set token as a cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 20 * 24 * 60 * 60 * 1000, // 20 days
+      });
+
       // Respond with user details (without sensitive information)
       res.status(200).json({
         success: true,
@@ -119,6 +133,6 @@ export const forgetPassword = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Forget password error:", error);
-    next(createError(500, "Internal Server Error"));
+    next(createError(500, "FORGET_PASSWORD: Internal Server Error"));
   }
 };
