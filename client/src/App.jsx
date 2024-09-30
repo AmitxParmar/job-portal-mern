@@ -8,6 +8,7 @@ import Layout from "./components/Dashboard/common/Layouts/Layout";
 import Login from "./pages/Login";
 import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
 import Navbar from "./components/Dashboard/common/Navbar";
+import { Navigate } from "react-router-dom";
 import Profile from "./components/Dashboard/Settings/Profile";
 import Register from "./pages/Register";
 import Settings from "./components/Dashboard/Settings";
@@ -58,16 +59,7 @@ function App() {
             }
           />
 
-          <Route
-            path="*"
-            element={
-              <div className="h-screen w-screen bg-black">
-                <p className="m-auto border-b-4 border-border">
-                  Error: No Route Found!
-                </p>{" "}
-              </div>
-            }
-          />
+          <Route path="*" element={<Navigate to={"/dashboard"} />} />
         </Routes>
       </div>
     </Router>

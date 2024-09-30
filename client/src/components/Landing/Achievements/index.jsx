@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
-import Ring from "@/components/Dashboard/common/Loader/Loader";
+import Loader from "@/components/Dashboard/common/Loader";
 import { achievements } from "@/constants/constants";
 import { memo } from "react";
 import { motion } from "framer-motion";
@@ -83,7 +83,7 @@ const Achievements = () => {
                     )
                   }
                 >
-                  <Ring
+                  <Loader
                     size={27}
                     className={
                       "ui-not-selected:hidden ui-selected:block group-focus:transition-all duration-1000"

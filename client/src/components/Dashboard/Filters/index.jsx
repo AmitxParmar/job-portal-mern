@@ -85,8 +85,9 @@ const Filters = () => {
         </div>
 
         <Button
+          variant="outline"
           onClick={() => clearFilters()}
-          className="w-full group flex justify-around items-center rounded-3xl"
+          className="w-full border-red-600 text-red-600 font-bold group flex justify-around items-center rounded-3xl"
         >
           <span>Clear Filters</span>
           <span className="group-hover:animate-bounce">

@@ -27,20 +27,21 @@ export const addProject = async (req, res) => {
 export const updateProject = async (req, res) => {
   const { projectId } = req.params;
   const updatedData = req.body;
-
+  console.log("request recieved");
   try {
-    const updatedProject = await Projects.findByIdAndUpdate(
+    const updatedProject = await Project.findByIdAndUpdate(
       projectId,
       { $set: updatedData },
-      { new: true }
+      { new: true, upsert: true }
     );
 
     if (!updatedProject) {
       return res.status(404).json({ error: "Project not found" });
     }
-
+    console.log("updated data", updatedProject);
     res.status(200).json(updatedProject);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Failed to update project" });
   }
 };
@@ -50,7 +51,7 @@ export const removeProject = async (req, res) => {
   const { userId, projectId } = req.params;
 
   try {
-    await Projects.findByIdAndDelete(projectId);
+    await Project.findByIdAndDelete(projectId);
 
     // Remove project reference from user
     const user = await User.findByIdAndUpdate(

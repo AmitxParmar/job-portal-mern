@@ -1,12 +1,12 @@
-import { Edit, Eye, Trash2 } from "lucide-react";
+import { Edit, Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-const Projects = ({ projects, onDelete, onUpdate }) => {
+const Projects = ({ projects, onDelete, onUpdate, onAdd }) => {
   return (
-    <>
+    <div className="flex flex-col justify-center">
       {projects?.map((project) => (
         <div
           key={project._id}
@@ -14,7 +14,7 @@ const Projects = ({ projects, onDelete, onUpdate }) => {
         >
           <div className="grid grid-cols-2">
             <div className="float-left px-4">
-              <h3 className="font-bold inline text-lg">{project?.title},</h3>{" "}
+              <h3 className="font-bold inline text-lg">{project?.title}, </h3>{" "}
               <p className="italic inline">{project?.skills?.join(", ")}</p>
               <p>
                 <span className="text-gray-600">
@@ -25,9 +25,6 @@ const Projects = ({ projects, onDelete, onUpdate }) => {
               </p>
             </div>
             <div className="px-6 w-full flex items-center justify-end h-full">
-              <Button variant="ghost" size="icon">
-                <Eye className="h-4 w-4" />
-              </Button>
               <Button
                 variant="ghost"
                 size="icon"
@@ -44,9 +41,14 @@ const Projects = ({ projects, onDelete, onUpdate }) => {
               </Button>
             </div>
           </div>
+          <div></div>
         </div>
       ))}
-    </>
+      <Button onClick={onAdd}>
+        <Plus />
+        <span>Add Project</span>
+      </Button>
+    </div>
   );
 };
 
@@ -61,6 +63,7 @@ Projects.propTypes = {
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
 };
 
 export default Projects;

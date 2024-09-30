@@ -1,4 +1,4 @@
-import { User, Experience } from "../../models/User.js";
+import { Experience, User } from "../../models/User.js";
 
 export const addExperience = async (req, res) => {
   const { userId } = req.params;
@@ -18,6 +18,7 @@ export const addExperience = async (req, res) => {
 
     res.status(201).json(user.experience);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Failed to add experience" });
   }
 };

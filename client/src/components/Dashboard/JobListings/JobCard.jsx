@@ -922,8 +922,11 @@ const JobCard = ({
                   </DrawerHeader>
                 </DrawerHeader>
                 <DrawerDescription
-                  className="overflow-y-auto text-md text-black scrollbar-thin scrollbar-thumb-rounded-full w-full mx-auto scrollbar-thumb-gray-400 p-4 "
-                  dangerouslySetInnerHTML={{ __html: description }}
+                  className="overflow-y-auto text-md text-black scrollbar-thin scrollbar-thumb-rounded-full w-full mx-auto scrollbar-thumb-gray-400 p-4 bullet_list"
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                    classList: ["bullet_list"],
+                  }}
                 />
                 <DrawerFooter>
                   <Button

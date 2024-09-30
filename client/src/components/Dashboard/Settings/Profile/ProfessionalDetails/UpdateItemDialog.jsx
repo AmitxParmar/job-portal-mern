@@ -20,23 +20,19 @@ import QuillEditor from "@/components/Dashboard/common/QuillEditor";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-const UpdateItemDialog = ({
-  isOpen,
-  setIsOpen,
-  activeSection,
-  item,
-  onUpdate,
-}) => {
+const ItemDialog = ({ isOpen, setIsOpen, activeSection, item, onSubmit }) => {
   const form = useForm();
 
   useEffect(() => {
     if (item) {
       form.reset(item);
+    } else {
+      form.reset({});
     }
   }, [item, form]);
 
-  const onSubmit = (data) => {
-    onUpdate(activeSection, item._id, data);
+  const handleSubmit = (data) => {
+    onSubmit(data);
   };
 
   const renderForm = () => {
@@ -63,7 +59,14 @@ const UpdateItemDialog = ({
                 <FormItem>
                   <FormLabel>Skills (comma-separated)</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(
+                          e.target.value.split(",").map((skill) => skill.trim())
+                        )
+                      }
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -179,7 +182,7 @@ const UpdateItemDialog = ({
               name="employer"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Employer</FormLabel>
+                  <FormLabel>Employer (Company)</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -234,14 +237,17 @@ const UpdateItemDialog = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Update{" "}
+            {item ? "Update" : "Add"}{" "}
             {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             {renderForm()}
-            <Button type="submit">Update</Button>
+            <Button type="submit">{item ? "Update" : "Add"}</Button>
           </form>
         </Form>
       </DialogContent>
@@ -249,14 +255,12 @@ const UpdateItemDialog = ({
   );
 };
 
-UpdateItemDialog.propTypes = {
+ItemDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   setIsOpen: PropTypes.func.isRequired,
   activeSection: PropTypes.string.isRequired,
-  item: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-  }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
+  item: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
 };
 
-export default UpdateItemDialog;
+export default ItemDialog;

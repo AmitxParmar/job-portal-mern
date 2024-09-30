@@ -4,7 +4,7 @@ import styles from "./loader.module.css";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function Ring({
+export default function Loader({
   color = "#ffffff",
   size = 80,
   className,
@@ -34,7 +34,7 @@ export default function Ring({
     </div>
   );
 }
-Ring.propTypes = {
+Loader.propTypes = {
   color: PropTypes.string,
   size: PropTypes.number,
   className: PropTypes.string,
