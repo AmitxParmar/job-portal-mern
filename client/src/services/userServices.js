@@ -126,3 +126,11 @@ export const removeProject = async (userId, projectId) => {
   );
   return data;
 };
+
+// Toggle bookmark job
+export const toggleBookmarkJob = async (jobId) => {
+  const { data } = await axiosInstance.put(
+    `${BASE_URL}/${jobId}/toggle-bookmark`
+  );
+  return data;
+};

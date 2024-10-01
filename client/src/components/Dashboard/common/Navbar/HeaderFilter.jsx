@@ -35,7 +35,7 @@ const HeaderFilter = ({ role }) => {
       >
         <div className="bg-foreground px-4 lg:min-h-24 lg:grid hidden lg:grid-flow-col items-center">
           {/*  */}
-          <div className="grid grid-flow-col-dense items-center">
+          <div className="grid grid-flow-col-dense border-r-2 items-center">
             <Search className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
             <Input
               placeholder={`eg. Full-stack Developer`}
@@ -54,7 +54,7 @@ const HeaderFilter = ({ role }) => {
             _onSelect={(city) =>
               setFilter({ ...filters, location: city.toLowerCase() })
             }
-            className={``}
+            className={`border-r-2`}
           />
           <DropdownList
             items={["full time", "part time", "internship"]}
@@ -63,7 +63,7 @@ const HeaderFilter = ({ role }) => {
             icon={
               <Briefcase className="text-white bg-black h-10 w-10 rounded-full border border-white p-1.5" />
             }
-            className={`bg-transparent border-0 text-background/50 text-lg`}
+            className={`bg-transparent w-fit border-0 text-background/80 text-lg`}
             _onSelect={(experience) => setFilter({ ...filters, experience })}
           />
           <DropdownList
@@ -73,7 +73,7 @@ const HeaderFilter = ({ role }) => {
             icon={
               <CalendarDays className="text-white bg-black h-10 w-10 rounded-full border border-white p-1.5" />
             }
-            className={`bg-transparent border-0 text-background/50 text-lg`}
+            className={`bg-transparent w-fit border-0 text-background/80 text-lg`}
             _onSelect={(frequency) => setFilter({ ...filters, frequency })}
           />
           <div className="w-full text-white">

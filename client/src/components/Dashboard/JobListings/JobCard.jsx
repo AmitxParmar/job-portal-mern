@@ -9,13 +9,14 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import PropTypes from "prop-types";
-import { bookmarkJob } from "@/services/JobServices";
 import { memo } from "react";
 import moment from "moment";
+import { toggleBookmarkJob } from "@/services/userServices";
 
 const JobCard = ({
   job: {
@@ -27,11 +28,14 @@ const JobCard = ({
     salaryRange,
     frequency,
     skillsRequired,
-    status,
+
     postedAt,
     combinedField,
   },
+  isBookmarked,
 }) => {
+  const queryClient = useQueryClient();
+  const status = "close";
   const formatSalary = (value) => {
     if (value >= 10000000) {
       return `${Math.floor(value / 10000000)}Cr`;
@@ -42,10 +46,34 @@ const JobCard = ({
     }
   };
 
+  const { mutate } = useMutation({
+    mutationFn: (jobId) => toggleBookmarkJob(jobId),
+  });
+  const handleBookmark = (jobId) =>
+    mutate(jobId, {
+      onSuccess: (s) => {
+        console.log(s);
+        queryClient.invalidateQueries(["user"]);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
   return (
     <>
       <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
-        <div className="bg-cyan-200 border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col justify-between">
+        <div
+          className={`${
+            status === "open" ? "bg-cyan-200" : "bg-slate-500"
+          } border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col relative justify-between"`}
+        >
+          <div
+            className={`${
+              status === "open" ? "hidden " : "block "
+            } absolute -rotate-45  text-7xl bg-black rounded-xl px-4 py-2 text-red-600 font-bold`}
+          >
+            CLOSE
+          </div>
           <div className="flex flex-row justify-between items-center">
             <span className="text-sm rounded-full bg-white/70 border-border shadow-xl text-center align-center w-fit flex flex-row items-center py-2 px-3 font-bold text-black">
               <span>
@@ -54,11 +82,11 @@ const JobCard = ({
               <span>{moment(postedAt).fromNow()}</span>
             </span>
             <Button
-              onClick={() => bookmarkJob(_id)}
+              onClick={() => handleBookmark(_id)}
               size="icon"
-              className="bg-white rounded-full p-1.5 hover:invert"
+              className="bg-white text-black rounded-full p-1.5 "
             >
-              <Bookmark fill="black" />
+              <Bookmark fill={isBookmarked ? "black" : "white"} />
             </Button>
           </div>
           <div className="mt-2">
@@ -179,7 +207,9 @@ const JobCard = ({
 };
 
 JobCard.propTypes = {
+  isBookmarked: PropTypes.bool.isRequired,
   job: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     employer: PropTypes.string,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,

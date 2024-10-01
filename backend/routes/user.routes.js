@@ -17,6 +17,7 @@ import {
   changePassword,
   deleteUserAccount,
   getUserProfile,
+  toggleBookmarkJob,
   updateProfile,
   updateUserAuth,
 } from "../controllers/user/user.controller.js";
@@ -30,6 +31,7 @@ router.put("/:userId/auth", updateUserAuth);
 router.put("/:userId/profile", updateProfile);
 router.delete("/:userId", deleteUserAccount);
 router.put("/:userId/password", changePassword);
+router.put("/:jobId/toggle-bookmark", toggleBookmarkJob);
 
 /* // Profile routes
 router.get("/:userId/profile", createOrUpdateProfile);

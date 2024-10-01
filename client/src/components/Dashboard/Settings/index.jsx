@@ -1,19 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Resume from "../common/Resume";
-import { fetchUserById } from "@/services/userServices";
-import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 
 const Settings = () => {
-  const userId = "66ccb1ecb5e4de35acdbb80d";
-
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["user", userId],
-    queryFn: () => fetchUserById(userId),
-  });
+  const { user, error, isLoading } = useAuth();
 
   console.log("user fetched Settings.jsx", user);
 

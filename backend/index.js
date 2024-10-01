@@ -1,14 +1,13 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import morgan from "morgan";
-import connectDB from "./db/db.js";
-
-import authRouter from "./routes/auth.routes.js";
-import jobsRouter from "./routes/job.routes.js";
-import userRouter from "./routes/user.routes.js";
-import inviteCodeRouter from "./routes/invitecode.routes.js";
 import applicationRouter from "./routes/application.routes.js";
+import authRouter from "./routes/auth.routes.js";
+import connectDB from "./db/db.js";
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import inviteCodeRouter from "./routes/invitecode.routes.js";
+import jobsRouter from "./routes/job.routes.js";
+import morgan from "morgan";
+import userRouter from "./routes/user.routes.js";
 
 dotenv.config();
 
@@ -27,6 +26,10 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  next(err);
+});
 
 // Test route (can be removed later)
 app.get("/", (req, res) => {

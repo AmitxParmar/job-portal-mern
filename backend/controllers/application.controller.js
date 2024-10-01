@@ -6,8 +6,9 @@ import { createError } from "../utils/error.js";
 export const applyForJob = async (req, res, next) => {
   try {
     const { jobId, notes } = req.body;
-    const userId = req.user.id;
-
+    /* const userId = req.user.id; */
+    const userId = "66ccb1ecb5e4de35acdbb80d";
+    ("NOTE: remove it after development");
     const job = await Job.findById(jobId);
     if (!job) return next(createError(404, "Job not found!"));
 

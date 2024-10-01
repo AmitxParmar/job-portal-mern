@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 
 import PropTypes from "prop-types";
+import { useFilters } from "@/hooks/useFilters";
 
 const DropdownList = ({
   items,
@@ -18,10 +19,17 @@ const DropdownList = ({
   icon,
   placeholder,
 }) => {
+  const { filters, setFilter } = useFilters();
   return (
     <div className="flex">
       <span>{icon}</span>
-      <Select onValueChange={(value) => _onSelect(value)}>
+      <Select
+        value={filters[name]} // Use the correct filter name
+        onValueChange={(value) => {
+          _onSelect(value);
+          setFilter({ ...filters, [name]: value }); // Update the filter
+        }}
+      >
         <SelectTrigger className={className}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

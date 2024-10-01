@@ -35,9 +35,10 @@ export const deleteJob = async (jobId) => {
 };
 
 /* BOTH ROLE */
-export const bookmarkJob = async (jobId) => {
+/* export const bookmarkJob = async (jobId) => {
   const { data } = await axiosInstance.post(
     `${BASE_URL}/${jobId}/bookmark-job`
   );
   return data;
 };
+ */

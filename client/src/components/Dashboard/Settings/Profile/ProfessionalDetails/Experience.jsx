@@ -19,7 +19,10 @@ const Experience = ({ experience, onDelete, onUpdate, onAdd }) => {
                 <p>{exp?.employer}</p>
                 <p>Start Date: {exp?.startDate}</p>
                 <p>End Date: {exp?.endDate}</p>
-                <p>{exp?.description}</p>
+                <p
+                  className="bullet_list"
+                  dangerouslySetInnerHTML={{ __html: exp?.description }}
+                />
               </div>
               <div className="px-6 w-full flex items-center justify-end h-full">
                 <Button
