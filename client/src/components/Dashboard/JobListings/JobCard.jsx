@@ -61,7 +61,7 @@ const JobCard = ({
     });
   return (
     <>
-      <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around space-y-2 bg-muted flex flex-col m-2">
+      <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col m-2">
         <div
           className={`${
             status === "open" ? "bg-cyan-200" : "bg-slate-500"
@@ -70,9 +70,9 @@ const JobCard = ({
           <div
             className={`${
               status === "open" ? "hidden " : "block "
-            } absolute -rotate-45  text-7xl bg-black rounded-xl px-4 py-2 text-red-600 font-bold`}
+            } absolute -rotate-45 inset-y-1/3 font-grotesk group-hover:hidden text-7xl bg-black transition-all rounded-xl px-4 py-2 text-red-600 font-semibold`}
           >
-            CLOSE
+            Closed!!
           </div>
           <div className="flex flex-row justify-between items-center">
             <span className="text-sm rounded-full bg-white/70 border-border shadow-xl text-center align-center w-fit flex flex-row items-center py-2 px-3 font-bold text-black">
