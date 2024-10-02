@@ -5,33 +5,65 @@ import { createError } from "../utils/error.js";
 
 export const applyForJob = async (req, res, next) => {
   try {
-    const { jobId, notes } = req.body;
-    /* const userId = req.user.id; */
-    const userId = "66ccb1ecb5e4de35acdbb80d";
-    ("NOTE: remove it after development");
+    console.log("Request params:", req.params);
+    const { jobId } = req.params;
+    console.log("Job ID:", jobId);
+
+    // In a real application, you'd get the userId from the authenticated user
+    // const userId = req.user.id;
+    const userId = "66ccb1ecb5e4de35acdbb80d"; // Hardcoded for testing
+
+    // Find the job
     const job = await Job.findById(jobId);
-    if (!job) return next(createError(404, "Job not found!"));
+    if (!job) {
+      return next(createError(404, "Job not found"));
+    }
 
-    const user = await User.findById(userId);
-    if (!user) return next(createError(404, "User not found!"));
-
-    // Check if the user has already applied
+    // Check if an application already exists
     const existingApplication = await Application.findOne({
       job: jobId,
       applicant: userId,
     });
-    if (existingApplication)
-      return next(createError(400, "You have already applied for this job!"));
 
-    const newApplication = new Application({
-      job: jobId,
-      applicant: userId,
-      notes,
+    let application;
+    let message;
+
+    if (existingApplication) {
+      // If application exists, remove it
+      await Application.findByIdAndDelete(existingApplication._id);
+
+      // Remove applicant from job
+      await Job.findByIdAndUpdate(jobId, {
+        $pull: { applicants: userId },
+      });
+
+      message = "Application removed successfully";
+    } else {
+      // If no application exists, create one
+      application = new Application({
+        job: jobId,
+        applicant: userId,
+      });
+      await application.save();
+
+      // Add applicant to job
+      await Job.findByIdAndUpdate(jobId, {
+        $addToSet: { applicants: userId },
+      });
+
+      message = "Applied for job successfully";
+    }
+
+    // Fetch the updated job
+    const updatedJob = await Job.findById(jobId).populate("applicants");
+
+    res.status(200).json({
+      message,
+      job: updatedJob,
+      application: application || null,
     });
-
-    const savedApplication = await newApplication.save();
-    res.status(201).json(savedApplication);
   } catch (error) {
+    console.error("Error applying/unapplying for job:", error);
     next(error);
   }
 };
@@ -46,7 +78,7 @@ export const getJobApplications = async (req, res, next) => {
 
     const applications = await Application.find({ job: jobId }).populate(
       "applicant",
-      "username email profile"
+      "email"
     );
     res.status(200).json(applications);
   } catch (error) {

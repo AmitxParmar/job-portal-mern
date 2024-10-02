@@ -1,5 +1,3 @@
-import { Router } from "express";
-
 import {
   applyForJob,
   getJobApplications,
@@ -7,9 +5,11 @@ import {
   updateApplicationStatus,
 } from "../controllers/application.controller.js";
 
+import { Router } from "express";
+
 const router = Router();
 
-router.post("/apply", applyForJob);
+router.post("/:jobId/apply", applyForJob);
 /* router.post("/apply", verifyToken, applyForJob); */
 
 router.get("/job/:jobId/applications", /* verifyToken, */ getJobApplications);

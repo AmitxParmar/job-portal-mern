@@ -12,56 +12,56 @@ import { Navigate } from "react-router-dom";
 import Profile from "./components/Dashboard/Settings/Profile";
 import Register from "./pages/Register";
 import Settings from "./components/Dashboard/Settings";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
-  const role = "jobSeeker"; // jobSeeker or employer
+  const role = "employer"; // jobSeeker or employer
   const isAuth = true;
   return (
     <Router>
-      <div className="">
-        <Navbar role={role} isAuth={isAuth} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/dashboard"
-            element={
-              <Layout role={role}>
-                <Dashboard role={role} />
-              </Layout>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <Layout role={role}>
-                <Settings />
-              </Layout>
-            }
-          >
-            <Route index element={<Profile />} />
-            <Route path="applied-jobs" element={<AppliedJobs />} />
-            <Route path="bookmarks" element={<Bookmarks />} />
-          </Route>
-          <Route
-            path="/login"
-            element={
-              <LoginRegisterLayout>
-                <Login />
-              </LoginRegisterLayout>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <LoginRegisterLayout>
-                <Register />
-              </LoginRegisterLayout>
-            }
-          />
+      <Navbar role={role} isAuth={isAuth} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Layout role={role}>
+              <Dashboard role={role} />
+            </Layout>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <Layout role={role}>
+              <Settings />
+            </Layout>
+          }
+        >
+          <Route index element={<Profile />} />
+          <Route path="applied-jobs" element={<AppliedJobs />} />
+          <Route path="bookmarks" element={<Bookmarks />} />
+        </Route>
+        <Route
+          path="/login"
+          element={
+            <LoginRegisterLayout>
+              <Login />
+            </LoginRegisterLayout>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <LoginRegisterLayout>
+              <Register />
+            </LoginRegisterLayout>
+          }
+        />
 
-          <Route path="*" element={<Navigate to={"/dashboard"} />} />
-        </Routes>
-      </div>
+        <Route path="*" element={<Navigate to={"/dashboard"} />} />
+      </Routes>
+      <Toaster />
     </Router>
   );
 }

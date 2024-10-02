@@ -12,9 +12,9 @@ export const getUserProfile = async (req, res, next) => {
       .populate("experience")
       .populate("education")
       .populate("bookmarkedJobs");
-    console.log(user);
-    if (!user) return next(createError(404, "User not found!"));
 
+    /* console.log(user); */
+    if (!user) return next(createError(404, "User not found!"));
     res.status(200).json(user);
   } catch (error) {
     next(error);

@@ -36,7 +36,7 @@ const jobSchema = new Schema({
   },
   skillsRequired: [{ type: String }],
   postedAt: { type: Date, default: Date.now },
-  applicants: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  applicants: [{ type: Schema.Types.ObjectId, ref: "Applicants" }],
   status: { type: String, enum: ["open", "closed"], default: "open" },
   jobType: {
     type: String,

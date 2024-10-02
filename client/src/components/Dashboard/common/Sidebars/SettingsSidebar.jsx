@@ -11,7 +11,7 @@ const SettingsSidebar = ({ role }) => {
   const location = useLocation(); // Added useLocation to fix the disallowed MIME type issue
 
   return (
-    <>
+    <div className="">
       {location.pathname.startsWith("/settings") ? (
         <Button
           variant="outline" // Fixed typo from "varient" to "variant"
@@ -70,7 +70,7 @@ const SettingsSidebar = ({ role }) => {
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

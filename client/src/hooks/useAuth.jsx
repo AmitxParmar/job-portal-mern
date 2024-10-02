@@ -22,7 +22,8 @@ export const useAuth = () => {
     enabled: !!userId,
   });
 
-  /*   const loginMutation = useMutation(loginUser, {
+  const loginMutation = useMutation({
+    mutationFn: loginUser,
     onSuccess: (data) => {
       setUserId(data.user._id);
       localStorage.setItem("userId", data.user._id);
@@ -30,28 +31,29 @@ export const useAuth = () => {
     },
   });
 
-  const registerMutation = useMutation(registerUser, {
+  const registerMutation = useMutation({
+    mutationFn: registerUser,
     onSuccess: (data) => {
       setUserId(data.user._id);
       localStorage.setItem("userId", data.user._id);
       queryClient.setQueryData(["user", data.user._id], data.user);
     },
-  }); */
-
-  /*   const logout = () => {
+  });
+  /* 
+  const logout = () => {
     logoutUser(); // Assume this function handles any server-side logout
     setUserId(null);
     localStorage.removeItem("userId");
     queryClient.clear();
-  }; */
-
+  };
+ */
   return {
     user,
     isLoading,
     error,
     isLoggedIn: !!userId,
-    /*    login: loginMutation.mutate,
-    register: registerMutation.mutate, */
+    login: loginMutation.mutate,
+    register: registerMutation.mutate,
     /* logout, */
   };
 };

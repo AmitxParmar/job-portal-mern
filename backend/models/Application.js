@@ -13,7 +13,6 @@ const applicationSchema = new Schema({
     default: "applied",
   },
   appliedAt: { type: Date, default: Date.now },
-  notes: { type: String },
 });
 
 export default model("Application", applicationSchema);
