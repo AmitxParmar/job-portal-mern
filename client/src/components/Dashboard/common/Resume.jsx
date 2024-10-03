@@ -1,15 +1,27 @@
 import { Badge } from "@/components/ui/badge";
 import Container from "./Container";
+import Loader from "./Loader";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-const Resume = ({ user }) => {
+const Resume = ({ user, isLoading }) => {
+  if (isLoading)
+    return (
+      <div
+        className={`min-w-96 border-none border-0 my-0 bg-background px-6 w-96`}
+      >
+        <Loader />
+      </div>
+    );
+
   const { fullName, bio, skills, projects, experience, education, profilePic } =
     user;
 
   return (
-    <Container className={`min-w-96 bg-background px-6 w-96`}>
-      <div className="my-5">
+    <Container
+      className={`min-w-96 border-none border-0 my-0 bg-background px-6 w-96`}
+    >
+      <div className="">
         <img
           src={profilePic || "https://via.placeholder.com/150"}
           alt="profile"
@@ -26,30 +38,6 @@ const Resume = ({ user }) => {
       <div className="border-b pb-4">
         <h2 className="text-xl font-semibold">Skills</h2>
         <ul className=" items-center flex flex-row justify-stretch flex-wrap gap-1">
-          {skills
-            ?.join(", ")
-            .split(", ")
-            .map((skill, index) => (
-              <li key={index}>
-                <Badge className="w-fit">{skill}</Badge>
-              </li>
-            ))}
-          {skills
-            ?.join(", ")
-            .split(", ")
-            .map((skill, index) => (
-              <li key={index}>
-                <Badge className="w-fit">{skill}</Badge>
-              </li>
-            ))}
-          {skills
-            ?.join(", ")
-            .split(", ")
-            .map((skill, index) => (
-              <li key={index}>
-                <Badge className="w-fit">{skill}</Badge>
-              </li>
-            ))}
           {skills
             ?.join(", ")
             .split(", ")
@@ -128,6 +116,7 @@ const Resume = ({ user }) => {
 };
 
 Resume.propTypes = {
+  isLoading: PropTypes.bool,
   user: PropTypes.shape({
     fullName: PropTypes.string.isRequired,
     bio: PropTypes.string.isRequired,

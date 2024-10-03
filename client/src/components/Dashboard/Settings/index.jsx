@@ -10,9 +10,9 @@ const Settings = () => {
   if (error) return <div className="text-5xl text-red-500">Error:{error}</div>;
 
   return (
-    <div className="flex flex-row justify-center h-full py-4">
+    <div className="flex flex-row flex-1 max-h-[calc(100vh-8vh)] py-4 overflow-y-hidden">
       <Outlet context={{ user, isLoading }} />
-      {!isLoading && <Resume user={user} />}
+      <Resume isLoading={isLoading} user={user} />
     </div>
   );
 };

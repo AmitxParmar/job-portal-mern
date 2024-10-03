@@ -17,22 +17,22 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import PropTypes from "prop-types";
 import QuillEditor from "@/components/Dashboard/common/QuillEditor";
+import { toast } from "sonner";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const ItemDialog = ({ isOpen, setIsOpen, activeSection, item, onSubmit }) => {
   const form = useForm();
 
-  useEffect(() => {
-    if (item) {
-      form.reset(item);
-    } else {
-      form.reset({});
-    }
-  }, [item, form]);
-
   const handleSubmit = (data) => {
-    onSubmit(data);
+    toast(`experience updated`, {
+      description: JSON.stringify(data),
+      /* action: {
+        label: "Undo",
+        onClick: () => bookmark(jobId),
+      }, */
+    });
+    /* onSubmit(data); */
   };
 
   const renderForm = () => {
@@ -196,7 +196,13 @@ const ItemDialog = ({ isOpen, setIsOpen, activeSection, item, onSubmit }) => {
                 <FormItem>
                   <FormLabel>Start Date</FormLabel>
                   <FormControl>
-                    <DatePicker {...field} />
+                    <DatePicker
+                      {...field}
+                      selected={field.value ? new Date(field.value) : null}
+                      onChange={(date) =>
+                        field.onChange(date ? date.toISOString() : null)
+                      }
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -208,7 +214,13 @@ const ItemDialog = ({ isOpen, setIsOpen, activeSection, item, onSubmit }) => {
                 <FormItem>
                   <FormLabel>End Date</FormLabel>
                   <FormControl>
-                    <DatePicker {...field} />
+                    <DatePicker
+                      {...field}
+                      selected={field.value ? new Date(field.value) : null}
+                      onChange={(date) =>
+                        field.onChange(date ? date.toISOString() : null)
+                      }
+                    />
                   </FormControl>
                 </FormItem>
               )}

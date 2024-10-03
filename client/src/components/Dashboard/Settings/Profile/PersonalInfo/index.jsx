@@ -7,8 +7,10 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { updateUserProfile } from "@/services/userServices";
 import { useForm } from "react-hook-form";
+import { useOutletContext } from "react-router-dom";
 
-const PersonalInfo = ({ user, isLoading }) => {
+const PersonalInfo = () => {
+  const { user, isLoading } = useOutletContext();
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
   const form = useForm({
