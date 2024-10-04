@@ -20,6 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import React from "react";
+import Resume from "./common/Resume";
 
 const EmployerDashboard = () => {
   /*   const {

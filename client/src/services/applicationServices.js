@@ -15,7 +15,7 @@ export const getJobApplications = async (jobId) => {
 };
 
 export const getUserApplications = async () => {
-  const { data } = await axiosInstance.get(`/applications/user/applications`);
+  const { data } = await axiosInstance.get(`/applications/user`);
   return data;
 };
 

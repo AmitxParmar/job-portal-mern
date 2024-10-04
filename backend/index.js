@@ -1,5 +1,6 @@
 import applicationRouter from "./routes/application.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import companyRoutes from "./routes/company.routes.js";
 import connectDB from "./db/db.js";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -42,6 +43,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/jobs", jobsRouter);
 app.use("/api/invitecode", inviteCodeRouter);
 app.use("/api/applications", applicationRouter);
+app.use("/api/company", companyRoutes);
 
 // Connect to MongoDB
 connectDB();

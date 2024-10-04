@@ -2,9 +2,14 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
 import Bookmarks from "./components/Dashboard/Settings/Bookmarks";
+import { CircleAlert } from "lucide-react";
+import { CircleCheck } from "lucide-react";
+import { CircleX } from "lucide-react";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
+import { Info } from "lucide-react";
 import Layout from "./components/Dashboard/common/Layouts/Layout";
+import Loader from "./components/Dashboard/common/Loader";
 import Login from "./pages/Login";
 import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
 import Navbar from "./components/Dashboard/common/Navbar";
@@ -15,7 +20,7 @@ import Settings from "./components/Dashboard/Settings";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
-  const role = "employer"; // jobSeeker or employer
+  const role = "jobSeeker"; // jobSeeker or employer
   const isAuth = true;
   return (
     <Router>
@@ -61,7 +66,15 @@ function App() {
 
         <Route path="*" element={<Navigate to={"/dashboard"} />} />
       </Routes>
-      <Toaster />
+      <Toaster
+        icons={{
+          success: <CircleCheck />,
+          info: <Info />,
+          warning: <CircleAlert />,
+          error: <CircleX />,
+          loading: <Loader />,
+        }}
+      />
     </Router>
   );
 }

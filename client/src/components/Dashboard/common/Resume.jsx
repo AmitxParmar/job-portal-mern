@@ -2,22 +2,20 @@ import { Badge } from "@/components/ui/badge";
 import Container from "./Container";
 import Loader from "./Loader";
 import PropTypes from "prop-types";
+import { memo } from "react";
 import moment from "moment";
 
 const Resume = ({ user, isLoading }) => {
-  if (isLoading)
-    return (
-      <div
-        className={`min-w-96 border-none border-0 my-0 bg-background px-6 w-96`}
-      >
-        <Loader />
-      </div>
-    );
-
   const { fullName, bio, skills, projects, experience, education, profilePic } =
     user;
 
-  return (
+  return isLoading ? (
+    <div
+      className={`min-w-96 border-none border-0 my-0 bg-background px-6 w-96`}
+    >
+      <Loader />
+    </div>
+  ) : (
     <Container
       className={`min-w-96 border-none border-0 my-0 bg-background px-6 w-96`}
     >
@@ -118,36 +116,36 @@ const Resume = ({ user, isLoading }) => {
 Resume.propTypes = {
   isLoading: PropTypes.bool,
   user: PropTypes.shape({
-    fullName: PropTypes.string.isRequired,
-    bio: PropTypes.string.isRequired,
-    skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+    profilePic: PropTypes.string, // Added profilePic to PropTypes
+    fullName: PropTypes.string,
+    bio: PropTypes.string,
+    skills: PropTypes.arrayOf(PropTypes.string),
     projects: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        skills: PropTypes.arrayOf(PropTypes.string).isRequired,
-        endDate: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        description: PropTypes.string,
+        skills: PropTypes.arrayOf(PropTypes.string),
+        endDate: PropTypes.string,
         url: PropTypes.string, // Made optional
       })
-    ).isRequired,
+    ),
     experience: PropTypes.arrayOf(
       PropTypes.shape({
-        jobTitle: PropTypes.string.isRequired,
-        employer: PropTypes.string.isRequired,
-        startDate: PropTypes.string.isRequired,
-        endDate: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
+        jobTitle: PropTypes.string,
+        employer: PropTypes.string,
+        startDate: PropTypes.string,
+        endDate: PropTypes.string,
+        description: PropTypes.string,
       })
-    ).isRequired,
+    ),
     education: PropTypes.arrayOf(
       PropTypes.shape({
-        institution: PropTypes.string.isRequired,
-        degree: PropTypes.string.isRequired,
-        yearOfGraduation: PropTypes.string.isRequired,
+        institution: PropTypes.string,
+        degree: PropTypes.string,
+        yearOfGraduation: PropTypes.string,
       })
-    ).isRequired,
-    profilePic: PropTypes.string, // Added profilePic to PropTypes
-  }).isRequired,
+    ),
+  }),
 };
 
-export default Resume;
+export default memo(Resume);

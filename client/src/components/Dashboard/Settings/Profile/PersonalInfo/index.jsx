@@ -4,15 +4,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PersonalInfoForm from "./PersonalInfoForm";
 import PropTypes from "prop-types";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 import { updateUserProfile } from "@/services/userServices";
 import { useForm } from "react-hook-form";
 import { useOutletContext } from "react-router-dom";
 
 const PersonalInfo = () => {
-  const { user, isLoading } = useOutletContext();
+  const { user } = useOutletContext();
+  const queryClient = useQueryClient();
+
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
+
   const form = useForm({
     defaultValues: {
       fullName: user?.fullName ?? "",
@@ -60,7 +63,7 @@ const PersonalInfo = () => {
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
-  const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn: ({ userId, data }) => updateUserProfile(userId, data),
     onSuccess: () => {
@@ -68,14 +71,21 @@ const PersonalInfo = () => {
       queryClient.invalidateQueries(["user", user._id]);
     },
   });
+
   const onSubmit = (data) => {
     mutate(
       { userId: user._id, data },
       {
-        onSuccess: (s) => console.log("success", s),
+        onSuccess: (data) =>
+          toast.success("Success!", {
+            description: `${JSON.stringify(data)}`,
+          }),
+        onError: (error) =>
+          toast.success("Error!", {
+            description: `${error.message}`,
+          }),
       }
     );
-    console.log(data);
   };
 
   return (
@@ -87,18 +97,16 @@ const PersonalInfo = () => {
         <Separator className="w-auto" />
       </div>
       <div className="border w-full h-full p-4 m-4 rounded-xl flex flex-row">
-        {!isLoading ? (
-          <PersonalInfoForm
-            form={form}
-            onSubmit={onSubmit}
-            previewUrl={previewUrl}
-            handleButtonClick={handleButtonClick}
-            handleFileChange={handleFileChange}
-            fileInputRef={fileInputRef}
-          />
-        ) : (
-          <Skeleton className={`min-h-full min-w-full`} />
-        )}
+        (
+        <PersonalInfoForm
+          form={form}
+          onSubmit={onSubmit}
+          previewUrl={previewUrl}
+          handleButtonClick={handleButtonClick}
+          handleFileChange={handleFileChange}
+          fileInputRef={fileInputRef}
+        />
+        )
       </div>
     </>
   );
@@ -125,7 +133,7 @@ PersonalInfo.propTypes = {
       }),
     }),
   }),
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default PersonalInfo;

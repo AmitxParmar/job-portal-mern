@@ -16,21 +16,35 @@ import { MapPin } from "lucide-react";
 import PropTypes from "prop-types";
 import { applyForJob } from "@/services/applicationServices";
 import moment from "moment";
+import { toast } from "sonner";
 
 const JobDetails = ({ job, isBookmarked }) => {
   const queryClient = useQueryClient();
   const { _id, title, description, location, postedAt, combinedField } = job;
+
   const { mutate: apply } = useMutation({
     mutationFn: (jobId) => applyForJob(jobId),
   });
 
   // handle job apply
-  const handleApplyForJob = (jobId) => {
-    console.log("handleJobA]ly");
-    apply(jobId, {
+  const handleApplyForJob = () => {
+    console.log("handleJobApply");
+    apply(_id, {
       onSuccess: () => {
         queryClient.invalidateQueries(["jobs"]);
-        console.log("sucesss");
+        toast.success("Success!", {
+          description: "You've applied for this job!",
+          style: {
+            border: "blue",
+            background: "black",
+          },
+        });
+      },
+      onError: (error) => {
+        queryClient.invalidateQueries(["jobs"]);
+        toast.error("Error!", {
+          description: error.message,
+        });
       },
     }); // get the user id from backend itself
   };

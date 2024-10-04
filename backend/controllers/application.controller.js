@@ -3,6 +3,7 @@ import Job from "../models/Job.js";
 import { User } from "../models/User.js";
 import { createError } from "../utils/error.js";
 
+const userId = "66ccb1ecb5e4de35acdbb80d"; // Hardcoded for testing
 export const applyForJob = async (req, res, next) => {
   try {
     console.log("Request params:", req.params);
@@ -11,7 +12,6 @@ export const applyForJob = async (req, res, next) => {
 
     // In a real application, you'd get the userId from the authenticated user
     // const userId = req.user.id;
-    const userId = "66ccb1ecb5e4de35acdbb80d"; // Hardcoded for testing
 
     // Find the job
     const job = await Job.findById(jobId);
@@ -30,11 +30,13 @@ export const applyForJob = async (req, res, next) => {
 
     if (existingApplication) {
       // If application exists, remove it
-      await Application.findByIdAndDelete(existingApplication._id);
+      const deletedApplication = await Application.findByIdAndDelete(
+        deletedApplication._id
+      );
 
       // Remove applicant from job
       await Job.findByIdAndUpdate(jobId, {
-        $pull: { applicants: userId },
+        $pull: { applicants: deletedApplication._id },
       });
 
       message = "Application removed successfully";
@@ -44,11 +46,11 @@ export const applyForJob = async (req, res, next) => {
         job: jobId,
         applicant: userId,
       });
-      await application.save();
+      const savedApplication = await application.save();
 
       // Add applicant to job
       await Job.findByIdAndUpdate(jobId, {
-        $addToSet: { applicants: userId },
+        $addToSet: { applicants: savedApplication._id },
       });
 
       message = "Applied for job successfully";
@@ -89,17 +91,18 @@ export const getJobApplications = async (req, res, next) => {
 // Get all applications by a user (for job seekers)
 export const getUserApplications = async (req, res, next) => {
   try {
-    const userId = req.user.id;
-
+    /* const userId = req.user.id; */
+    console.log("getUserApplication");
     const user = await User.findById(userId);
     if (!user) return next(createError(404, "User not found!"));
-
+    console.log("UserA]lication User::::", user);
     const applications = await Application.find({ applicant: userId }).populate(
-      "job",
-      "title company location"
+      "job"
     );
+    console.log("applications", applications);
     res.status(200).json(applications);
   } catch (error) {
+    console.log("UserAppErrr:", error);
     next(error);
   }
 };
