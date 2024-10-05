@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import BookmarkButton from "../JobListings/BookmarkButton";
+import BookmarkButton from "../common/JobCard/BookmarkButton";
 import Container from "../common/Container";
 import Loader from "../common/Loader";
 import { formatSalary } from "@/lib/utils";
@@ -19,7 +19,7 @@ const Bookmarks = () => {
   console.log("bookmarks", user?.salaryRange?.min, user?.bookmarkedJobs);
   return (
     <Container
-      className={`max-w-screen-2xl capitalize font-semibold w-screen lg:px-20 mx-6 h-screen lg:py-12`}
+      className={`max-w-screen-2xl capitalize font-semibold w-screen lg:px-20 mx-6 max-h-full lg:py-12`}
     >
       <div className="container mx-auto p-4 max-w-3xl">
         <h1 className="text-2xl font-bold mb-4">

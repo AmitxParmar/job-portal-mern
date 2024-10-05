@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Drawer,
   DrawerContent,
@@ -9,7 +10,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Badge } from "@/components/ui/badge";
-import BookmarkButton from "./BookmarkButton";
+import BookmarkButton from "../common/JobCard/BookmarkButton";
 import { Button } from "@/components/ui/button";
 import { Clock } from "lucide-react";
 import { MapPin } from "lucide-react";
@@ -20,7 +21,15 @@ import { toast } from "sonner";
 
 const JobDetails = ({ job, isBookmarked }) => {
   const queryClient = useQueryClient();
-  const { _id, title, description, location, postedAt, combinedField } = job;
+  const {
+    _id,
+    title,
+    description,
+    location,
+    company,
+    postedAt,
+    combinedField,
+  } = job;
 
   const { mutate: apply } = useMutation({
     mutationFn: (jobId) => applyForJob(jobId),
@@ -70,11 +79,10 @@ const JobDetails = ({ job, isBookmarked }) => {
               </DrawerTitle>
               <div className="flex  lg:flex-row items-center">
                 <div className="mr-4 p-1">
-                  <img
-                    src="/google.png"
-                    alt="Company Logo"
-                    className="lg:h-20 lg:w-20"
-                  />
+                  <Avatar>
+                    <AvatarImage src={company?.logo} alt={company.name} />
+                    <AvatarFallback>{company.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
                   <div className="text-blue-600 text-center font-bold">
                     {"Google"}
                   </div>
@@ -150,7 +158,11 @@ JobDetails.propTypes = {
   isBookmarked: PropTypes.bool.isRequired,
   job: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    employer: PropTypes.string,
+    company: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      logo: PropTypes.string.isRequired,
+      _id: PropTypes.object.isRequired,
+    }).isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.shape({

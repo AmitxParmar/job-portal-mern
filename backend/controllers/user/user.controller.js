@@ -3,6 +3,7 @@ import { User } from "../../models/User.js";
 import { createError } from "../../utils/error.js";
 import mongoose from "mongoose";
 
+const userId = "66ccb1ecb5e4de35acdbb80d";
 // Get User Profile
 export const getUserProfile = async (req, res, next) => {
   try {

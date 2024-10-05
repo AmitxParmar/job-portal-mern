@@ -1,9 +1,10 @@
 import { Bell, BellDotIcon, LucideSettings } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+
 import HeaderFilter from "./HeaderFilter";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
@@ -11,7 +12,7 @@ const Navbar = ({ role, isAuth }) => {
   const notification = false;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex font-grotesk  flex-col">
       <header className="hidden lg:flex sticky top-0 justify-between items-center bg-black text-white p-4 z-50">
         {/* Left Section (Navigation) */}
         <div className="flex items-center space-x-6">

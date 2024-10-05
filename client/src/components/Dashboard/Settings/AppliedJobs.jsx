@@ -35,86 +35,6 @@ import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-/* const applications = [
-  {
-    id: 1,
-    logo: "/placeholder.svg?height=40&width=40",
-    company: "TechCorp",
-    applyFor: "Software Engineer",
-    jobType: "Full-time",
-    status: "Applied",
-    apply: "2023-10-01",
-    description:
-      "We are seeking a skilled Software Engineer to join our team...",
-  },
-  {
-    id: 2,
-    logo: "/placeholder.svg?height=40&width=40",
-    company: "DesignStudio",
-    applyFor: "Product Manager",
-    jobType: "Full-time",
-    status: "Interviewing",
-    apply: "2023-09-15",
-    description:
-      "DesignStudio is looking for an experienced Product Manager...",
-  },
-  {
-    id: 3,
-    logo: "/placeholder.svg?height=40&width=40",
-    company: "DataTech",
-    applyFor: "Data Scientist",
-    jobType: "Contract",
-    status: "Rejected",
-    apply: "2023-08-20",
-    description:
-      "Join our data science team to work on cutting-edge projects...",
-  },
-  {
-    id: 4,
-    logo: "/placeholder.svg?height=40&width=40",
-    company: "UXPro",
-    applyFor: "UX Designer",
-    jobType: "Part-time",
-    status: "Reviewing",
-    apply: "2023-10-05",
-    description:
-      "We're looking for a creative UX Designer to help shape our products...",
-  },
-  {
-    id: 5,
-    logo: "/placeholder.svg?height=40&width=40",
-    company: "CloudOps",
-    applyFor: "DevOps Engineer",
-    jobType: "Full-time",
-    status: "Applied",
-    apply: "2023-09-30",
-    description:
-      "Join our DevOps team to build and maintain our cloud infrastructure...",
-  },
-  {
-    id: 6,
-    logo: "/placeholder.svg?height=40&width=40",
-    company: "WebFront",
-    applyFor: "Frontend Developer",
-    jobType: "Internship",
-    status: "Hired",
-    apply: "2023-10-10",
-    description:
-      "Exciting opportunity for a Frontend Developer intern to work on real projects...",
-  },
-  {
-    id: 7,
-    logo: "/placeholder.svg?height=40&width=40",
-    company: "BackendTech",
-    applyFor: "Backend Developer",
-    jobType: "Full-time",
-    status: "Interviewing",
-    apply: "2023-09-25",
-    description:
-      "We're hiring a Backend Developer to work on our scalable systems...",
-  },
-]; */
-
 const statusClasses = {
   applied: "bg-applied",
   reviewing: "bg-reviewing",
@@ -142,7 +62,12 @@ export default function AppliedJobs() {
   isError && toast(error.message);
   console.log("applied jobs", appliedJobs);
 
-  if (isLoading) return <Loader />;
+  if (isLoading)
+    return (
+      <div className="max-h-[calc(100vh-8vh)] min-h-[calc(100vh-8vh)]">
+        <Loader />
+      </div>
+    );
   if (error) {
     return (
       <Container

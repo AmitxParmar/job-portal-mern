@@ -10,12 +10,9 @@ const JobListings = lazy(() => import("@/components/Dashboard/JobListings"));
 const Dashboard = ({ role }) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      {role === "jobSeeker" ? (
-        <JobListings />
-      ) : (
-        role === "employer" && <EmployerDashboard />
-      )}
-    </Suspense>
+      {role === "jobSeeker" && <JobListings />}
+      {role === "employer" && <EmployerDashboard />}
+    </Suspense> // NOTE: idk why its calling job listing api even though the role is employer? gotta do something about it.
   );
 };
 

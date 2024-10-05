@@ -8,6 +8,7 @@ import { CircleX } from "lucide-react";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import { Info } from "lucide-react";
+import JobOpenings from "./components/Dashboard/EmployerComponents/JobOpenings";
 import Layout from "./components/Dashboard/common/Layouts/Layout";
 import Loader from "./components/Dashboard/common/Loader";
 import Login from "./pages/Login";
@@ -20,49 +21,27 @@ import Settings from "./components/Dashboard/Settings";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
-  const role = "jobSeeker"; // jobSeeker or employer
+  const role = "employer"; // jobSeeker or employer
   const isAuth = true;
   return (
     <Router>
       <Navbar role={role} isAuth={isAuth} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/dashboard"
-          element={
-            <Layout role={role}>
-              <Dashboard role={role} />
-            </Layout>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <Layout role={role}>
-              <Settings />
-            </Layout>
-          }
-        >
-          <Route index element={<Profile />} />
-          <Route path="applied-jobs" element={<AppliedJobs />} />
-          <Route path="bookmarks" element={<Bookmarks />} />
+        <Route path="/" element={<Layout role={role} />}>
+          <Route path="/dashboard" element={<Dashboard role={role} />} />
+          <Route path="/recruiter/job-openings" element={<JobOpenings />} />
+          <Route path="/settings" element={<Settings />}>
+            <Route index element={<Profile />} />
+            <Route path="applied-jobs" element={<AppliedJobs />} />
+            <Route path="bookmarks" element={<Bookmarks />} />
+          </Route>
         </Route>
-        <Route
-          path="/login"
-          element={
-            <LoginRegisterLayout>
-              <Login />
-            </LoginRegisterLayout>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <LoginRegisterLayout>
-              <Register />
-            </LoginRegisterLayout>
-          }
-        />
+
+        <Route element={<LoginRegisterLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
         <Route path="*" element={<Navigate to={"/dashboard"} />} />
       </Routes>

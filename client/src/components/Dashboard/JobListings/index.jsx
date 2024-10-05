@@ -1,12 +1,13 @@
 import { Fragment, Suspense, lazy } from "react";
 
 import { Button } from "@/components/ui/button";
-import CardSkeleton from "./CardSkeleton";
+import CardSkeleton from "../common/JobCard/CardSkeleton";
+import JobDetails from "./JobDetails";
 import Loader from "../common/Loader";
 import { useAuth } from "@/hooks/useAuth";
 import { useFilters } from "@/hooks/useFilters";
 
-const JobCard = lazy(() => import("./JobCard"));
+const JobCard = lazy(() => import("../common/JobCard"));
 
 const JobListings = () => {
   const { jobQuery } = useFilters();
@@ -36,13 +37,14 @@ const JobListings = () => {
           data?.pages?.map((page, i) => (
             <Fragment key={i}>
               {page?.jobs?.map((job) => (
-                <JobCard
-                  key={job._id}
-                  job={job}
-                  isBookmarked={user?.bookmarkedJobs?.some(
-                    (bookmarkedJob) => bookmarkedJob._id === job._id
-                  )}
-                />
+                <JobCard key={job._id} job={job}>
+                  <JobDetails
+                    job={job}
+                    isBookmarked={user?.bookmarkedJobs?.some(
+                      (bookmarkedJob) => bookmarkedJob?._id === job?._id
+                    )}
+                  />
+                </JobCard>
               ))}
             </Fragment>
           ))

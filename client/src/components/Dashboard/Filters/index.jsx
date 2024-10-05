@@ -1,7 +1,6 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Label } from "@/components/ui/label";
 import { Trash } from "lucide-react";
@@ -10,12 +9,14 @@ import { useFilters } from "@/hooks/useFilters";
 const Filters = () => {
   const { filters, setFilter, clearFilters } = useFilters();
 
-  const handleSkillChange = (skill) => {
-    const updatedSkills = filters?.skills?.includes(skill)
-      ? filters?.skills.filters((s) => s !== skill)
-      : [...filters.skills, skill];
+  /* const handleSkillChange = (skill) => {
+    const updatedSkills = filters?.skills
+      ? filters.skills.includes(skill)
+        ? filters.skills.filter((s) => s !== skill)
+        : [...filters.skills, skill]
+      : [skill];
     setFilter({ ...filters, skills: updatedSkills });
-  };
+  }; */
 
   const handleStatusChange = (value) => {
     setFilter({ ...filters, status: value });
@@ -26,15 +27,13 @@ const Filters = () => {
     setFilter({ ...filters, [type]: date });
   };
 
-  const handleApplyFilters = () => {};
-
-  function onFilterChange() {}
+  /* const handleApplyFilters = () => {}; */
 
   return (
     <>
-      <h2 className="text-xl font-semibold mb-4">Filters</h2>
+      <h2 className="text-xl font-grotesk font-semibold mb-4">Filters</h2>
       <div className="space-y-4">
-        <div>
+        {/*     <div>
           <Label>Skills Required</Label>
           <div className="space-y-2">
             {["React", "Node.js", "Python", "Java", "JavaScript"].map(
@@ -52,7 +51,7 @@ const Filters = () => {
               )
             )}
           </div>
-        </div>
+        </div> */}
 
         <div>
           <Label>Status</Label>
@@ -94,9 +93,9 @@ const Filters = () => {
             <Trash />
           </span>
         </Button>
-        <Button onClick={handleApplyFilters} className="w-full rounded-3xl">
+        {/* <Button onClick={handleApplyFilters} className="w-full rounded-3xl">
           Apply Filters
-        </Button>
+        </Button> */}
       </div>
     </>
   );

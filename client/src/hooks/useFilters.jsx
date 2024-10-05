@@ -33,7 +33,7 @@ export const useFilters = () => {
     keepPreviousData: true,
     staleTime: 5000,
   });
-  console.log("useInfintiefilters", jobQuery?.data?.pages);
+
   return {
     jobQuery,
     filters,

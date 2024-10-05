@@ -1,6 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Icons } from "@/constants/Icons";
 import {
   Form,
   FormControl,
@@ -9,11 +6,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/constants/Icons";
+import { Input } from "@/components/ui/input";
+import { LucideUserPlus2 } from "lucide-react";
+import { registerUser } from "@/services/authServices";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "@/services/authServices";
 import { useNavigate } from "react-router-dom";
-import { LucideUserPlus2 } from "lucide-react";
 
 const Register = () => {
   const form = useForm();
@@ -31,7 +32,7 @@ const Register = () => {
   };
 
   return (
-    <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+    <div className="mx-auto relative flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
       <div className="flex flex-col w-full items-center justify-stretch space-y-2 text-center">
         <LucideUserPlus2 size={50} className="" />
         <h1 className="text-2xl font-grotesk font-semibold tracking-tight">

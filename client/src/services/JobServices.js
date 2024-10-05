@@ -34,6 +34,11 @@ export const deleteJob = async (jobId) => {
   return data;
 };
 
+export const getRecruiterJobs = async () => {
+  const { data } = await axiosInstance.get(`${BASE_URL}/recruiter/jobs`);
+  return data;
+};
+
 /* BOTH ROLE */
 /* export const bookmarkJob = async (jobId) => {
   const { data } = await axiosInstance.post(

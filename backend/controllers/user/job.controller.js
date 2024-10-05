@@ -3,6 +3,7 @@ import Job from "../../models/Job.js";
 import { User } from "../../models/User.js";
 import { createError } from "../../utils/error.js";
 
+const userId = "66ccb1ecb5e4de35acdbb80d";
 export const jobControllers = {
   // Create a new job
   createJob: async (req, res, next) => {
@@ -200,8 +201,33 @@ export const jobControllers = {
     }
   },
 
+  // Get jobs posted by a recruiter
+  getRecruiterJobs: async (req, res, next) => {
+    try {
+      const recruiter = await User.findById(userId /* req.user.id */);
+      /* if (!recruiter || recruiter.role !== "recruiter") {
+        return next(createError(403, "Access denied"));
+      } */
+      console.log("gettings recruiters job", recruiter.email);
+      const jobs = await Job.find({ postedBy: recruiter._id })
+        .populate("company", "name logo")
+        .populate("applicants", "fullName email");
+      const formattedJobs = jobs.map((job) => ({
+        ...job.toObject(),
+        combinedField: {
+          requiredSkills: job.skillsRequired[0] || null,
+          jobType: job.jobType,
+          workFrom: job.workFrom,
+          experience: job.experience,
+        },
+      }));
+      res.status(200).json({ jobs: formattedJobs });
+    } catch (err) {
+      next(err);
+    }
+  },
   // Apply for a job
-  applyForJob: async (req, res, next) => {
+  /*   applyForJob: async (req, res, next) => {
     try {
       const job = await Job.findById(req.params.id);
       if (!job) {
@@ -225,22 +251,5 @@ export const jobControllers = {
       next(err);
     }
   },
-
-  // Get jobs posted by a recruiter
-  getRecruiterJobs: async (req, res, next) => {
-    try {
-      const recruiter = await User.findById(req.user.id);
-      if (!recruiter || recruiter.role !== "recruiter") {
-        return next(createError(403, "Access denied"));
-      }
-
-      const jobs = await Job.find({ postedBy: recruiter._id })
-        .populate("company", "name logo")
-        .populate("applicants", "fullName email");
-
-      res.status(200).json(jobs);
-    } catch (err) {
-      next(err);
-    }
-  },
+ */
 };

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
+import { NotepadText } from "lucide-react";
 import PostAJobButton from "../../EmployerComponents/PostAJobButton";
 import { profileMenu } from "@/constants/constants.jsx";
 
@@ -37,21 +38,38 @@ const SettingsSidebar = ({ role }) => {
       </div> */}
       <div className="font-grotesk font-semibold overflow-hidden rounded-xl flex flex-col space-y-2 py-6 mt-4 px-1">
         {role === "employer" && (
-          <Link
-            to={"/dashboard"}
-            className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center min-w-max border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
-              location.pathname === "/dashboard"
-                ? "border-black invert scale-15"
-                : ""
-            }`}
-          >
-            <span className="flex flex-row items-center  p-1">
-              <span className="mr-3 ">
-                <Home />
+          <>
+            <Link
+              to={"/dashboard"}
+              className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center min-w-max border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
+                location.pathname === "/dashboard"
+                  ? "border-black invert scale-15"
+                  : ""
+              }`}
+            >
+              <span className="flex flex-row items-center  p-1">
+                <span className="mr-3 ">
+                  <Home />
+                </span>
+                <span className="">Dashboard</span>
               </span>
-              <span className="">Dashboard</span>
-            </span>
-          </Link>
+            </Link>
+            <Link
+              to={"/recruiter/job-openings"}
+              className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center min-w-max border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
+                location.pathname === "/recruiter/job-openings"
+                  ? "border-black invert scale-15"
+                  : ""
+              }`}
+            >
+              <span className="flex flex-row items-center p-1">
+                <span className="mr-3 ">
+                  <NotepadText />
+                </span>
+                <span className="">Job Postings</span>
+              </span>
+            </Link>
+          </>
         )}
         {profileMenu.map((item) => (
           <Link

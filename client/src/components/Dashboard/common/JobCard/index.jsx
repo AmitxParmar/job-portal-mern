@@ -1,16 +1,17 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { Badge } from "@/components/ui/badge";
 import BookmarkButton from "./BookmarkButton";
 import { Clock } from "lucide-react";
-import JobDetails from "./JobDetails";
 import PropTypes from "prop-types";
 import { formatSalary } from "@/lib/utils";
 import { memo } from "react";
 import moment from "moment";
 
-const JobCard = ({ job, isBookmarked }) => {
+const JobCard = ({ job, isBookmarked, children }) => {
   const {
     _id,
-    employer,
+    company,
     title,
     location,
     salaryRange,
@@ -27,10 +28,10 @@ const JobCard = ({ job, isBookmarked }) => {
     applicants,
     applicants.includes("66ccb1ecb5e4de35acdbb80d")
   );
-
+  console.log("testng job recuiters", job);
   return (
     <>
-      <div className="p-2 mx-auto font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col m-2">
+      <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col m-2">
         <div
           className={`${
             status === "open" ? "bg-cyan-200" : "bg-slate-500"
@@ -54,11 +55,17 @@ const JobCard = ({ job, isBookmarked }) => {
               <BookmarkButton isBookmarked={isBookmarked} jobId={_id} />
             </div>
           </div>
-          <div className="mt-2">
-            <p className="text-gray-500">{employer._id}</p>
-            <h3 className="text-3xl font-medium font-grotesk tracking-normal leading-none">
-              {title}
-            </h3>
+          <div className="mt-2 flex flex-row items-center justify-between">
+            <div>
+              <p className="font-bold">{company.name}</p>
+              <h3 className="text-3xl font-bold font-grotesk tracking-normal leading-none">
+                {title}
+              </h3>
+            </div>
+            <Avatar>
+              <AvatarImage src={company?.logo} alt="@shadcn" />
+              <AvatarFallback>{company?.name?.charAt(0)}</AvatarFallback>
+            </Avatar>
           </div>
 
           <div className="flex h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 py-4 font-grotesk font-bold">
@@ -83,8 +90,7 @@ const JobCard = ({ job, isBookmarked }) => {
               {location?.city}, {location?.state}
             </div>
           </div>
-
-          <JobDetails job={job} isBookmarked={isBookmarked} />
+          {children}
         </div>
       </div>
     </>
@@ -92,10 +98,15 @@ const JobCard = ({ job, isBookmarked }) => {
 };
 
 JobCard.propTypes = {
+  children: PropTypes.node,
   isBookmarked: PropTypes.bool.isRequired,
   job: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    employer: PropTypes.string,
+    company: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      logo: PropTypes.string.isRequired,
+    }).isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.shape({

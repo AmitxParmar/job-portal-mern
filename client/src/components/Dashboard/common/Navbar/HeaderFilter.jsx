@@ -26,7 +26,6 @@ const DropdownList = lazy(() => import("../DropdownList"));
 const HeaderFilter = ({ role }) => {
   const { filters, setFilter } = useFilters();
   const { pathname } = useLocation(); // Get pathname from useLocation
-
   return (
     pathname === "/dashboard" &&
     role !== "employer" && (
