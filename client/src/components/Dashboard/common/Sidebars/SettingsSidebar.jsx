@@ -37,7 +37,7 @@ const SettingsSidebar = ({ role }) => {
         <p className="text-center text-xl font-bold">John Doe</p>
       </div> */}
       <div className="font-grotesk font-semibold overflow-hidden rounded-xl flex flex-col space-y-2 py-6 mt-4 px-1">
-        {role === "employer" && (
+        {role === "recruiter" && (
           <>
             <Link
               to={"/dashboard"}

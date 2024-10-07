@@ -6,6 +6,7 @@ import { CircleAlert } from "lucide-react";
 import { CircleCheck } from "lucide-react";
 import { CircleX } from "lucide-react";
 import Dashboard from "./pages/Dashboard";
+import EmployerDashboard from "@/components/Dashboard/EmployerDashboard";
 import Home from "./pages/Home";
 import { Info } from "lucide-react";
 import JobOpenings from "./components/Dashboard/EmployerComponents/JobOpenings";
@@ -19,9 +20,10 @@ import Profile from "./components/Dashboard/Settings/Profile";
 import Register from "./pages/Register";
 import Settings from "./components/Dashboard/Settings";
 import { Toaster } from "./components/ui/sonner";
+import UserJobListings from "@/components/Dashboard/JobListings";
 
 function App() {
-  const role = "employer"; // jobSeeker or employer
+  const role = "recruiter"; // jobSeeker or recruiter
   const isAuth = true;
   return (
     <Router>
@@ -29,7 +31,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/" element={<Layout role={role} />}>
-          <Route path="/dashboard" element={<Dashboard role={role} />} />
+          <Route path="/dashboard" element={<Dashboard role={role} />}>
+            <Route path="jobSeeker" element={<UserJobListings />} />
+            <Route path="recruiter" element={<EmployerDashboard />} />
+          </Route>
           <Route path="/recruiter/job-openings" element={<JobOpenings />} />
           <Route path="/settings" element={<Settings />}>
             <Route index element={<Profile />} />

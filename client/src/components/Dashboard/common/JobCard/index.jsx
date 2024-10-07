@@ -20,15 +20,8 @@ const JobCard = ({ job, isBookmarked, children }) => {
     status,
     postedAt,
     combinedField,
-    applicants,
   } = job;
 
-  console.log(
-    "people applied for the job",
-    applicants,
-    applicants.includes("66ccb1ecb5e4de35acdbb80d")
-  );
-  console.log("testng job recuiters", job);
   return (
     <>
       <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col m-2">
@@ -118,13 +111,33 @@ JobCard.propTypes = {
       min: PropTypes.string.isRequired,
       max: PropTypes.string.isRequired,
     }).isRequired,
-    applicants: PropTypes.arrayOf(PropTypes.string),
+    /* applicants: PropTypes.shape({
+      _id: PropTypes.string,
+      profilePic: PropTypes.string, // Added profilePic to PropTypes
+      fullName: PropTypes.string,
+      bio: PropTypes.string,
+      skills: PropTypes.arrayOf(PropTypes.string),
+      experience: PropTypes.arrayOf(
+        PropTypes.shape({
+          jobTitle: PropTypes.string,
+          recruiter: PropTypes.string,
+          startDate: PropTypes.string,
+          endDate: PropTypes.string,
+          description: PropTypes.string,
+        })
+      ),
+    }), */
     tags: PropTypes.arrayOf(PropTypes.string),
     frequency: PropTypes.string.isRequired,
     skillsRequired: PropTypes.arrayOf(PropTypes.string),
     status: PropTypes.string,
     postedAt: PropTypes.string.isRequired,
-    combinedField: PropTypes.shape({}).isRequired,
+    combinedField: PropTypes.shape({
+      requiredSkills: PropTypes.string,
+      jobType: PropTypes.string,
+      workFrom: PropTypes.string,
+      experience: PropTypes.string,
+    }).isRequired,
   }).isRequired,
 };
 

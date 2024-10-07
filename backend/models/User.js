@@ -1,7 +1,5 @@
 import { Schema, model } from "mongoose";
 
-import bcrypt from "bcryptjs";
-
 const educationSchema = new Schema({
   institution: { type: String },
   degree: { type: String },
@@ -30,7 +28,7 @@ const userSchema = new Schema({
   password: { type: String },
   role: {
     type: String,
-    enum: ["admin", "employer", "jobSeeker"],
+    enum: ["admin", "recruiter", "jobSeeker"],
     default: "jobSeeker",
   },
   isVerified: { type: Boolean, default: false },
@@ -38,6 +36,7 @@ const userSchema = new Schema({
 
   // Reference to profile schema
   profilePic: { type: String },
+  yoe: { type: String },
   fullName: { type: String },
   bio: { type: String },
   contact: { type: String },

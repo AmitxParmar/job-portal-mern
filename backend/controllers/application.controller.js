@@ -78,10 +78,17 @@ export const getJobApplications = async (req, res, next) => {
     const job = await Job.findById(jobId);
     if (!job) return next(createError(404, "Job not found!"));
 
-    const applications = await Application.find({ job: jobId }).populate(
-      "applicant",
-      "email"
-    );
+    const applications = await Application.find({ job: jobId })
+      .populate({
+        path: "applicant",
+        select: "email profilePic fullName experience skills yoe",
+        populate: {
+          path: "experience",
+          model: "Experience",
+        },
+      })
+      .populate("job", "title");
+
     res.status(200).json(applications);
   } catch (error) {
     next(error);

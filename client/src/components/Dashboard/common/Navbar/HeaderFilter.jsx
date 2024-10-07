@@ -28,7 +28,7 @@ const HeaderFilter = ({ role }) => {
   const { pathname } = useLocation(); // Get pathname from useLocation
   return (
     pathname === "/dashboard" &&
-    role !== "employer" && (
+    role !== "recruiter" && (
       <Suspense
         fallback={<Loader className={`transition-all duration-1000`} />}
       >
@@ -103,7 +103,7 @@ const HeaderFilter = ({ role }) => {
 };
 
 HeaderFilter.propTypes = {
-  role: PropTypes.oneOf(["employer", "jobSeeker"]).isRequired,
+  role: PropTypes.oneOf(["recruiter", "jobSeeker"]).isRequired,
 };
 
 export default memo(HeaderFilter);

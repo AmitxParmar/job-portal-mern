@@ -131,6 +131,7 @@ Resume.propTypes = {
     ),
     experience: PropTypes.arrayOf(
       PropTypes.shape({
+        yoe: PropTypes.string,
         jobTitle: PropTypes.string,
         employer: PropTypes.string,
         startDate: PropTypes.string,

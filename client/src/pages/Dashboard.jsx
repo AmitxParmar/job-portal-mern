@@ -1,23 +1,31 @@
-import { Suspense, lazy } from "react";
+import { Navigate, Outlet, useParams } from "react-router-dom";
 
+import Loader from "@/components/Dashboard/common/Loader";
 import PropTypes from "prop-types";
-
-const EmployerDashboard = lazy(() =>
-  import("@/components/Dashboard/EmployerDashboard")
-);
-const JobListings = lazy(() => import("@/components/Dashboard/JobListings"));
+import { Suspense } from "react";
 
 const Dashboard = ({ role }) => {
+  const { role: routeRole } = useParams();
+
+  if (role !== routeRole) {
+    return <Navigate to={`/dashboard/${role}`} replace />;
+  }
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {role === "jobSeeker" && <JobListings />}
-      {role === "employer" && <EmployerDashboard />}
-    </Suspense> // NOTE: idk why its calling job listing api even though the role is employer? gotta do something about it.
+    <Suspense
+      fallback={
+        <div className="min-h-full min-w-full">
+          <Loader />
+        </div>
+      }
+    >
+      <Outlet />
+    </Suspense>
   );
 };
 
 Dashboard.propTypes = {
-  role: PropTypes.oneOf(["jobSeeker", "employer"]).isRequired,
+  role: PropTypes.oneOf(["jobSeeker", "recruiter"]).isRequired,
 };
 
 export default Dashboard;

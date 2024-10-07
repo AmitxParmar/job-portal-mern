@@ -15,7 +15,7 @@ const Sidebars = ({ role }) => {
       <Container
         className={`sticky border-none border-0 ml-4 left-0 bg-card w-56`}
       >
-        {pathname.startsWith("/settings") || role === "employer" ? (
+        {pathname.startsWith("/settings") || role === "recruiter" ? (
           <SettingsSidebar role={role} />
         ) : role === "jobSeeker" ? (
           <Filters />

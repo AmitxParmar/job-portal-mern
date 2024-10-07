@@ -9,7 +9,7 @@ import { useFilters } from "@/hooks/useFilters";
 
 const JobCard = lazy(() => import("../common/JobCard"));
 
-const JobListings = () => {
+const UserJobListings = () => {
   const { jobQuery } = useFilters();
   const { user } = useAuth();
   const {
@@ -72,4 +72,4 @@ const JobListings = () => {
   );
 };
 
-export default JobListings;
+export default UserJobListings;
