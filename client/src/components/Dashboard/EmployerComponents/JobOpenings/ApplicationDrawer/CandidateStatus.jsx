@@ -217,14 +217,15 @@ const CandidateStatus = ({
                           <div
                             className={`w-8 h-8 rounded-full flex items-center justify-center ${
                               step.number < activeStep ||
-                              step.number === activeStep
+                              (step.number === 4 && activeStep === 4)
                                 ? "bg-green-500"
                                 : step.number === activeStep
                                 ? "bg-yellow-500"
                                 : "bg-gray-700"
                             }`}
                           >
-                            {step.number < activeStep ? (
+                            {step.number < activeStep ||
+                            (step.number === 4 && activeStep === 4) ? (
                               <Check className="w-5 h-5 text-white" />
                             ) : step.number === activeStep ? (
                               isPending ? (
@@ -247,7 +248,7 @@ const CandidateStatus = ({
 
                           {step.number === activeStep && (
                             <span
-                              className={`inline-block bg-green-600 text-sm px-2 py-1 font-semibold rounded-full mt-1 text-background`}
+                              className={`inline-block bg-green-600 text-sm px-2 font-medium rounded-full mt-1 text-background`}
                             >
                               Active
                             </span>
