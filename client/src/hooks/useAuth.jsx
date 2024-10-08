@@ -1,9 +1,11 @@
 import { loginUser, registerUser } from "@/services/authServices";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { fetchUserById } from "@/services/userServices";
 import { toast } from "sonner";
 import { useState } from "react";
+import useUser from "./useUser";
+
+/* import { fetchUserById } from "@/services/userServices"; */
 
 export const useAuth = () => {
   const [userId, setUserId] = useState(
@@ -11,13 +13,9 @@ export const useAuth = () => {
   );
   const queryClient = useQueryClient();
 
-  console.log("Userid", userId);
+  console.log("UserId", userId);
 
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: user, isLoading, error } = useUser(userId); /* useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUserById(userId),
     enabled: !!userId,
@@ -25,7 +23,7 @@ export const useAuth = () => {
       toast.success("User data fetched", {
         description: JSON.stringify(data),
       }),
-  });
+  }); */
 
   const loginMutation = useMutation({
     mutationFn: loginUser,

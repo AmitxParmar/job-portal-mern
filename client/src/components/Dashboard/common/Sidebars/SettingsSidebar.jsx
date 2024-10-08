@@ -16,7 +16,7 @@ const SettingsSidebar = ({ role }) => {
       {location.pathname.startsWith("/settings") ? (
         <Button
           variant="outline" // Fixed typo from "varient" to "variant"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate(`/dashboard/${role}`)}
           className="group transition-all flex flex-row items-center place-items-center text-center duration-500 hover:scale-105 rounded-full hover:bg-white px-4 py-2 justify-center border w-full hover:invert "
         >
           <ArrowLeft
@@ -25,7 +25,7 @@ const SettingsSidebar = ({ role }) => {
           />
           <span className="ml-2 group">Back</span>
         </Button>
-      ) : location.pathname === "/dashboard" ? (
+      ) : location.pathname === "/dashboard/recruiter" ? (
         <PostAJobButton />
       ) : null}
       {/* <div className="my-5">
@@ -42,7 +42,7 @@ const SettingsSidebar = ({ role }) => {
             <Link
               to={"/dashboard"}
               className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center min-w-max border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
-                location.pathname === "/dashboard"
+                location.pathname === `/dashboard/${role}`
                   ? "border-black invert scale-15"
                   : ""
               }`}

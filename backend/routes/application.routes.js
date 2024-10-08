@@ -15,7 +15,7 @@ router.post("/:jobId/apply", applyForJob);
 router.get("/job/:jobId/applications", /* verifyToken, */ getJobApplications);
 router.get("/user", /* verifyToken, */ getUserApplications);
 router.put(
-  "/application/:id/status",
+  "/application/:applicationId/:status",
   /* verifyToken, */ updateApplicationStatus
 );
 

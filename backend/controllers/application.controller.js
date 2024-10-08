@@ -81,7 +81,7 @@ export const getJobApplications = async (req, res, next) => {
     const applications = await Application.find({ job: jobId })
       .populate({
         path: "applicant",
-        select: "email profilePic fullName experience skills yoe",
+        select: "email profilePic fullName experience skills yoe address",
         populate: {
           path: "experience",
           model: "Experience",
@@ -117,8 +117,9 @@ export const getUserApplications = async (req, res, next) => {
 // Update application status (for employers)
 export const updateApplicationStatus = async (req, res, next) => {
   try {
-    const { status } = req.body;
-    const applicationId = req.params.id;
+    const { applicationId, status } = req.params;
+
+    console.log("status:::::==>", req.params);
 
     const application = await Application.findById(applicationId);
     if (!application) return next(createError(404, "Application not found!"));

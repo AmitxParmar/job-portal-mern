@@ -73,7 +73,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
               ))}
           </div>
         </div>
-        <div className="px-4 items-center flex flex-row justify-between">
+        <div className="px-2.5 items-center flex flex-row justify-between">
           <div className="grid grid-flow-row leading-none truncate">
             <div className="font-bold h-fit text-gray-700">
               {formatSalary(salaryRange?.min)} -{" "}

@@ -10,12 +10,11 @@ import {
 
 import ApplicantCard from "./ApplicantCard";
 import { Badge } from "@/components/ui/badge";
-import BookmarkButton from "../../common/JobCard/BookmarkButton";
+import BookmarkButton from "../../../common/JobCard/BookmarkButton";
 import PropTypes from "prop-types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getJobApplications } from "@/services/applicationServices";
 import moment from "moment";
-import { toast } from "sonner";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -26,8 +25,8 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["job-applications", _id], // Add _id to the query key
-    queryFn: () => getJobApplications(_id), // Use an arrow function to return the promise
+    queryKey: ["job-applications", _id],
+    queryFn: () => getJobApplications(_id),
     enabled: !!_id && open,
   });
 
@@ -38,8 +37,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
   }, [open, refetch]);
 
   return (
-    <Drawer open={open} onOpenChange={setOpen} className="">
-      {/* <DrawerTrigger asChild></DrawerTrigger> */}
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent className="h-[calc(100vh-1vh)] px-4 lg:px-28 max-w-screen bg-background">
         <DrawerHeader
           className={`w-full bg-transparent h-fit font-grotesk p-0 px-1 my-2 lg:px-20`}
@@ -51,6 +49,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
               </DrawerTitle>
               <div className="flex lg:flex-row items-center">
                 <div className="mr-4 p-1">
+                  {console.log("application in drawer", applicants)}
                   <Avatar>
                     <AvatarImage src={company?.logo} alt={company?.name} />
                     <AvatarFallback>{company?.name?.charAt(0)}</AvatarFallback>
@@ -88,12 +87,6 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
               </div>
             </div>
             <div className="grid mt-4 order-1 lg:order-2 justify-end gap-1 lg:gap-5 grid-flow-col-dense">
-              {/* <Button
-                onClick={() => handleApplyForJob()}
-                className="w-fit lg:px-6 text-sm lg:text-lg font-grotesk fonr-semibold lg:h-12"
-              >
-                Apply Now
-              </Button> */}
               <div className="rounded-sm border h-fit bg-background">
                 <BookmarkButton jobId={_id} isBookmarked={isBookmarked} />
               </div>
@@ -117,8 +110,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
               ))}
             </div>
           ) : applicants?.length > 0 ? (
-            <div className="grid grid-cols-2">
-              {/* The error message "Failed prop type: Invalid prop `application._id` of type `string` supplied to `ApplicantCard`, expected `object`." indicates that the `ApplicantCard` component expects an object for the `application` prop, but it's receiving a string. This is likely because the `application` object itself is being passed as the `application` prop, rather than the `_id` property of the `application` object. */}
+            <div className="grid grid-cols-3">
               {applicants?.map((application) => (
                 <ApplicantCard
                   key={application._id}
@@ -180,4 +172,5 @@ Applicants.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
 };
+
 export default Applicants;
