@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 
 import Loader from "@/components/Dashboard/common/Loader";
 import PropTypes from "prop-types";
@@ -8,7 +8,10 @@ const Dashboard = ({ role }) => {
   const { role: routeRole } = useParams();
 
   if (role !== routeRole) {
-    return <Navigate to={`/dashboard/${role}`} replace />;
+    console.warn(
+      `User with role ${role} attempted to access ${routeRole} dashboard`
+    );
+    // You might want to redirect to an error page or show an access denied message here
   }
 
   return (

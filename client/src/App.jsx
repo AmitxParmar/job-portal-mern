@@ -1,14 +1,11 @@
+import { CircleAlert, CircleCheck, CircleX, Info } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
 import Bookmarks from "./components/Dashboard/Settings/Bookmarks";
-import { CircleAlert } from "lucide-react";
-import { CircleCheck } from "lucide-react";
-import { CircleX } from "lucide-react";
 import Dashboard from "./pages/Dashboard";
 import EmployerDashboard from "@/components/Dashboard/EmployerDashboard";
 import Home from "./pages/Home";
-import { Info } from "lucide-react";
 import JobOpenings from "./components/Dashboard/EmployerComponents/JobOpenings";
 import Layout from "./components/Dashboard/common/Layouts/Layout";
 import Loader from "./components/Dashboard/common/Loader";
@@ -23,23 +20,34 @@ import { Toaster } from "./components/ui/sonner";
 import UserJobListings from "@/components/Dashboard/JobListings";
 
 function App() {
-  const role = "recruiter"; // jobSeeker or recruiter
+  const role = "recruiter"; // or "jobSeeker"
   const isAuth = true;
+
   return (
     <Router>
       <Navbar role={role} isAuth={isAuth} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/" element={<Layout role={role} />}>
-          <Route path="/dashboard" element={<Dashboard role={role} />}>
-            <Route path="jobSeeker" element={<UserJobListings />} />
-            <Route path="recruiter" element={<EmployerDashboard />} />
-          </Route>
-          <Route path="/recruiter/job-openings" element={<JobOpenings />} />
-          <Route path="/settings" element={<Settings />}>
-            <Route index element={<Profile />} />
+
+        <Route path="/dashboard" element={<Layout role={role} />}>
+          <Route
+            index
+            element={<Navigate to={`/dashboard/${role}`} replace />}
+          />
+
+          <Route path="jobSeeker" element={<Dashboard role="jobSeeker" />}>
+            <Route index element={<UserJobListings />} />
             <Route path="applied-jobs" element={<AppliedJobs />} />
             <Route path="bookmarks" element={<Bookmarks />} />
+          </Route>
+
+          <Route path="recruiter" element={<Dashboard role="recruiter" />}>
+            <Route index element={<EmployerDashboard />} />
+            <Route path="job-openings" element={<JobOpenings />} />
+          </Route>
+
+          <Route path="settings" element={<Settings />}>
+            <Route index element={<Profile />} />
           </Route>
         </Route>
 
@@ -48,7 +56,7 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
 
-        <Route path="*" element={<Navigate to={"/dashboard"} />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
       <Toaster
         icons={{

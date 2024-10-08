@@ -55,9 +55,9 @@ const SettingsSidebar = ({ role }) => {
               </span>
             </Link>
             <Link
-              to={"/recruiter/job-openings"}
+              to={"/dashboard/recruiter/job-openings"}
               className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center min-w-max border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
-                location.pathname === "/recruiter/job-openings"
+                location.pathname === "/dashboard/recruiter/job-openings"
                   ? "border-black invert scale-15"
                   : ""
               }`}
