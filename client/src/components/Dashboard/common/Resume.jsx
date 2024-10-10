@@ -50,7 +50,8 @@ const Resume = ({ user, isLoading, className }) => {
         className
       )}
     >
-      <section>
+      {/* Basic Info */}
+      <section className="pb-4">
         <img
           src={profilePic || "https://via.placeholder.com/150"}
           alt="profile"
@@ -87,19 +88,26 @@ const Resume = ({ user, isLoading, className }) => {
         </ul>
       </section>
 
-      {/* <!-- Portfolio Links Section --> */}
-      <div className="pb-4">
+      {/* <!-- Projects --> */}
+      <section className="pb-4">
         <h2 className="text-lg flex items-center border-black border-b-2 py-1 font-bold">
           <FolderOpen className="h-5 w-5 fill-black stroke-white mr-2" />
           Projects
         </h2>
-        <ul className="mt-2 relative text-sm space-y-2">
+        <ul className="mt-2 max-w-96 relative text-sm space-y-2">
           {projects?.map((project, index) => (
             <li key={index}>
-              <div className="flex flex-row flex-wrap">
-                <h3 className="font-semibold mr-1">{project?.title},</h3>
-                <p className="text-gray-500">{project?.skills.join(", ")}</p>
-                <p className="right-0 absolute">
+              <div className="flex flex-row">
+                <div className="flex flex-row ">
+                  <h3 className="font-semibold text-nowrap mr-1">
+                    {project?.title},
+                    <span className="font-normal text-gray-500 text-wrap text-sm italic ">
+                      {" "}
+                      {project?.skills.join(", ")}
+                    </span>
+                  </h3>
+                </div>
+                <p className="right-0 pl-6 text-nowrap float-right">
                   {moment(project?.endDate).format("MMM YYYY")}
                 </p>
               </div>
@@ -117,10 +125,10 @@ const Resume = ({ user, isLoading, className }) => {
             </li>
           ))}
         </ul>
-      </div>
+      </section>
 
       {/* <!-- Experience Section --> */}
-      <div className="pb-4">
+      <section className="pb-4">
         <h2 className="text-lg flex items-center border-black border-b-2 py-1 font-bold">
           <BriefcaseBusiness className="h-5 w-5 mr-2" />
           Experience
@@ -130,32 +138,32 @@ const Resume = ({ user, isLoading, className }) => {
             <li key={index}>
               <div className="flex flex-row flex-wrap">
                 <p className="font-semibold">{exp?.employer}</p>
-                <h3 className="font-semibold">{exp?.jobTitle}</h3>
+                <h3 className="italic">{exp?.jobTitle}</h3>
 
                 <p className="absolute right-0">
                   {moment(exp?.startDate).format("MMM YYYY")} -{" "}
                   {moment(exp?.endDate).format("MMM YYYY")}
                 </p>
-                <p
-                  className="bullet_list"
-                  dangerouslySetInnerHTML={{ __html: exp?.description }}
-                />
               </div>
+              <p
+                className="bullet_list"
+                dangerouslySetInnerHTML={{ __html: exp?.description }}
+              />
             </li>
           ))}
         </ul>
-      </div>
+      </section>
 
       {/* <!-- Education Section --> */}
-      <section className="relative">
-        <h2 className="text-sm flex items-center border-black border-b-2 py-1 font-bold">
+      <section className="pb-4">
+        <h2 className="text-lg flex items-center border-black border-b-2 py-1 font-bold">
           <GraduationCap className="h-5 w-5 mr-2" />
           Education
         </h2>
         {education?.map((edu, index) => (
-          <div key={index} className="relative mt-2">
-            <p className="font-semibold">{edu?.degree},</p>
-            <h3 className="">{edu?.institution}</h3>
+          <div key={index} className="relative text-sm flex flex-row mt-2">
+            <p className="font-semibold  mr-2">{edu?.degree},</p>
+            <h3 className="italic"> {edu?.institution}</h3>
             <p className="absolute right-0">{edu?.yearOfGraduation}</p>
           </div>
         ))}
