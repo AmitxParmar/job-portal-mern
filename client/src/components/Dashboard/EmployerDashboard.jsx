@@ -65,7 +65,7 @@ const EmployerDashboard = () => {
     return (
       <div className=" bg-gray-100 bg-blend-saturation overflow-hidden max-h-full h-[calc(100vh-8vh)]">
         <main className="mx-auto h-full px-4 flex flex-row justify-between sm:px-6 lg:px-8 py-8 gap-8">
-          <div className="hidden max-h-full h-full w-full">
+          <div className="max-h-full h-full w-full">
             <div className="grid h-fit grid-cols-1 gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
               <Card className="shadow-3xl bg-orange-500 h-40 font-bold rounded-3xl">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -126,11 +126,11 @@ const EmployerDashboard = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-4">
+                  <ul className="grid grid-flow-row-dense gap-2">
                     {recentJobs?.map((job) => (
                       <li
                         key={job._id}
-                        className="flex items-center justify-between"
+                        className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between"
                       >
                         <div>
                           <p className="font-medium">{job.title}</p>
@@ -157,11 +157,11 @@ const EmployerDashboard = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-4">
+                  <ul className="grid grid-flow-row-dense gap-2">
                     {recentApplications.map((app) => (
                       <li
                         key={app._id}
-                        className="flex items-center justify-between"
+                        className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between"
                       >
                         <div>
                           <p className="font-medium">
