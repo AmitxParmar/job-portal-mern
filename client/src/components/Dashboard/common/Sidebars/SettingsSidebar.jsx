@@ -6,6 +6,7 @@ import { Home } from "lucide-react";
 import { NotepadText } from "lucide-react";
 import PostAJobButton from "../../EmployerComponents/PostAJobButton";
 import { profileMenu } from "@/constants/constants.jsx";
+import PropTypes from "prop-types";
 
 const SettingsSidebar = ({ role }) => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const SettingsSidebar = ({ role }) => {
 
   return (
     <>
-      {location.pathname.startsWith("/settings") ? (
+      {location.pathname.startsWith("/dashboard/settings") ? (
         <Button
           variant="outline" // Fixed typo from "varient" to "variant"
           onClick={() => navigate(`/dashboard/${role}`)}
@@ -36,7 +37,7 @@ const SettingsSidebar = ({ role }) => {
         />
         <p className="text-center text-xl font-bold">John Doe</p>
       </div> */}
-      <div className="font-grotesk font-semibold overflow-hidden rounded-xl flex flex-col space-y-2 py-6 mt-4 px-1">
+      <div className="font-semibold overflow-hidden rounded-xl flex flex-col space-y-2 py-6 mt-4 px-2">
         {role === "recruiter" && (
           <>
             <Link
@@ -47,8 +48,8 @@ const SettingsSidebar = ({ role }) => {
                   : ""
               }`}
             >
-              <span className="flex flex-row items-center  p-1">
-                <span className="mr-3 ">
+              <span className="flex flex-row items-center p-1">
+                <span className="mr-2">
                   <Home />
                 </span>
                 <span className="">Dashboard</span>
@@ -63,7 +64,7 @@ const SettingsSidebar = ({ role }) => {
               }`}
             >
               <span className="flex flex-row items-center p-1">
-                <span className="mr-3 ">
+                <span className="mr-2">
                   <NotepadText />
                 </span>
                 <span className="">Job Postings</span>
@@ -71,6 +72,7 @@ const SettingsSidebar = ({ role }) => {
             </Link>
           </>
         )}
+
         {profileMenu.map((item) => (
           <Link
             key={item.name}
@@ -81,8 +83,8 @@ const SettingsSidebar = ({ role }) => {
                 : ""
             }`}
           >
-            <span className="flex flex-row items-center  p-1">
-              <span className="mr-3 ">{item.icon}</span>
+            <span className="flex flex-row items-center p-1">
+              <span className="mr-2">{item.icon}</span>
               <span className="">{item.name}</span>
             </span>
           </Link>
@@ -92,4 +94,7 @@ const SettingsSidebar = ({ role }) => {
   );
 };
 
+SettingsSidebar.propTypes = {
+  role: PropTypes.string.isRequired,
+};
 export default SettingsSidebar;

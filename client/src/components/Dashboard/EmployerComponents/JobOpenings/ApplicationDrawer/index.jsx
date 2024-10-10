@@ -147,7 +147,7 @@ Applicants.propTypes = {
       min: PropTypes.string.isRequired,
       max: PropTypes.string.isRequired,
     }).isRequired,
-    applicants: PropTypes.shape({
+    applicants: PropTypes.arrayOf({
       profilePic: PropTypes.string, // Added profilePic to PropTypes
       fullName: PropTypes.string,
       bio: PropTypes.string,

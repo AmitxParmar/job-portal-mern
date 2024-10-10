@@ -1,30 +1,33 @@
 import { loginUser, registerUser } from "@/services/authServices";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { toast } from "sonner";
 import { useState } from "react";
-import useUser from "./useUser";
 
-/* import { fetchUserById } from "@/services/userServices"; */
+import { fetchUserById } from "@/services/userServices";
 
 export const useAuth = () => {
-  const [userId, setUserId] = useState(
-    localStorage.getItem("userId") || "66ccb1ecb5e4de35acdbb80d"
-  );
+  const [userId, setUserId] = useState("66ccb1ecb5e4de35acdbb80d"); // Hard coded user ID
   const queryClient = useQueryClient();
 
-  console.log("UserId", userId);
-
-  const { data: user, isLoading, error } = useUser(userId); /* useQuery({
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUserById(userId),
     enabled: !!userId,
-    onSuccess: (data) =>
+    onSuccess: (data) => {
+      console.log("user fetched", data);
       toast.success("User data fetched", {
         description: JSON.stringify(data),
-      }),
-  }); */
-
+      });
+      queryClient.setQueryData(["user", userId], data); // Cache the user data
+    },
+    onError: () => toast.error("error user fetching"),
+  });
+  console.log(user);
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {

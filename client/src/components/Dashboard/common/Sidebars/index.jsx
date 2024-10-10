@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, memo } from "react";
 
 import Container from "@/components/Dashboard/common/Container";
 import PropTypes from "prop-types";
@@ -11,9 +11,9 @@ const Sidebars = ({ role }) => {
   const { pathname } = useLocation();
 
   return (
-    <Suspense fallback={`loading:...`}>
+    <Suspense fallback={`loading....`}>
       <Container
-        className={`sticky border-none border-0 ml-4 left-0 bg-card w-56`}
+        className={`sticky border-none font-inter border-0  ml-4 left-0 bg-card w-56`}
       >
         {pathname.startsWith("/settings") || role === "recruiter" ? (
           <SettingsSidebar role={role} />
@@ -29,4 +29,4 @@ Sidebars.propTypes = {
   role: PropTypes.string.isRequired,
 };
 
-export default Sidebars;
+export default memo(Sidebars);

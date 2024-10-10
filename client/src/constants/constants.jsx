@@ -9,17 +9,17 @@ export const cities = City.getCitiesOfCountry("IN");
 const profileMenu = [
   {
     name: "Profile",
-    path: "/settings",
+    path: "/dashboard/settings",
     icon: <User />,
   },
   {
     name: "Applied Jobs",
-    path: "/settings/applied-jobs",
+    path: "/dashboard/settings/applied-jobs",
     icon: <Briefcase />,
   },
   {
     name: "Bookmarks",
-    path: "/settings/bookmarks",
+    path: "/dashboard/settings/bookmarks",
     icon: <Bookmark />,
   },
 ];

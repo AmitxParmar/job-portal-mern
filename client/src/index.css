@@ -11,7 +11,7 @@
 }
 
 @font-face {
-  font-family: 'Inter-VariableFont_opsz,wght';
+  font-family: 'Inter';
   src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
   font-weight: 100 900;
   font-display: swap;
@@ -32,7 +32,7 @@
 
 :root {
   --font-grotesk: 'CabinetGrotesk-Variable', 'CabinetGrotesk', sans-serif;
-  --font-inter: 'Inter-Variable', 'Inter', sans-serif;
+  --font-inter: 'Inter', 'Georgia', 'Times New Roman', 'serif';
   --font-helvetica: 'Helvetica', sans-serif;
 }
 
@@ -95,15 +95,12 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
 
   body {
     @apply bg-muted text-primary font-inter !antialiased;
   }
 
   .bullet_list ul>li {
-    @apply list-disc ml-8;
+    @apply list-disc ml-4;
   }
 }

@@ -1,23 +1,24 @@
-import { CircleAlert, CircleCheck, CircleX, Info } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { CircleAlert, CircleCheck, CircleX, Info } from "lucide-react";
+import { Toaster } from "./components/ui/sonner";
+import { Navigate } from "react-router-dom";
 
-import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
-import Bookmarks from "./components/Dashboard/Settings/Bookmarks";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import EmployerDashboard from "@/components/Dashboard/EmployerDashboard";
-import Home from "./pages/Home";
+import UserJobListings from "@/components/Dashboard/JobListings";
 import JobOpenings from "./components/Dashboard/EmployerComponents/JobOpenings";
+import Settings from "./components/Dashboard/Settings";
+import Profile from "./components/Dashboard/Settings/Profile";
+import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
+import Bookmarks from "./components/Dashboard/Settings/Bookmarks";
+
 import Layout from "./components/Dashboard/common/Layouts/Layout";
-import Loader from "./components/Dashboard/common/Loader";
-import Login from "./pages/Login";
 import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
 import Navbar from "./components/Dashboard/common/Navbar";
-import { Navigate } from "react-router-dom";
-import Profile from "./components/Dashboard/Settings/Profile";
-import Register from "./pages/Register";
-import Settings from "./components/Dashboard/Settings";
-import { Toaster } from "./components/ui/sonner";
-import UserJobListings from "@/components/Dashboard/JobListings";
+import Loader from "./components/Dashboard/common/Loader";
 
 function App() {
   const role = "recruiter"; // or "jobSeeker"
@@ -46,8 +47,11 @@ function App() {
             <Route path="job-openings" element={<JobOpenings />} />
           </Route>
 
+          {/* Common settings route accessible to both roles */}
           <Route path="settings" element={<Settings />}>
             <Route index element={<Profile />} />
+            <Route path="bookmarks" element={<Bookmarks />} />
+            <Route path="applied-jobs" element={<AppliedJobs />} />
           </Route>
         </Route>
 

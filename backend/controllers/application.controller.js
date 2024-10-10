@@ -70,6 +70,90 @@ export const applyForJob = async (req, res, next) => {
   }
 };
 
+export const getRecruiterDashboard = async (req, res, next) => {
+  try {
+    /* const recruiterId = req.user.id; */ // Assuming you have user authentication middleware
+    //NOTE: remove hard coded later
+    // Get the recruiter's companies
+    const recruiter = await User.findById(userId /* recruiterId */).populate(
+      "company"
+    );
+    if (!recruiter || !recruiter.company || recruiter.company.length === 0) {
+      return next(createError(404, "Recruiter or companies not found"));
+    }
+
+    const companyIds = recruiter.company.map((company) => company._id);
+
+    // Count of active jobs across all companies
+    const activeJobsCount = await Job.countDocuments({
+      company: { $in: companyIds },
+      status: "open",
+    });
+
+    // Total applications across all companies
+    const totalApplications = await Application.countDocuments({
+      job: {
+        $in: await Job.find({ company: { $in: companyIds } }).select("_id"),
+      },
+    });
+
+    // Total interviews across all companies
+    const totalInterviews = await Application.countDocuments({
+      job: {
+        $in: await Job.find({ company: { $in: companyIds } }).select("_id"),
+      },
+      status: "interview",
+    });
+
+    // New applications (last 7 days) across all companies
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const newApplications = await Application.countDocuments({
+      job: {
+        $in: await Job.find({ company: { $in: companyIds } }).select("_id"),
+      },
+      appliedAt: { $gte: sevenDaysAgo },
+    });
+
+    // Recent job postings (last 5) across all companies
+    const recentJobs = await Job.find({ company: { $in: companyIds } })
+      .sort({ postedAt: -1 })
+      .limit(5)
+      .populate("company", "name")
+      .select(
+        "title location.city location.country postedAt company applicants"
+      );
+
+    // Recent applications (last 5) across all companies
+    const recentApplications = await Application.find({
+      job: {
+        $in: await Job.find({ company: { $in: companyIds } }).select("_id"),
+      },
+    })
+      .sort({ appliedAt: -1 })
+      .limit(5)
+      .populate("job", "title company")
+      .populate("applicant", "fullName")
+      .select("status appliedAt");
+
+    // Populate company names for recent applications
+    await Application.populate(recentApplications, {
+      path: "job.company",
+      select: "name",
+    });
+
+    res.status(200).json({
+      activeJobsCount,
+      totalApplications,
+      totalInterviews,
+      newApplications,
+      recentJobs,
+      recentApplications,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Get all applications for a job (for employers)
 export const getJobApplications = async (req, res, next) => {
   try {

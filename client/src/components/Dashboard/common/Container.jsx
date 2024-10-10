@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import PropTypes from "prop-types";
 
 const Container = ({ children, className }) => {
   return (
@@ -13,4 +14,8 @@ const Container = ({ children, className }) => {
   );
 };
 
+Container.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
 export default Container;

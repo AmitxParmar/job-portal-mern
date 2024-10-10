@@ -7,10 +7,14 @@ import PropTypes from "prop-types";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { memo } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { MapPin } from "lucide-react";
 
 const Navbar = ({ role, isAuth }) => {
+  const { user } = useAuth();
   const notification = false;
-
+  console.log("user navbar", user);
   return (
     <div className="flex font-grotesk  flex-col">
       <header className="hidden lg:flex sticky top-0 justify-between items-center bg-black text-white p-4 z-50">
@@ -35,15 +39,24 @@ const Navbar = ({ role, isAuth }) => {
         <div className="flex items-center space-x-4">
           {isAuth ? (
             <>
-              <div className="text-sm">New York, NY</div>
+              <div className="grid grid-flow-col-dense items-center h-fit text-sm">
+                <MapPin size={20} className="mr-2" />
+                {user?.address}
+              </div>
               <Button size="icon" className="rounded-full border border-white">
                 <LucideSettings size={20} />
               </Button>
               <Button size="icon" className="rounded-full border border-white">
                 {notification ? <BellDotIcon size={20} /> : <Bell size={20} />}
               </Button>
-              <Link to={`/settings`}>
-                <div className="h-10 w-10 rounded-full bg-gray-600"></div>
+              <Link to={`/dashboard/settings`}>
+                <Avatar>
+                  <AvatarImage
+                    src={user?.profile.profilePic}
+                    alt={user?.fullName}
+                  />
+                  <AvatarFallback>{user?.fullName?.charAt(0)}</AvatarFallback>
+                </Avatar>
               </Link>
             </>
           ) : (

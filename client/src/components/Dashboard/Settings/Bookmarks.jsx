@@ -19,20 +19,20 @@ const Bookmarks = () => {
   console.log("bookmarks", user?.salaryRange?.min, user?.bookmarkedJobs);
   return (
     <Container
-      className={`max-w-screen-2xl capitalize font-semibold w-screen lg:px-20 mx-6 max-h-full lg:py-12`}
+      className={`max-w-screen-2xl capitalize font-semibold w-screen lg:px-20 mx-6 max-h-full bg-background lg:py-12`}
     >
-      <div className="container mx-auto p-4 max-w-3xl">
+      <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">
           Bookmarked Jobs ({user?.bookmarkedJobs?.length})
         </h1>
-        <div className="space-y-4">
+        <div className="grid grid-cols-3 gap-4">
           {user?.bookmarkedJobs?.map((job) => (
-            <Card key={job._id}>
+            <Card key={job._id} className="antialiased">
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div>
                     <CardTitle>{job?.title}</CardTitle>
-                    <CardDescription>{job?.company}</CardDescription>
+                    <CardDescription>{job?.frequency}</CardDescription>
                   </div>
                   <div className="h-12 border rounded-full w-12">
                     <BookmarkButton jobId={job?._id} isBookmarked />

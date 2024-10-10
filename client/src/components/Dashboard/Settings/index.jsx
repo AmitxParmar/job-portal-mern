@@ -7,8 +7,6 @@ import { useAuth } from "@/hooks/useAuth";
 const Settings = () => {
   const { user, isLoading, error } = useAuth();
 
-  console.log("user fetched Settings.jsx", user);
-
   if (error) return <div className="text-5xl text-red-500">Error:{error}</div>;
 
   return (

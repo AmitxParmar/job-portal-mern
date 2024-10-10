@@ -3,6 +3,7 @@ import {
   getJobApplications,
   getUserApplications,
   updateApplicationStatus,
+  getRecruiterDashboard,
 } from "../controllers/application.controller.js";
 
 import { Router } from "express";
@@ -18,5 +19,7 @@ router.put(
   "/application/:applicationId/:status",
   /* verifyToken, */ updateApplicationStatus
 );
+
+router.get("/recruiter/dashboard", /* verifyToken, */ getRecruiterDashboard);
 
 export default router;

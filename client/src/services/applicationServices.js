@@ -1,5 +1,4 @@
 import axiosInstance from "@/lib/axiosInstance";
-import { toast } from "sonner";
 
 const BASE = "applications";
 // Get all applications by a user (for job seekers)
@@ -21,6 +20,11 @@ export const getJobApplications = async (jobId) => {
   const { data } = await axiosInstance.get(
     `/${BASE}/job/${jobId}/applications`
   );
+  return data;
+};
+
+export const getRecruiterDashboard = async () => {
+  const { data } = await axiosInstance.get(`/${BASE}/recruiter/dashboard`);
   return data;
 };
 

@@ -83,12 +83,12 @@ export default function AppliedJobs() {
 
   return (
     <Container
-      className={`max-w-screen-2xl bg-background px-8 font-semibold capitalize w-screen mx-6 py-12 `}
+      className={`max-w-screen-2xl bg-background px-8 capitalize w-screen mx-6 py-12 `}
     >
       <h1 className="text-3xl font-bold mb-6">Applied Jobs</h1>
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div className="relative w-full md:w-64">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
+          <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
           <Input
             placeholder="Search jobs..."
             className="pl-8"
@@ -112,7 +112,7 @@ export default function AppliedJobs() {
       </div>
       <Table>
         {appliedJobs.length === 0 ? (
-          <div className="text-center  py-12">
+          <div className="text-center py-12">
             <p className="text-xl font-semibold text-gray-600">
               No applications found
             </p>
@@ -124,8 +124,8 @@ export default function AppliedJobs() {
           <>
             <TableCaption>A list of your recently applied jobs.</TableCaption>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Company</TableHead>
+              <TableRow className="bg-muted text-foreground text-lg font-semibold">
+                <TableHead>Company</TableHead>
                 <TableHead>Position</TableHead>
                 <TableHead>Job Type</TableHead>
                 <TableHead>Status</TableHead>
@@ -133,11 +133,11 @@ export default function AppliedJobs() {
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="bg-muted/50 border">
               {appliedJobs?.map((application) => {
                 const job = application?.job;
                 return (
-                  <TableRow key={application._id}>
+                  <TableRow key={application._id} className="border ">
                     <TableCell className="font-medium">
                       <div className="flex items-center gap-2">
                         <Avatar

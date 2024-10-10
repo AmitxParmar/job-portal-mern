@@ -53,7 +53,7 @@ const userSchema = new Schema({
     },
   },
 
-  company: { type: Schema.Types.ObjectId, ref: "Company" },
+  company: [{ type: Schema.Types.ObjectId, ref: "Company" }],
   // Array of references to project schema
   projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
 
