@@ -65,7 +65,7 @@ const EmployerDashboard = () => {
         <main className="mx-auto h-full px-4 flex flex-row justify-between sm:px-6 lg:px-8 py-8 gap-8">
           <div className="max-h-full h-full w-full">
             <div className="grid h-fit grid-cols-1 gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
-              <Card className="shadow-3xl bg-orange-500 h-40 font-bold rounded-3xl">
+              <Card className="shadow-lg bg-orange-500 h-40 font-bold rounded-3xl">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <ChartLine className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
                   <Briefcase className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
@@ -77,7 +77,7 @@ const EmployerDashboard = () => {
                   <div className="text-3xl font-bold">{activeJobsCount}</div>
                 </CardContent>
               </Card>
-              <Card className="shadow-3xl bg-purple-600/20 h-40 font-bold rounded-3xl">
+              <Card className="shadow-lg bg-purple-600/20 h-40 font-bold rounded-3xl">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <ChartLine className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
                   <FileText className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
@@ -89,7 +89,7 @@ const EmployerDashboard = () => {
                   <div className="text-2xl font-bold">{totalApplications}</div>
                 </CardContent>
               </Card>
-              <Card className="shadow-3xl bg-foreground h-40 text-secondary font-bold rounded-3xl">
+              <Card className="shadow-lg bg-foreground h-40 text-secondary font-bold rounded-3xl">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <ChartLine className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
                   <Users className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
@@ -101,7 +101,7 @@ const EmployerDashboard = () => {
                   <div className="text-2xl font-bold">{totalInterviews}</div>
                 </CardContent>
               </Card>
-              <Card className="shadow-3xl bg-cyan-400 h-40 font-bold rounded-3xl">
+              <Card className="shadow-lg bg-cyan-400 h-40 font-bold rounded-3xl">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <ChartLine className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
                   <FileText className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
@@ -116,7 +116,7 @@ const EmployerDashboard = () => {
             </div>
 
             <div className="mt-8 max-h-[600px] h-full grid grid-cols-1 gap-6 lg:grid-cols-2">
-              <Card className="rounded-3xl">
+              <Card className="rounded-3xl shadow-xl">
                 <CardHeader>
                   <CardTitle>Recent Job Postings</CardTitle>
                   <CardDescription>
@@ -147,7 +147,7 @@ const EmployerDashboard = () => {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-3xl">
+              <Card className="rounded-3xl shadow-xl">
                 <CardHeader>
                   <CardTitle>Recent Applications</CardTitle>
                   <CardDescription>

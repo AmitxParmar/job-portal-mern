@@ -97,7 +97,7 @@ const Resume = ({ user, isLoading, className }) => {
                       </span>
                     </h3>
                   </div>
-                  <p className="right-0 pl-6 text-nowrap float-right">
+                  <p className="right-0 absolute w-fit h-fit ">
                     {moment(project?.endDate).format("MMM YYYY")}
                   </p>
                 </div>
