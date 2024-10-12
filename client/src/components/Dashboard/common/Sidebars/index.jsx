@@ -1,32 +1,32 @@
 import { Suspense, lazy, memo } from "react";
 
 import Container from "@/components/Dashboard/common/Container";
-import PropTypes from "prop-types";
 import SettingsSidebar from "./SettingsSidebar";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Filters = lazy(() => import("../../Filters"));
 
-const Sidebars = ({ role }) => {
+const Sidebars = () => {
+  const { user } = useAuth();
   const { pathname } = useLocation();
+  const isJobSeeker = user?.role === "jobSeeker";
+  const isRecruiter = user?.role === "recruiter";
+  const isDashboard = pathname.startsWith("/dashboard");
 
   return (
     <Suspense fallback={`loading....`}>
       <Container
         className={`sticky border-none font-inter border-0 ml-4 left-0 bg-card w-56`}
       >
-        {pathname.startsWith("/dashboard") || role === "recruiter" ? (
-          <SettingsSidebar role={role} />
-        ) : role === "jobSeeker" ? (
+        {isDashboard || isRecruiter === "recruiter" ? (
+          <SettingsSidebar />
+        ) : isJobSeeker === "jobSeeker" ? (
           <Filters />
         ) : null}
       </Container>
     </Suspense>
   );
-};
-
-Sidebars.propTypes = {
-  role: PropTypes.string.isRequired,
 };
 
 export default memo(Sidebars);

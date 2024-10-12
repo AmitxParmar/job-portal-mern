@@ -26,7 +26,7 @@ const PostAJobButton = () => {
 
   const handleJobSubmit = (jobData) => {
     console.log("Job submitted:", jobData);
-    mutation.mutate(jobData); // on save button press send data to the apis
+    mutation.mutate(jobData);
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -36,7 +36,7 @@ const PostAJobButton = () => {
           onClick={() => setOpen(true)} // Open dialog on button click
         >
           <Plus />
-          <span>Create a Job</span>
+          <span>Post a Job</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] lg:max-w-screen-xl max-h-screen overflow-auto">

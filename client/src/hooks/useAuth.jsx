@@ -32,6 +32,7 @@ export const useAuth = () => {
   } = useQuery({
     queryKey: ["currentUser"],
     queryFn: fetchCurrentUser,
+    enabled: isAuthenticated,
     onSuccess: () => {
       setIsAuthenticated(true);
     },

@@ -4,7 +4,7 @@ const inviteCodeSchema = new Schema({
   code: { type: String, required: true, unique: true },
   role: {
     type: String,
-    enum: ["admin", "employer", "jobSeeker"],
+    enum: ["admin", "recruiter", "jobSeeker"],
     required: true,
   },
   email: { type: String, required: true }, // Email of the invitee

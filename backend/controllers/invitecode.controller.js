@@ -1,9 +1,11 @@
+import { generateRandomCode } from "../utils/generateRandomCodes.js";
 import InviteCode from "../models/InviteCode.js";
-import { v4 as uuidv4 } from "uuid";
+
 import { createError } from "../utils/error.js";
 
 // Generate a new invite code
 export const generateInviteCode = async (req, res, next) => {
+  console.log("generate invite code", req.body);
   try {
     const { role, email } = req.body;
 
@@ -15,7 +17,7 @@ export const generateInviteCode = async (req, res, next) => {
       );
     }
 
-    const code = uuidv4(); // Generates a unique invite code
+    const code = await generateRandomCode();
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7); // Code expires in 7 days
 
@@ -29,6 +31,7 @@ export const generateInviteCode = async (req, res, next) => {
     await newInviteCode.save();
     res.status(201).json({ inviteCode: code, expiresAt });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

@@ -11,22 +11,30 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/constants/Icons";
 import { Input } from "@/components/ui/input";
 import { LucideUserPlus2 } from "lucide-react";
-import { registerUser } from "@/services/authServices";
+
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
+  const { registerUser } = useAuth();
   const form = useForm();
   const navigate = useNavigate();
-  const { mutate, isLoading } = useMutation({
-    mutationFn: registerUser, // Specify mutation function
-  });
 
   const handleSubmit = (credentials) => {
-    mutate(credentials, {
-      onSuccess: (data) => navigate(`/dashboard/${data?.user?.role}`),
-      onError: (error) => console.log(error),
+    setLoading(true);
+    registerUser(credentials, {
+      onSuccess: (data) => {
+        setLoading(false);
+        navigate(`/dashboard/${data?.user?.role}`);
+      },
+      onError: (error) => {
+        setLoading(false);
+        console.log(error);
+      },
     }); // on save button press send data to the apis
   };
 
@@ -76,7 +84,30 @@ const Register = () => {
                           autoCapitalize="none"
                           autoComplete="password"
                           autoCorrect="off"
-                          disabled={isLoading}
+                          disabled={loading}
+                          {...field}
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="password"
+                          placeholder="password"
+                          type="password"
+                          autoCapitalize="none"
+                          autoComplete="password"
+                          autoCorrect="off"
+                          disabled={loading}
                           {...field}
                           value={field.value || ""}
                         />
@@ -86,8 +117,8 @@ const Register = () => {
                   )}
                 />
 
-                <Button disabled={isLoading}>
-                  {isLoading && (
+                <Button disabled={loading}>
+                  {loading && (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Sign In with Email
@@ -105,8 +136,8 @@ const Register = () => {
               </span>
             </div>
           </div>
-          <Button variant="outline" type="button" disabled={isLoading}>
-            {isLoading ? (
+          <Button variant="outline" type="button" disabled={loading}>
+            {loading ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <Icons.google className="mr-2 h-4 w-4" />

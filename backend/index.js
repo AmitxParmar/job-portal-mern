@@ -26,7 +26,11 @@ app.use(morgan("dev"));
 // CORS setup
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:8000"], // Allow requests from your frontend URL
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:8000",
+      "http://localhost:3000",
+    ], // Allow requests from your frontend URL
     credentials: true, // Enable credentials (cookies)
   })
 );
