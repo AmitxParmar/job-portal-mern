@@ -1,10 +1,22 @@
-import { Project, User } from "../../models/User.js";
+import { Project } from "../../models/User.js";
+
+// Get all projects of the user
+export const getProjects = async (req, res) => {
+  try {
+    const projects = await Project.find({ userId: req.user.id });
+    if (!projects) {
+      return res.status(404).json({ error: "Projects not found" });
+    }
+    res.status(200).json(projects);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to get projects" });
+  }
+};
 
 // Add a new project
 export const addProject = async (req, res) => {
-  const { userId } = req.params;
   const projectData = req.body;
-  console.log(userId, projectData);
   try {
     // Create a new project
     const newProject = new Project(projectData);
@@ -12,7 +24,7 @@ export const addProject = async (req, res) => {
 
     // Add project reference to the user
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user.id,
       { $push: { projects: newProject._id } },
       { new: true }
     ).populate("projects");
@@ -48,14 +60,14 @@ export const updateProject = async (req, res) => {
 
 // Remove a project
 export const removeProject = async (req, res) => {
-  const { userId, projectId } = req.params;
+  const { projectId } = req.params;
 
   try {
     await Project.findByIdAndDelete(projectId);
 
     // Remove project reference from user
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user.id,
       { $pull: { projects: projectId } },
       { new: true }
     );

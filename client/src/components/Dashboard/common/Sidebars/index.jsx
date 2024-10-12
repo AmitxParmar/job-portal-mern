@@ -13,9 +13,9 @@ const Sidebars = ({ role }) => {
   return (
     <Suspense fallback={`loading....`}>
       <Container
-        className={`sticky border-none font-inter border-0  ml-4 left-0 bg-card w-56`}
+        className={`sticky border-none font-inter border-0 ml-4 left-0 bg-card w-56`}
       >
-        {pathname.startsWith("/settings") || role === "recruiter" ? (
+        {pathname.startsWith("/dashboard") || role === "recruiter" ? (
           <SettingsSidebar role={role} />
         ) : role === "jobSeeker" ? (
           <Filters />

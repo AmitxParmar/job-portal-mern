@@ -1,7 +1,16 @@
 import { Education, User } from "../../models/User.js";
 
+export const getEducations = async (req, res) => {
+  const { id } = req.user;
+  try {
+    const education = await Education.find({ _id: { $in: id.education } });
+    res.status(200).json(education);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch education records" });
+  }
+};
+
 export const addEducation = async (req, res) => {
-  const { userId } = req.params;
   const educationData = req.body;
 
   try {
@@ -11,7 +20,7 @@ export const addEducation = async (req, res) => {
 
     // Add education reference to the user
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user.id,
       { $push: { education: newEducation._id } },
       { new: true }
     ).populate("education");
@@ -44,18 +53,17 @@ export const updateEducation = async (req, res) => {
 };
 
 export const removeEducation = async (req, res) => {
-  const { userId, eduId } = req.params;
-  console.log(req.params);
+  const { eduId } = req.params;
+
   try {
     await Education.findByIdAndDelete(eduId);
 
     // Remove education reference from user
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user.id,
       { $pull: { education: eduId } },
       { new: true }
     );
-
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ error: "Failed to remove education record" });

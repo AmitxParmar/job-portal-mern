@@ -5,19 +5,10 @@ import PropTypes from "prop-types";
 import { Suspense } from "react";
 
 const Dashboard = ({ role }) => {
-  const { role: routeRole } = useParams();
-
-  if (role !== routeRole) {
-    console.warn(
-      `User with role ${role} attempted to access ${routeRole} dashboard`
-    );
-    // You might want to redirect to an error page or show an access denied message here
-  }
-
   return (
     <Suspense
       fallback={
-        <div className="min-h-full min-w-full">
+        <div className="absolute h-screen w-screen blur flex items-center">
           <Loader />
         </div>
       }

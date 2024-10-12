@@ -18,7 +18,7 @@ const Settings = () => {
       ) : (
         <>
           <Outlet context={{ user }} />
-          <Resume isLoading={isLoading} user={user} />
+          <Resume isLoading={isLoading} user={user} className={"max-w-56"} />
         </>
       )}
     </div>

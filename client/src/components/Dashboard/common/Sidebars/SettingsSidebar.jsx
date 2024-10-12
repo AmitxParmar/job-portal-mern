@@ -2,22 +2,22 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Home } from "lucide-react";
-import { NotepadText } from "lucide-react";
+import { Home, NotepadText } from "lucide-react";
 import PostAJobButton from "../../EmployerComponents/PostAJobButton";
 import { profileMenu } from "@/constants/constants.jsx";
-import PropTypes from "prop-types";
+import { useAuth } from "@/hooks/useAuth";
 
-const SettingsSidebar = ({ role }) => {
+const SettingsSidebar = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // Added useLocation to fix the disallowed MIME type issue
+  const location = useLocation();
+  const { user } = useAuth();
 
   return (
     <>
       {location.pathname.startsWith("/dashboard/settings") ? (
         <Button
           variant="outline" // Fixed typo from "varient" to "variant"
-          onClick={() => navigate(`/dashboard/${role}`)}
+          onClick={() => navigate(`/dashboard/${user?.role}`)}
           className="group transition-all flex flex-row items-center place-items-center text-center duration-500 hover:scale-105 rounded-full hover:bg-white px-4 py-2 justify-center border w-full hover:invert "
         >
           <ArrowLeft
@@ -38,12 +38,12 @@ const SettingsSidebar = ({ role }) => {
         <p className="text-center text-xl font-bold">John Doe</p>
       </div> */}
       <div className="font-semibold overflow-hidden rounded-xl flex flex-col space-y-2 py-6 mt-4 px-2">
-        {role === "recruiter" && (
+        {user?.role === "recruiter" && (
           <>
             <Link
               to={"/dashboard"}
               className={`border w-full text-center mx-auto rounded-full px-4 text-black items-center min-w-max border-black transition-all border-b bg-white py-2 whitespace-nowrap relative ${
-                location.pathname === `/dashboard/${role}`
+                location.pathname === `/dashboard/${user?.role}`
                   ? "border-black invert scale-15"
                   : ""
               }`}
@@ -94,7 +94,4 @@ const SettingsSidebar = ({ role }) => {
   );
 };
 
-SettingsSidebar.propTypes = {
-  role: PropTypes.string.isRequired,
-};
 export default SettingsSidebar;

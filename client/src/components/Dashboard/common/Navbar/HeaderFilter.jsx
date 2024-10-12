@@ -5,17 +5,16 @@ import {
   MapPin,
   Search,
 } from "lucide-react";
-import { lazy, memo } from "react";
+import { lazy, memo, Suspense } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Loader from "../Loader";
-import PropTypes from "prop-types";
 import { Slider } from "@/components/ui/slider";
-import { Suspense } from "react";
 import { cities } from "@/constants/constants";
 import { useFilters } from "@/hooks/useFilters";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const SearchDropdown = lazy(() =>
   import("../../../../components/SearchDropdown")
@@ -23,12 +22,14 @@ const SearchDropdown = lazy(() =>
 
 const DropdownList = lazy(() => import("../DropdownList"));
 
-const HeaderFilter = ({ role }) => {
+const HeaderFilter = () => {
   const { filters, setFilter } = useFilters();
-  const { pathname } = useLocation(); // Get pathname from useLocation
+  const { user } = useAuth();
+  const { pathname } = useLocation();
+
   return (
     pathname === "/dashboard" &&
-    role !== "recruiter" && (
+    user?.role !== "recruiter" && (
       <Suspense
         fallback={<Loader className={`transition-all duration-1000`} />}
       >
@@ -100,10 +101,6 @@ const HeaderFilter = ({ role }) => {
       </Suspense>
     )
   );
-};
-
-HeaderFilter.propTypes = {
-  role: PropTypes.oneOf(["recruiter", "jobSeeker"]).isRequired,
 };
 
 export default memo(HeaderFilter);

@@ -3,11 +3,11 @@ import axiosInstance from "@/lib/axiosInstance";
 // Base API URL
 const BASE_URL = "/user";
 
-// Fetch all users
-/* export const fetchUsers = async () => {
-  const { data } = await axiosInstance.get(`${BASE_URL}`);
+// Fetch current user
+export const fetchCurrentUser = async () => {
+  const { data } = await axiosInstance.get(`${BASE_URL}/current-user`);
   return data;
-}; */
+};
 
 // Fetch single user by ID
 export const fetchUserById = async (userId) => {
@@ -16,95 +16,112 @@ export const fetchUserById = async (userId) => {
 };
 
 // Update user by ID
-export const updateUserProfile = async (userId, userData) => {
+export const updateUserProfile = async (userData) => {
   const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/profile`,
+    `${BASE_URL}/profile-update`,
     userData
   );
   return data;
 };
 
 // Delete user by ID
-export const deleteUser = async (userId) => {
-  const { data } = await axiosInstance.delete(`${BASE_URL}/${userId}`);
+export const deleteUser = async () => {
+  const { data } = await axiosInstance.delete(`${BASE_URL}/delete`);
   return data;
 };
 
 // Change user password
-export const changePassword = async (userId, passwords) => {
+export const changePassword = async (passwords) => {
   const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/password`,
+    `${BASE_URL}/change-password`,
     passwords // current and newPasword
   );
   return data;
 };
 
 // Update user auth profile for updating email,password (there is already a route for update password),invitecode
-export const updateUserAuth = async (userId, authData) => {
-  const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/auth`,
-    authData
-  );
+export const updateUserAuth = async (authData) => {
+  const { data } = await axiosInstance.put(`${BASE_URL}/auth-update`, authData);
   return data;
 };
 
 /* ------------------- EDUCATION ROUTES ------------------------ */
+// Fetch all educations
+export const fetchEducations = async () => {
+  const { data } = await axiosInstance.get(`${BASE_URL}/get-educations`);
+  return data;
+};
+
 // Add education
-export const addEducation = async (userId, educationData) => {
+export const addEducation = async (educationData) => {
   const { data } = await axiosInstance.post(
-    `${BASE_URL}/${userId}/education`,
+    `${BASE_URL}/add-education`,
     educationData
   );
   return data;
 };
 
 // Update education
-export const updateEducation = async (userId, eduId, educationData) => {
+export const updateEducation = async (eduId, educationData) => {
   const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/education/${eduId}`,
+    `${BASE_URL}/update-education/${eduId}`,
     educationData
   );
   return data;
 };
 
 // Remove education
-export const removeEducation = async (userId, eduId) => {
+export const removeEducation = async (eduId) => {
   const { data } = await axiosInstance.delete(
-    `${BASE_URL}/${userId}/education/${eduId}`
+    `${BASE_URL}/delete-education/${eduId}`
   );
   return data;
 };
 
+/* ------------------- EXPERIENCE ROUTES ------------------------ */
+// Fetch all experiences
+export const fetchExperiences = async () => {
+  const { data } = await axiosInstance.get(`${BASE_URL}/get-experiences`);
+  return data;
+};
+
 // Add experience
-export const addExperience = async (userId, experienceData) => {
+export const addExperience = async (experienceData) => {
   const { data } = await axiosInstance.post(
-    `${BASE_URL}/${userId}/experience`,
+    `${BASE_URL}/add-experience`,
     experienceData
   );
   return data;
 };
 
 // Update experience
-export const updateExperience = async (userId, expId, experienceData) => {
+export const updateExperience = async (expId, experienceData) => {
   const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/experience/${expId}`,
+    `${BASE_URL}/update-experience/${expId}`,
     experienceData
   );
   return data;
 };
 
 // Remove experience
-export const removeExperience = async (userId, expId) => {
+export const removeExperience = async (expId) => {
   const { data } = await axiosInstance.delete(
-    `${BASE_URL}/${userId}/experience/${expId}`
+    `${BASE_URL}/experience/${expId}`
   );
+  return data;
+};
+
+/* ------------------- PROJECTS ROUTES ------------------------ */
+// Fetch all projects
+export const fetchProjects = async () => {
+  const { data } = await axiosInstance.get(`${BASE_URL}/get-projects`);
   return data;
 };
 
 // Add project
 export const addProject = async (userId, projectData) => {
   const { data } = await axiosInstance.post(
-    `${BASE_URL}/${userId}/projects`,
+    `${BASE_URL}/add-project`,
     projectData
   );
   return data;
@@ -113,7 +130,7 @@ export const addProject = async (userId, projectData) => {
 // Update project
 export const updateProject = async (userId, projectId, projectData) => {
   const { data } = await axiosInstance.put(
-    `${BASE_URL}/${userId}/projects/${projectId}`,
+    `${BASE_URL}/update-project/${projectId}`,
     projectData
   );
   return data;
@@ -122,7 +139,7 @@ export const updateProject = async (userId, projectId, projectData) => {
 // Remove project
 export const removeProject = async (userId, projectId) => {
   const { data } = await axiosInstance.delete(
-    `${BASE_URL}/${userId}/projects/${projectId}`
+    `${BASE_URL}/delete-project/${projectId}`
   );
   return data;
 };

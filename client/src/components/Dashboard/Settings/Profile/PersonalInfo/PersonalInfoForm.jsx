@@ -13,6 +13,7 @@ import { Edit } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import PropTypes from "prop-types";
 import { Separator } from "@/components/ui/separator";
+import { useEffect, useState } from "react";
 
 const PersonalInfoForm = ({
   form,
@@ -22,6 +23,17 @@ const PersonalInfoForm = ({
   handleFileChange,
   fileInputRef,
 }) => {
+  const [isDirty, setIsDirty] = useState(false);
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      const defaultValues = form.getValues();
+      setIsDirty(JSON.stringify(value) !== JSON.stringify(defaultValues));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form]);
+
   return (
     <>
       <Form {...form}>
@@ -39,7 +51,7 @@ const PersonalInfoForm = ({
           </div>
           <Separator />
           <div className="space-y-6">
-            <div className="grid  my-3 items-center md:grid-cols-[1fr_auto] h-auto md:gap-6 xl:gap-8">
+            <div className="grid my-3 items-center md:grid-cols-[1fr_auto] h-auto md:gap-6 xl:gap-8">
               <div className="order-2 gap-3 md:order-1 flex flex-col justify-around items-center h-full">
                 <FormField
                   control={form.control}
@@ -67,7 +79,6 @@ const PersonalInfoForm = ({
                       <FormControl>
                         <Input placeholder="bio" className="h-12" {...field} />
                       </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
@@ -237,6 +248,7 @@ const PersonalInfoForm = ({
                 <Button
                   type="submit"
                   className="text-lg flex flex-row justify-center rounded-full gap-2 h-12 font-medium"
+                  disabled={!isDirty} // Disable button if no changes
                 >
                   <Check />
                   <Separator orientation="vertical" />

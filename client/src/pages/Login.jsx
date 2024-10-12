@@ -10,26 +10,27 @@ import {
 } from "@/components/ui/form";
 import { Icons } from "@/constants/Icons";
 import { useForm } from "react-hook-form";
-import { loginUser } from "@/services/authServices";
+
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { LogIn } from "lucide-react";
-import { LogInIcon } from "lucide-react";
 import { KeyRound } from "lucide-react";
+import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const form = useForm();
   const navigate = useNavigate();
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: loginUser, // Specify mutation function
-  });
+  const { login, isLoading } = useAuth();
 
-  const handleSubmit = (data) => {
-    console.log("handleSubmit:Login", data);
-    mutate(data, {
-      onSuccess: () => navigate("/dashboard"),
-      onError: (error) => console.log("onErrror:loginmutate", error.message),
+  const handleSubmit = (credentials) => {
+    login(credentials, {
+      onSuccess: (data) => {
+        toast.success("Login Success!");
+        navigate(`/dashboard/${data?.user?.role}`);
+      },
+      onError: (error) => {
+        toast.error("onErrror:loginmutate", { description: error.message });
+      },
     }); // on save button press send data to the apis
   };
 

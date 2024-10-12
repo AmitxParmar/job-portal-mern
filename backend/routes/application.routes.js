@@ -1,3 +1,4 @@
+import { protect, authorize } from "../middleware/auth.middleware.js";
 import {
   applyForJob,
   getJobApplications,
@@ -9,17 +10,23 @@ import {
 import { Router } from "express";
 
 const router = Router();
+router.use(protect);
 
-router.post("/:jobId/apply", applyForJob);
-/* router.post("/apply", verifyToken, applyForJob); */
-
-router.get("/job/:jobId/applications", /* verifyToken, */ getJobApplications);
-router.get("/user", /* verifyToken, */ getUserApplications);
+// For Recruiters NOTE: add authorize('recruiter') later
+router.get("/recruiter/dashboard", getRecruiterDashboard);
+router.get(
+  "/:jobId/get-job-applications",
+  authorize("recruiter"),
+  getJobApplications
+);
 router.put(
-  "/application/:applicationId/:status",
-  /* verifyToken, */ updateApplicationStatus
+  "/update-status/:applicationId/:status",
+  authorize("recruiter"),
+  updateApplicationStatus
 );
 
-router.get("/recruiter/dashboard", /* verifyToken, */ getRecruiterDashboard);
+// For Job Seekers
+router.post("/:jobId/apply", applyForJob);
+router.get("/get-user-applications", getUserApplications);
 
 export default router;

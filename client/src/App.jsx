@@ -1,7 +1,7 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { CircleAlert, CircleCheck, CircleX, Info } from "lucide-react";
 import { Toaster } from "./components/ui/sonner";
-import { Navigate } from "react-router-dom";
+import { Suspense } from "react";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -19,21 +19,62 @@ import Layout from "./components/Dashboard/common/Layouts/Layout";
 import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
 import Navbar from "./components/Dashboard/common/Navbar";
 import Loader from "./components/Dashboard/common/Loader";
+import { useAuth } from "./hooks/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function App() {
-  const role = "recruiter"; // or "jobSeeker"
-  const isAuth = true;
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated && user) navigate(`/dashboard/${user?.role}`);
+  }, [isAuthenticated, user?.role]);
+
+  const ProtectedRoute = ({ children }) => {
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+    return children;
+  };
+
+  const RoleBasedRoute = ({ children, allowedRole }) => {
+    if (isAuthenticated && user?.role !== allowedRole) {
+      return <Navigate to="/unauthorized" replace />; // Handle unauthorized
+    }
+    return children;
+  };
 
   return (
-    <Router>
-      <Navbar role={role} isAuth={isAuth} />
+    <Suspense
+      fallback={
+        <div className="absolute h-screen w-screen blur">
+          <Loader />
+        </div>
+      }
+    >
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route path="/dashboard" element={<Layout role={role} />}>
+        <Route element={<LoginRegisterLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRole={user?.role}>
+                <Layout role={user?.role} />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        >
           <Route
             index
-            element={<Navigate to={`/dashboard/${role}`} replace />}
+            element={<Navigate to={`/dashboard/${user?.role}`} replace />}
           />
 
           <Route path="jobSeeker" element={<Dashboard role="jobSeeker" />}>
@@ -47,7 +88,6 @@ function App() {
             <Route path="job-openings" element={<JobOpenings />} />
           </Route>
 
-          {/* Common settings route accessible to both roles */}
           <Route path="settings" element={<Settings />}>
             <Route index element={<Profile />} />
             <Route path="bookmarks" element={<Bookmarks />} />
@@ -55,12 +95,8 @@ function App() {
           </Route>
         </Route>
 
-        <Route element={<LoginRegisterLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
-
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/unauthorized" element={<div>Unauthorized</div>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Toaster
         icons={{
@@ -71,7 +107,7 @@ function App() {
           loading: <Loader />,
         }}
       />
-    </Router>
+    </Suspense>
   );
 }
 

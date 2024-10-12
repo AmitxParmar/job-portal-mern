@@ -3,8 +3,7 @@ import { User } from "../../models/User.js";
 import { createError } from "../../utils/error.js";
 import mongoose from "mongoose";
 
-const userId = "66ccb1ecb5e4de35acdbb80d";
-// Get User Profile
+// Get User Profile (public route)
 export const getUserProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId)
@@ -14,7 +13,6 @@ export const getUserProfile = async (req, res, next) => {
       .populate("education")
       .populate("bookmarkedJobs");
 
-    /* console.log(user); */
     if (!user) return next(createError(404, "User not found!"));
     res.status(200).json(user);
   } catch (error) {
@@ -22,10 +20,39 @@ export const getUserProfile = async (req, res, next) => {
   }
 };
 
+// Fetch Current Protected
+export const fetchCurrentUser = async (req, res, next) => {
+  try {
+    // The user ID is attached to the request by the authentication middleware
+    const userId = req.user.id;
+
+    // Fetch the user from the database, excluding the password
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate("projects")
+      .populate("experience")
+      .populate("education")
+      .populate("bookmarkedJobs");
+
+    if (!user) {
+      return next(createError(404, "User not found"));
+    }
+
+    // Send the user data
+    res.status(200).json({
+      success: true,
+      message: "Current user data fetched successfully!",
+      user,
+    });
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    next(createError(500, "Error fetching user data"));
+  }
+};
 // Update User Profile
 export const updateUserAuth = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.user.id);
     if (!user) return next(createError(404, "User not found!"));
 
     const updatedAuthData = {
@@ -50,8 +77,10 @@ export const updateUserAuth = async (req, res, next) => {
 
 // Update User Profile
 export const updateProfile = async (req, res, next) => {
+  const userId = req.user.id;
+  console.log("upating profile", req.user.id);
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(userId);
     if (!user) return next(createError(404, "User not found!"));
 
     const updatedProfileData = {
@@ -73,6 +102,7 @@ export const updateProfile = async (req, res, next) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
+    console.log("Error updating profile", req.user.id);
     next(error);
   }
 };
@@ -89,7 +119,7 @@ export const deleteUserAccount = async (req, res, next) => {
   }
 };
 
-// Change User Password
+// Change User Password (only after logged in from settings)
 export const changePassword = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
@@ -114,10 +144,7 @@ export const changePassword = async (req, res, next) => {
 
 export const toggleBookmarkJob = async (req, res, next) => {
   try {
-    const userId = "66ccb1ecb5e4de35acdbb80d"; // NOTE: remove hard coded value later
-    console.log("Attempting to find user with ID:", userId);
-
-    const user = await User.findById(userId);
+    const user = await User.findById(req.user.id);
     console.log("User found:", user ? "Yes" : "No");
     if (!user) return next(createError(404, "User not found!"));
 

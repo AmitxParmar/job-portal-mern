@@ -1,10 +1,4 @@
-import {
-  Briefcase,
-  ChartLine,
-  FileText,
-  PlusCircle,
-  Users,
-} from "lucide-react";
+import { Briefcase, ChartLine, FileText, Users } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -14,16 +8,16 @@ import {
 } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import { getRecruiterDashboard } from "@/services/applicationServices";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../ui/skeleton";
 import CardSkeleton from "./common/JobCard/CardSkeleton";
 import Resume from "./common/Resume";
 import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const EmployerDashboard = () => {
-  // Mock data based on the provided schemas
   const { user } = useAuth();
   const { data, isLoading, error, status } = useQuery({
     queryKey: ["recruiter-dashboard"],
@@ -194,7 +188,7 @@ const EmployerDashboard = () => {
             </div>
           </div>
           <div className="row-span-2">
-            <Resume user={user} className={"w-full"} />
+            <Resume user={user} className={"w-full max-w-96"} />
           </div>
           {/*  <div className="mt-8 flex flex-wrap gap-4">
             <Button>
@@ -210,6 +204,10 @@ const EmployerDashboard = () => {
         </main>
       </div>
     );
+  } else if (status === "error") {
+    toast.error("Error:", {
+      description: error.message,
+    });
   }
 };
 

@@ -23,10 +23,9 @@ const Register = () => {
     mutationFn: registerUser, // Specify mutation function
   });
 
-  const handleSubmit = (data) => {
-    console.log("Job submitted:", data);
-    mutate(data, {
-      onSuccess: () => navigate("/dashboard"),
+  const handleSubmit = (credentials) => {
+    mutate(credentials, {
+      onSuccess: (data) => navigate(`/dashboard/${data?.user?.role}`),
       onError: (error) => console.log(error),
     }); // on save button press send data to the apis
   };

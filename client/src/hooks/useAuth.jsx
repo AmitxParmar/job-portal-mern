@@ -1,67 +1,87 @@
-import { loginUser, registerUser } from "@/services/authServices";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useState } from "react";
+import { loginUser, registerUser, logoutUser } from "@/services/authServices";
+import { fetchCurrentUser } from "@/services/userServices";
 
-import { fetchUserById } from "@/services/userServices";
+// Zustand store for persisting auth state
+const useAuthStore = create(
+  persist(
+    (set) => ({
+      isAuthenticated: false,
+      setIsAuthenticated: (value) => set({ isAuthenticated: value }),
+    }),
+    {
+      name: "auth-storage",
+      getStorage: () => localStorage,
+    }
+  )
+);
 
+// React Query hook for auth operations
 export const useAuth = () => {
-  const [userId, setUserId] = useState("66ccb1ecb5e4de35acdbb80d"); // Hard coded user ID
   const queryClient = useQueryClient();
+  const { isAuthenticated, setIsAuthenticated } = useAuthStore();
 
   const {
-    data: user,
     isLoading,
     error,
+    data,
+    refetch: refetchUser,
   } = useQuery({
-    queryKey: ["user", userId],
-    queryFn: () => fetchUserById(userId),
-    enabled: !!userId,
-    onSuccess: (data) => {
-      console.log("user fetched", data);
-      toast.success("User data fetched", {
-        description: JSON.stringify(data),
-      });
-      queryClient.setQueryData(["user", userId], data); // Cache the user data
+    queryKey: ["currentUser"],
+    queryFn: fetchCurrentUser,
+    onSuccess: () => {
+      setIsAuthenticated(true);
     },
-    onError: () => toast.error("error user fetching"),
+    onError: (error) => {
+      console.log("currentUser fetching error", error);
+      setIsAuthenticated(false);
+      toast.error("Session expired. Please log in again.");
+    },
+    cacheTime: 1000 * 60 * 60, // Cache for 1 hour
   });
-  console.log(user);
+
   const loginMutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      toast.success("Successfully Registered!");
-      setUserId(data.user._id);
-      localStorage.setItem("userId", data.user._id);
-      queryClient.setQueryData(["user", data.user._id], data.user);
+    onSuccess: () => {
+      setIsAuthenticated(true);
+      toast.success("Successfully logged in!");
     },
-    onError: (error) =>
-      toast.error("Error: Login", {
-        description: error.message,
-      }),
+    onError: (error) => toast.error(`Login Error: ${error.message}`),
   });
 
   const registerMutation = useMutation({
     mutationFn: registerUser,
-    onSuccess: (data) => {
-      toast.success("Successfully Registered!");
-      setUserId(data.user._id);
-      localStorage.setItem("userId", data.user._id);
-      queryClient.setQueryData(["user", data.user._id], data.user);
+    onSuccess: () => {
+      toast.success(
+        "Successfully registered! Check your email to verify your account."
+      );
     },
-    onError: (error) =>
-      toast.error("Error:Registering", {
-        description: error.message,
-      }),
+    onError: (error) => toast.error(`Registration Error: ${error.message}`),
+  });
+
+  const logoutMutation = useMutation({
+    mutationFn: logoutUser,
+    onSuccess: () => {
+      setIsAuthenticated(false);
+      queryClient.clear();
+      toast.success("Successfully logged out!");
+    },
+    onError: (error) => toast.error(`Logout Error: ${error.message}`),
   });
 
   return {
-    user,
+    user: data?.user,
     isLoading,
     error,
-    isLoggedIn: !!userId,
+    isAuthenticated,
     login: loginMutation.mutate,
     register: registerMutation.mutate,
+    logout: logoutMutation.mutate,
+    refetchUser,
   };
 };
+
+export default useAuthStore;

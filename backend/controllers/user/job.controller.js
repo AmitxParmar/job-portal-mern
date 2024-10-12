@@ -3,12 +3,12 @@ import Job from "../../models/Job.js";
 import { User } from "../../models/User.js";
 import { createError } from "../../utils/error.js";
 
-const userId = "66ccb1ecb5e4de35acdbb80d";
 export const jobControllers = {
   // Create a new job
   createJob: async (req, res, next) => {
+    const recruiterId = req.user.id;
     try {
-      const recruiter = await User.findById(req.user.id);
+      const recruiter = await User.findById(recruiterId);
       if (!recruiter || recruiter.role !== "recruiter") {
         return next(createError(403, "Only recruiters can post jobs"));
       }
@@ -203,11 +203,10 @@ export const jobControllers = {
 
   // Get jobs posted by a recruiter
   getRecruiterJobs: async (req, res, next) => {
+    const recruiterId = req.user.id;
     try {
-      const recruiter = await User.findById(userId /* req.user.id */);
-      /* if (!recruiter || recruiter.role !== "recruiter") {
-        return next(createError(403, "Access denied"));
-      } */
+      const recruiter = await User.findById(recruiterId);
+
       console.log("gettings recruiters job", recruiter.email);
       const jobs = await Job.find({ postedBy: recruiter._id })
         .populate("company", "name logo")
@@ -226,30 +225,4 @@ export const jobControllers = {
       next(err);
     }
   },
-  // Apply for a job
-  /*   applyForJob: async (req, res, next) => {
-    try {
-      const job = await Job.findById(req.params.id);
-      if (!job) {
-        return next(createError(404, "Job not found"));
-      }
-
-      const user = await User.findById(req.user.id);
-      if (!user || user.role !== "jobSeeker") {
-        return next(createError(403, "Only job seekers can apply for jobs"));
-      }
-
-      if (job.applicants.includes(user._id)) {
-        return next(createError(400, "You have already applied for this job"));
-      }
-
-      job.applicants.push(user._id);
-      await job.save();
-
-      res.status(200).json({ message: "Application submitted successfully" });
-    } catch (err) {
-      next(err);
-    }
-  },
- */
 };

@@ -15,6 +15,7 @@ import { useOutletContext } from "react-router-dom";
 
 const Bookmarks = () => {
   const { user, isLoading } = useOutletContext();
+
   if (isLoading) return <Loader />;
   console.log("bookmarks", user?.salaryRange?.min, user?.bookmarkedJobs);
   return (

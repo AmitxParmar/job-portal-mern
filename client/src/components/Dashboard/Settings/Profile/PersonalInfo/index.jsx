@@ -65,7 +65,7 @@ const PersonalInfo = () => {
   };
 
   const { mutate } = useMutation({
-    mutationFn: ({ userId, data }) => updateUserProfile(userId, data),
+    mutationFn: ({ data }) => updateUserProfile(data),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["user", user._id]);
@@ -74,11 +74,11 @@ const PersonalInfo = () => {
 
   const onSubmit = (data) => {
     mutate(
-      { userId: user._id, data },
+      { data },
       {
-        onSuccess: (data) =>
+        onSuccess: () =>
           toast.success("Success!", {
-            description: `${JSON.stringify(data)}`,
+            description: `Profile data updated Successfully!`,
           }),
         onError: (error) =>
           toast.success("Error!", {

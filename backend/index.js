@@ -9,6 +9,8 @@ import inviteCodeRouter from "./routes/invitecode.routes.js";
 import jobsRouter from "./routes/job.routes.js";
 import morgan from "morgan";
 import userRouter from "./routes/user.routes.js";
+import cookieParser from "cookie-parser";
+import { protect } from "./middleware/auth.middleware.js";
 
 dotenv.config();
 
@@ -16,19 +18,21 @@ dotenv.config();
 const app = express();
 
 // Middleware setup
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
+
 // CORS setup
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: ["http://localhost:5173", "http://localhost:8000"], // Allow requests from your frontend URL
+    credentials: true, // Enable credentials (cookies)
   })
 );
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  console.log(req.cookie);
   next(err);
 });
 
