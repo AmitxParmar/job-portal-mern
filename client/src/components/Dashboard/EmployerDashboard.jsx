@@ -12,14 +12,14 @@ import { Badge } from "@/components/ui/badge";
 import { getRecruiterDashboard } from "@/services/applicationServices";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../ui/skeleton";
-import CardSkeleton from "./common/JobCard/CardSkeleton";
+
 import Resume from "./common/Resume";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 const EmployerDashboard = () => {
   const { user } = useAuth();
-  const { data, isLoading, error, status } = useQuery({
+  const { data, error, status } = useQuery({
     queryKey: ["recruiter-dashboard"],
     queryFn: getRecruiterDashboard,
     retry: 1,
@@ -27,23 +27,27 @@ const EmployerDashboard = () => {
     staleTime: 1000 * 60 * 100, // Data is fresh for 2 minutes
   });
 
-  if (isLoading) {
+  if (status === "pending") {
     return (
-      <div className="min-w-full w-full px-8 py-4 flex flex-col gap-4">
-        <div className="grid grid-cols-7">
-          <Skeleton className={"w-56 h-56 bg-black/30 rounded-3xl"} />
-          <Skeleton className={"w-56 h-56 bg-black/30 rounded-3xl"} />
-          <Skeleton className={"w-56 h-56 bg-black/30 rounded-3xl"} />
-          <Skeleton className={"w-56 h-56 bg-black/30 rounded-3xl"} />
-        </div>
-        <div className="cols-span-4 gap-x-80 grid grid-cols-4">
-          <CardSkeleton
-            className={"h-80 min-w-[450px] min-h-[600px] max-h-screen"}
-          />
-          <CardSkeleton
-            className={"h-80 min-w-[450px] min-h-[600px] max-h-screen"}
-          />
-        </div>
+      <div className=" bg-gray-100 bg-blend-saturation overflow-hidden max-h-full h-[calc(100vh-8vh)]">
+        <main className="mx-auto h-full px-4 flex flex-row justify-between sm:px-6 lg:px-8 py-8 gap-8">
+          <div className="max-h-full h-full w-full">
+            <div className="grid  grid-cols-1 gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
+              <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
+              <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
+              <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
+              <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
+            </div>
+
+            <div className="mt-8 max-h-[600px] h-full grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <Skeleton className="bg-black/20 rounded-3xl h-[550px] " />
+              <Skeleton className="bg-black/20 rounded-3xl h-[550px] " />
+            </div>
+          </div>
+          <div className="row-span-2">
+            <Skeleton className="h-full w-80 rounded-3xl bg-black/20" />
+          </div>
+        </main>
       </div>
     );
   } else if (status === "success") {
@@ -190,17 +194,6 @@ const EmployerDashboard = () => {
           <div className="row-span-2">
             <Resume user={user} className={"w-full max-w-96"} />
           </div>
-          {/*  <div className="mt-8 flex flex-wrap gap-4">
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" /> Post New Job
-            </Button>
-            <Button variant="outline">
-              <Users className="mr-2 h-4 w-4" /> View All Candidates
-            </Button>
-            <Button variant="outline">
-              <Briefcase className="mr-2 h-4 w-4" /> Manage Job Postings
-            </Button>
-          </div> */}
         </main>
       </div>
     );
