@@ -13,7 +13,6 @@ import { Edit } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import PropTypes from "prop-types";
 import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
 
 const PersonalInfoForm = ({
   form,
@@ -23,17 +22,6 @@ const PersonalInfoForm = ({
   handleFileChange,
   fileInputRef,
 }) => {
-  const [isDirty, setIsDirty] = useState(false);
-
-  useEffect(() => {
-    const subscription = form.watch((value) => {
-      const defaultValues = form.getValues();
-      setIsDirty(JSON.stringify(value) !== JSON.stringify(defaultValues));
-    });
-
-    return () => subscription.unsubscribe();
-  }, [form]);
-
   return (
     <>
       <Form {...form}>
@@ -248,7 +236,6 @@ const PersonalInfoForm = ({
                 <Button
                   type="submit"
                   className="text-lg flex flex-row justify-center rounded-full gap-2 h-12 font-medium"
-                  disabled={!isDirty} // Disable button if no changes
                 >
                   <Check />
                   <Separator orientation="vertical" />
