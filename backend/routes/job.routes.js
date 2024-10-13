@@ -7,8 +7,8 @@ import { authorize, protect } from "../middleware/auth.middleware.js";
 const router = express.Router();
 router.use(protect);
 
-router.post("/", jobControllers.createJob);
-router.get("/", jobControllers.getAllJobs);
+router.post("/", authorize("recruiter"), jobControllers.createJob);
+router.get("/", authorize("jobSeeker"), jobControllers.getAllJobs);
 router.get("/:jobId", jobControllers.getJobById);
 router.put("/:jobId", jobControllers.updateJob);
 router.delete("/:jobId", jobControllers.deleteJob);

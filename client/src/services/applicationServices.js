@@ -13,6 +13,7 @@ export const applyForJob = async (jobId) => {
   });
   return data;
 };
+
 /* ==================================== */
 
 // for recruiters

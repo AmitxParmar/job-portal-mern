@@ -71,7 +71,7 @@ const SettingsSidebar = () => {
       >
         <Link
           to={to}
-          className={`flex items-center justify-center w-full px-4 py-2 text-s border rounded-full transition-all ${
+          className={`flex items-center justify-center w-full px-4 py-2 text-sm border rounded-full transition-all ${
             isActive ? "bg-cyan-400/20" : "bg-white"
           }`}
         >
@@ -103,7 +103,7 @@ const SettingsSidebar = () => {
         {profileMenu.map((item) =>
           renderNavLink(item.path, item.icon, item.name)
         )}
-        <InviteCodeGenerator />
+        {<InviteCodeGenerator />}
       </div>
     </div>
   );
@@ -142,9 +142,9 @@ export function InviteCodeGenerator() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline">
-          <UserRoundPlus />
-          Generate Invite Code
+        <Button variant="outline" className="rounded-3xl">
+          <UserRoundPlus className="mr-2" />
+          Invite
         </Button>
       </SheetTrigger>
       <SheetContent side="left">

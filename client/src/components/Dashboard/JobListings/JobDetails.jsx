@@ -174,13 +174,18 @@ JobDetails.propTypes = {
       min: PropTypes.string.isRequired,
       max: PropTypes.string.isRequired,
     }).isRequired,
-    applicants: PropTypes.arrayOf(PropTypes.string),
+
     tags: PropTypes.arrayOf(PropTypes.string),
     frequency: PropTypes.string.isRequired,
     skillsRequired: PropTypes.arrayOf(PropTypes.string),
     status: PropTypes.string,
     postedAt: PropTypes.string.isRequired,
-    combinedField: PropTypes.shape({}).isRequired,
+    combinedField: PropTypes.shape({
+      requiredSkills: PropTypes.string,
+      jobType: PropTypes.string,
+      workFrom: PropTypes.string,
+      experience: PropTypes.string,
+    }).isRequired,
   }).isRequired,
 };
 export default JobDetails;

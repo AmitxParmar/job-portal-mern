@@ -15,12 +15,16 @@ import { useNavigate } from "react-router-dom";
 import { KeyRound } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 
 const Login = () => {
   const form = useForm();
+  const { login, isLoading, logout } = useAuth();
   const navigate = useNavigate();
 
-  const { login, isLoading } = useAuth();
+  useEffect(() => {
+    logout();
+  }, []);
 
   const handleSubmit = (credentials) => {
     login(credentials, {

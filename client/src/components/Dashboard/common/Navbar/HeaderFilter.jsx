@@ -28,7 +28,7 @@ const HeaderFilter = () => {
   const { pathname } = useLocation();
 
   return (
-    pathname === "/dashboard" &&
+    pathname.startsWith("/dashboard/jobSeeker") &&
     user?.role !== "recruiter" && (
       <Suspense
         fallback={<Loader className={`transition-all duration-1000`} />}

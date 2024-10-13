@@ -22,6 +22,13 @@ const UserJobListings = () => {
     status,
   } = jobQuery;
 
+  const isBookmarked = (jobId) => {
+    console.log(
+      user?.bookmarkedJobs?.some(
+        (bookmarkedJob) => bookmarkedJob?._id === jobId
+      )
+    );
+  };
   return status === "pending" ? (
     <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
       {Array.from({ length: 10 }, (_, index) => (
@@ -38,12 +45,7 @@ const UserJobListings = () => {
             <Fragment key={i}>
               {page?.jobs?.map((job) => (
                 <JobCard key={job._id} job={job}>
-                  <JobDetails
-                    job={job}
-                    isBookmarked={user?.bookmarkedJobs?.some(
-                      (bookmarkedJob) => bookmarkedJob?._id === job?._id
-                    )}
-                  />
+                  <JobDetails job={job} isBookmarked={isBookmarked(job._id)} />
                 </JobCard>
               ))}
             </Fragment>
