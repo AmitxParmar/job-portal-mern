@@ -25,9 +25,11 @@ const PersonalInfo = () => {
       contactEmail: user?.contactEmail ?? "",
       address: user?.address ?? "",
       skills: user?.skills ?? "",
-      linkedin: user?.profileLinks?.linkedIn ?? "",
-      github: user?.profileLinks?.github ?? "",
-      other: user?.profileLinks?.other ?? "",
+      profileLinks: {
+        linkedIn: user?.profileLinks?.linkedIn ?? "",
+        github: user?.profileLinks?.github ?? "",
+        other: user?.profileLinks?.other ?? "",
+      },
     },
     values: {
       fullName: user?.fullName ?? "",
@@ -37,9 +39,10 @@ const PersonalInfo = () => {
       contactEmail: user?.contactEmail ?? "",
       address: user?.address ?? "",
       skills: user?.skills ?? "",
-      linkedin: user?.profileLinks?.linkedIn ?? "",
-      github: user?.profileLinks?.github ?? "",
-      other: user?.profileLinks?.other ?? "",
+      profileLinks: {
+        linkedIn: user?.profileLinks?.linkedIn ?? "",
+        github: user?.profileLinks?.github ?? "",
+      },
     },
   });
 

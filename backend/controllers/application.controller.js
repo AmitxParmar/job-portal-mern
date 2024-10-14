@@ -181,21 +181,16 @@ export const getUserApplications = async (req, res, next) => {
     const user = await User.findById(userId);
 
     if (!user) return next(createError(404, "User not found!"));
-    console.log("UserA]lication User::::", user);
 
     const applications = await Application.find({
       applicant: userId,
     }).populate("job");
 
-    console.log("applications", applications);
-
-    res
-      .status(200)
-      .json({
-        success: true,
-        applications,
-        message: "User Applications fetched successfully!",
-      });
+    res.status(200).json({
+      success: true,
+      applications,
+      message: "User Applications fetched successfully!",
+    });
   } catch (error) {
     console.log("UserAppErrr:", error);
     next(error);

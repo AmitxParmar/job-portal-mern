@@ -1,31 +1,33 @@
 import { Briefcase, ChartLine, FileText, Users } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { getRecruiterDashboard } from "@/services/applicationServices";
 import { useQuery } from "@tanstack/react-query";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../../ui/skeleton";
 
-import Resume from "./common/Resume";
+import Resume from "../../common/Resume";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import RecentJobPostings from "./RecentJobPostings";
+import RecentApplications from "./RecentApplications";
+import { useState } from "react";
 
 const EmployerDashboard = () => {
+  const [selectedApplicantId, setSelectedApplicantId] = useState(null);
+
   const { user } = useAuth();
+
   const { data, error, status } = useQuery({
     queryKey: ["recruiter-dashboard"],
     queryFn: getRecruiterDashboard,
-    retry: 1,
+    retry: 3,
     cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
     staleTime: 1000 * 60 * 100, // Data is fresh for 2 minutes
   });
+
+  const handleSelectApplicant = (applicantId) => {
+    setSelectedApplicantId(applicantId);
+  };
 
   if (status === "pending") {
     return (
@@ -116,83 +118,19 @@ const EmployerDashboard = () => {
             </div>
 
             <div className="mt-8 max-h-[600px] h-full grid grid-cols-1 gap-6 lg:grid-cols-2">
-              <Card className="rounded-3xl shadow-xl">
-                <CardHeader>
-                  <CardTitle>Recent Job Postings</CardTitle>
-                  <CardDescription>
-                    Overview of your latest job listings
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="grid grid-flow-row-dense gap-2">
-                    {recentJobs?.map((job) => (
-                      <li
-                        key={job._id}
-                        className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between"
-                      >
-                        <div>
-                          <p className="font-medium">{job.title}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {job.company.name} - {job.location.city},{" "}
-                            {job.location.country}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {job.applicants.length} applicant(s)
-                          </p>
-                        </div>
-                        <Badge variant="default">Open</Badge>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="rounded-3xl shadow-xl">
-                <CardHeader>
-                  <CardTitle>Recent Applications</CardTitle>
-                  <CardDescription>
-                    Latest candidate applications
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="grid grid-flow-row-dense gap-2">
-                    {recentApplications.map((app) => (
-                      <li
-                        key={app._id}
-                        className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between"
-                      >
-                        <div>
-                          <p className="font-medium">
-                            {app.applicant.fullName}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {app.job.title}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            Applied:{" "}
-                            {new Date(app.appliedAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <Badge
-                          variant={
-                            app.status === "applied"
-                              ? "default"
-                              : app.status === "reviewing"
-                              ? "secondary"
-                              : "outline"
-                          }
-                        >
-                          {app.status}
-                        </Badge>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <RecentJobPostings recentJobs={recentJobs} />
+              <RecentApplications
+                onSelectApplicant={handleSelectApplicant}
+                recentApplications={recentApplications}
+              />
             </div>
           </div>
           <div className="row-span-2">
-            <Resume user={user} className={"w-full max-w-96"} />
+            <Resume
+              /* user={user} */
+              userId={selectedApplicantId}
+              className={"w-full max-w-96"}
+            />
           </div>
         </main>
       </div>

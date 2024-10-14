@@ -35,8 +35,6 @@ app.use(
   })
 );
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  console.log(req.cookie);
   next(err);
 });
 

@@ -74,7 +74,7 @@ export const searchJobs = async (req, res, next) => {
       employerName, // New filter to search by employer's full name
       employerSkills, // New filter to search by employer's skills
     } = req.params;
-    console.log(req.params);
+
     const filter = {};
 
     // Job-specific filters

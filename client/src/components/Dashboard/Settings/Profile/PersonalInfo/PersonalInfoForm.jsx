@@ -51,7 +51,8 @@ const PersonalInfoForm = ({
                         <Input
                           placeholder="Full Name"
                           className={`${form.error && `border-red-600`} h-12`}
-                          {...field}
+                          value={field.value || ""} // Ensure controlled input
+                          onChange={field.onChange} // Ensure controlled input
                         />
                       </FormControl>
                       <FormMessage />
@@ -65,7 +66,12 @@ const PersonalInfoForm = ({
                     <FormItem className="w-full">
                       <FormLabel className="font-bold">Bio</FormLabel>
                       <FormControl>
-                        <Input placeholder="bio" className="h-12" {...field} />
+                        <Input
+                          placeholder="bio"
+                          className="h-12"
+                          value={field.value || ""} // Ensure controlled input
+                          onChange={field.onChange} // Ensure controlled input
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -81,7 +87,8 @@ const PersonalInfoForm = ({
                         <Input
                           placeholder="designation"
                           className="h-12"
-                          {...field}
+                          value={field.value || ""} // Ensure controlled input
+                          onChange={field.onChange} // Ensure controlled input
                         />
                       </FormControl>
                       <FormMessage />
@@ -130,7 +137,12 @@ const PersonalInfoForm = ({
                   <FormItem>
                     <FormLabel className="font-bold">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Email" className="h-12" {...field} />
+                      <Input
+                        placeholder="Email"
+                        className="h-12"
+                        value={field.value || ""} // Ensure controlled input
+                        onChange={field.onChange} // Ensure controlled input
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -143,7 +155,12 @@ const PersonalInfoForm = ({
                   <FormItem>
                     <FormLabel className="font-bold">Phone</FormLabel>
                     <FormControl>
-                      <Input placeholder="Phone" className="h-12" {...field} />
+                      <Input
+                        placeholder="Phone"
+                        className="h-12"
+                        value={field.value || ""} // Ensure controlled input
+                        onChange={field.onChange} // Ensure controlled input
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -159,7 +176,8 @@ const PersonalInfoForm = ({
                       <Input
                         placeholder="Address"
                         className="h-12"
-                        {...field}
+                        value={field.value || ""} // Ensure controlled input
+                        onChange={field.onChange} // Ensure controlled input
                       />
                     </FormControl>
                     <FormMessage />
@@ -176,7 +194,8 @@ const PersonalInfoForm = ({
                       <Input
                         placeholder="Skills (comma-separated)"
                         className="h-12"
-                        {...field}
+                        value={field.value || ""} // Ensure controlled input
+                        onChange={field.onChange} // Ensure controlled input
                       />
                     </FormControl>
                     <FormMessage />
@@ -191,7 +210,7 @@ const PersonalInfoForm = ({
               <Separator />
               <FormField
                 control={form.control}
-                name="linkedIn"
+                name="profileLinks.linkedIn"
                 render={({ field }) => (
                   <FormItem className="my-3">
                     <FormLabel className="font-bold">LinkedIn</FormLabel>
@@ -199,7 +218,8 @@ const PersonalInfoForm = ({
                       <Input
                         placeholder="LinkedIn"
                         className="h-12"
-                        {...field}
+                        value={field.value || ""} // Ensure controlled input
+                        onChange={field.onChange} // Ensure controlled input
                       />
                     </FormControl>
                     <FormMessage />
@@ -208,30 +228,40 @@ const PersonalInfoForm = ({
               />
               <FormField
                 control={form.control}
-                name="github"
+                name="profileLinks.github"
                 render={({ field }) => (
                   <FormItem className="my-3">
                     <FormLabel className="font-bold">Github</FormLabel>
                     <FormControl>
-                      <Input placeholder="Github" className="h-12" {...field} />
+                      <Input
+                        placeholder="Github"
+                        className="h-12"
+                        value={field.value || ""} // Ensure controlled input
+                        onChange={field.onChange} // Ensure controlled input
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
+              {/*  <FormField
                 control={form.control}
                 name="other"
                 render={({ field }) => (
                   <FormItem className="my-3">
                     <FormLabel className="font-bold">Other</FormLabel>
                     <FormControl>
-                      <Input placeholder="Other" className="h-12" {...field} />
+                      <Input
+                        placeholder="Other"
+                        className="h-12"
+                        value={field.value || ""} // Ensure controlled input
+                        onChange={field.onChange} // Ensure controlled input
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <div className="sticky bottom-0 flex flex-row justify-end gap-5">
                 <Button
                   type="submit"

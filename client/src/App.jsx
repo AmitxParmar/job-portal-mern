@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import EmployerDashboard from "@/components/Dashboard/EmployerDashboard";
+import EmployerDashboard from "@/components/Dashboard/EmployerComponents/EmployerDashboard";
 import UserJobListings from "@/components/Dashboard/JobListings";
 import JobOpenings from "./components/Dashboard/EmployerComponents/JobOpenings";
 import Settings from "./components/Dashboard/Settings";
@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated && user) navigate(`/dashboard/${user?.role}`);
-  }, [isAuthenticated, user?.role]);
+  }, [isAuthenticated]);
 
   const ProtectedRoute = ({ children }) => {
     if (!isAuthenticated) {
