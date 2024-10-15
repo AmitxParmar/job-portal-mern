@@ -97,26 +97,22 @@ const PersonalInfoForm = ({
                 />
               </div>
 
-              <div className="order-1 mb-4 flex justify-center md:order-2 relative md:mb-0 md:pt-2">
+              <div className="order-1 mb-4 flex justify-center md:order-2 items-center border rounded-xl h-full w-56 md:mb-0 md:pt-2">
                 <Button
                   name="profilePic"
                   variant="ghost"
-                  className="border flex flex-col w-30 h-30 p-2 rounded-full z-2"
+                  className="border relative flex flex-col w-44 h-44 p-2 rounded-full z-2"
                   onClick={handleButtonClick}
                   type="button"
                 >
                   {previewUrl ? (
-                    <img
-                      src={previewUrl}
-                      alt="Preview"
-                      className="w-full h-full rounded-full"
-                    />
+                    <img src={previewUrl} alt="Preview" className="h-44 w-44" />
                   ) : (
                     <Camera size={150} className="p-10" />
                   )}
                   <Edit3
                     size={50}
-                    className="rounded-full bg-muted border p-3 absolute bottom-0 align-middle flex right-0"
+                    className="rounded-full bg-muted border p-3 absolute bottom-2 right-2 flex"
                   />
                   <Input
                     name="profilePic"

@@ -22,9 +22,10 @@ const Resume = ({ user, userId, className }) => {
   const { data: fetchedUser, isLoading } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUserById(userId),
-
     enabled: !user && !!userId,
     // Only run the query if user is not provided and userId is available
+    cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
+    staleTime: 1000 * 60 * 100, // Data is fresh for 2 minutes
   });
 
   const resumeData = user || fetchedUser;
@@ -44,7 +45,9 @@ const Resume = ({ user, userId, className }) => {
       <div
         className={`min-w-96 border-none border-0 my-0 min-h-full p-3 item-center rounded-3xl bg-background px-6 w-96`}
       >
-        <p className="text-center text-xl font-bold">No user data available</p>
+        <p className="text-center text-xl font-bold">
+          No user data available! Select a candidate to render the Resume
+        </p>
       </div>
     );
   }
