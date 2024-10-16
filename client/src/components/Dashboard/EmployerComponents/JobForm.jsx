@@ -1,4 +1,3 @@
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,17 +21,20 @@ import { Separator } from "@/components/ui/separator";
 
 import QuillEditor from "../common/QuillEditor";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
-const JobPostForm = ({ onSubmit, onCancel }) => {
-  const form = useForm();
-
-  const handleSubmit = (data) => {
-    onSubmit(data);
-  };
+const JobForm = ({ onSubmit, onCancel, form }) => {
+  useEffect(() => {
+    // This effect will run when the form is reset with new values
+    const subscription = form.watch((value, { name, type }) => {
+      console.log(value, name, type);
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4">
         <FormField
           control={form.control}
           name="title"
@@ -298,7 +300,7 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
             }}
           >
             <X />
-            <Separator orientation />
+            <Separator orientation="vertical" />
             <span>Cancel</span>
           </Button>
           <Button
@@ -306,8 +308,8 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
             className="text-lg flex flex-row justify-center rounded-full gap-2 h-9 font-medium"
           >
             <Plus />
-            <Separator orientation />
-            <span>Post A Job</span>
+            <Separator orientation="vertical" />
+            <span>Update Job</span>
           </Button>
         </div>
       </form>
@@ -315,9 +317,10 @@ const JobPostForm = ({ onSubmit, onCancel }) => {
   );
 };
 
-JobPostForm.propTypes = {
+JobForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  form: PropTypes.func.isRequired,
 };
 
-export default JobPostForm;
+export default JobForm;

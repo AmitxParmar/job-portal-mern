@@ -83,7 +83,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
               {location?.city}, {location?.state}
             </div>
           </div>
-          <div className="w-fit bg-black relative">{children}</div>
+          {children}
         </div>
       </div>
     </>

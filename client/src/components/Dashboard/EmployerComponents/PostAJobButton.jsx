@@ -1,4 +1,4 @@
-import JobPostForm from "./JobPostForm";
+import JobForm from "./JobForm";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +12,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createJob } from "@/services/JobServices";
 import { useState } from "react";
 import { Plus } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 const PostAJobButton = () => {
+  const form = useForm();
   const [open, setOpen] = useState(false); // Use state to manage dialog open/close
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -27,6 +29,7 @@ const PostAJobButton = () => {
   const handleJobSubmit = (jobData) => {
     console.log("Job submitted:", jobData);
     mutation.mutate(jobData);
+    setOpen(false);
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -47,11 +50,9 @@ const PostAJobButton = () => {
           </DialogDescription>
         </DialogHeader>
         <div className="">
-          <JobPostForm
-            onSubmit={(data) => {
-              handleJobSubmit(data);
-              setOpen(false);
-            }}
+          <JobForm
+            form={form}
+            onSubmit={handleJobSubmit}
             onCancel={() => setOpen(false)} // close the dialog onCancel
           />
         </div>

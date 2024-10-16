@@ -152,8 +152,9 @@ export const jobControllers = {
 
   // Update a job
   updateJob: async (req, res, next) => {
+    const jobId = req.params.jobId;
     try {
-      const job = await Job.findById(req.params.id);
+      const job = await Job.findById(jobId);
       if (!job) {
         return next(createError(404, "Job not found"));
       }
@@ -164,12 +165,16 @@ export const jobControllers = {
       }
 
       const updatedJob = await Job.findByIdAndUpdate(
-        req.params.id,
+        jobId,
         { $set: req.body },
         { new: true }
       );
 
-      res.status(200).json(updatedJob);
+      res.status(200).json({
+        success: true,
+        message: "Job updated successfully!",
+        job: updatedJob,
+      });
     } catch (err) {
       next(err);
     }
