@@ -15,6 +15,7 @@ const RecentJobPostings = ({ recentJobs }) => {
   const [openStates, setOpenStates] = useState({});
   const { user } = useAuth();
   const handleSetOpen = (jobId, isOpen) => {
+    console.log("isOPen, jobId", jobId, isOpen);
     setOpenStates((prev) => ({ ...prev, [jobId]: isOpen }));
   };
   const isBookmarked = (jobId) => {
@@ -37,6 +38,7 @@ const RecentJobPostings = ({ recentJobs }) => {
               <li
                 key={job._id}
                 className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between"
+                onClick={() => handleSetOpen(job._id, true)}
               >
                 <div>
                   <p className="font-medium">{job.title}</p>
@@ -52,7 +54,7 @@ const RecentJobPostings = ({ recentJobs }) => {
               </li>
               <Applicants
                 open={openStates[job?._id] || false}
-                setOpen={(isOpen) => handleSetOpen(job?._id, isOpen)}
+                setOpen={(isOpen) => handleSetOpen(job._id, isOpen)}
                 job={job}
                 isBookmarked={isBookmarked(job?._id)}
               />

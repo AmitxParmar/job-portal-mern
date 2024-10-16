@@ -28,7 +28,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
     queryFn: () => getJobApplications(_id),
     enabled: !!_id && open,
   });
-
+  console.log("Job:", { job, isBookmarked, open, setOpen });
   useEffect(() => {
     if (open) {
       refetch();
@@ -48,7 +48,6 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
               </DrawerTitle>
               <div className="flex lg:flex-row items-center">
                 <div className="mr-4 p-1">
-                  {console.log("application in drawer", applicants)}
                   <Avatar>
                     <AvatarImage src={company?.logo} alt={company?.name} />
                     <AvatarFallback>{company?.name?.charAt(0)}</AvatarFallback>
@@ -119,7 +118,9 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
               ))}
             </div>
           ) : (
-            <div>No Applicants</div>
+            <div className="border h-56 min-w-full rounded-3xl">
+              No Applicants
+            </div>
           )}
         </div>
       </DrawerContent>
