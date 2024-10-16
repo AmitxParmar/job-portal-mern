@@ -1,21 +1,16 @@
 import { Briefcase, ChartLine, FileText, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { getRecruiterDashboard } from "@/services/applicationServices";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../../../ui/skeleton";
-
-import Resume from "../../common/Resume";
-import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import RecentJobPostings from "./RecentJobPostings";
-import RecentApplications from "./RecentApplications";
 import { useState } from "react";
+import Resume from "../../common/Resume";
+import RecentApplications from "./RecentApplications";
+import RecentJobPostings from "./RecentJobPostings";
 
 const EmployerDashboard = () => {
   const [selectedApplicantId, setSelectedApplicantId] = useState(null);
-
-  const { user } = useAuth();
 
   const { data, error, status } = useQuery({
     queryKey: ["recruiter-dashboard"],

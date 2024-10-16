@@ -1,4 +1,4 @@
-import ApplicantsDrawer from "./ApplicationDrawer";
+import ApplicantsDrawer from "../common/ApplicationDrawer";
 import { Button } from "@/components/ui/button";
 import CardSkeleton from "../../common/JobCard/CardSkeleton";
 import JobCard from "../../common/JobCard";

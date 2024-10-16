@@ -20,12 +20,12 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
-import Loader from "../../../common/Loader";
 import { Loader2 } from "lucide-react";
 import PropTypes from "prop-types";
 import { fetchUserById } from "@/services/userServices";
 import { toast } from "sonner";
 import { updateApplicationStatus } from "@/services/applicationServices";
+import Loader from "../../common/Loader";
 
 const CandidateStatus = ({
   open,

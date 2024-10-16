@@ -320,7 +320,7 @@ const JobForm = ({ onSubmit, onCancel, form }) => {
 JobForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  form: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
 };
 
 export default JobForm;

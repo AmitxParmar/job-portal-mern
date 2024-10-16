@@ -76,11 +76,12 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
                       </span>
                       <span>{moment(postedAt).fromNow()}</span>
                     </Badge>
-                    {Object.values(combinedField)?.map((skill) => (
-                      <Badge key={skill} className="rounded-full text-xs">
-                        {skill}
-                      </Badge>
-                    ))}
+                    {combinedField &&
+                      Object.values(combinedField)?.map((skill) => (
+                        <Badge key={skill} className="rounded-full text-xs">
+                          {skill}
+                        </Badge>
+                      ))}
                   </div>
                 </div>
               </div>
