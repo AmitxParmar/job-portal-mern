@@ -18,8 +18,8 @@ const RecentApplications = ({ recentApplications, onSelectApplicant }) => {
     setOpenStates((prev) => ({ ...prev, [userId]: isOpen }));
   };
   return (
-    <Card className="rounded-3xl shadow-xl">
-      <CardHeader>
+    <Card className="rounded-3xl overflow-y-auto  shadow-xl scrollbar-thin scrollbar-rounded scrollbar-track-muted scrollbar-thumb-foreground">
+      <CardHeader className="sticky top-0">
         <CardTitle>Recent Applications</CardTitle>
         <CardDescription>Latest candidate applications</CardDescription>
       </CardHeader>

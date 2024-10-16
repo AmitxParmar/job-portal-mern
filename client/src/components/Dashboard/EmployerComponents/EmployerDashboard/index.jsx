@@ -112,7 +112,7 @@ const EmployerDashboard = () => {
               </Card>
             </div>
 
-            <div className="mt-8 max-h-[600px] h-full grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="mt-8 h-[600px] grid grid-cols-1 gap-6 lg:grid-cols-2">
               <RecentJobPostings recentJobs={recentJobs} />
               <RecentApplications
                 onSelectApplicant={handleSelectApplicant}

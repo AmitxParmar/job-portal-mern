@@ -25,8 +25,8 @@ const RecentJobPostings = ({ recentJobs }) => {
     );
   };
   return (
-    <Card className="rounded-3xl shadow-xl">
-      <CardHeader>
+    <Card className="rounded-3xl overflow-y-auto  shadow-xl scrollbar-thin scrollbar-rounded scrollbar-track-muted scrollbar-thumb-foreground">
+      <CardHeader className="sticky top-0">
         <CardTitle>Recent Job Postings</CardTitle>
         <CardDescription>Overview of your latest job listings</CardDescription>
       </CardHeader>
