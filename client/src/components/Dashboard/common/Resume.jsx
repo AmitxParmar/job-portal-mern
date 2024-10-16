@@ -20,7 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const Resume = ({ user, userId, className }) => {
   const { data: fetchedUser, isLoading } = useQuery({
-    queryKey: ["user", userId],
+    queryKey: ["candidate", userId],
     queryFn: () => fetchUserById(userId),
     enabled: !user && !!userId,
     // Only run the query if user is not provided and userId is available

@@ -24,11 +24,11 @@ const JobCard = ({ job, isBookmarked, children }) => {
 
   return (
     <>
-      <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border border-input bg-white max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col m-2">
+      <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border border-input bg-white border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col m-2">
         <div
           className={`${
             status === "open" ? "bg-cyan-200" : "bg-slate-500"
-          } border h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col relative justify-between"`}
+          } border-2 border-black/10 h-4/5 min-h-[80%] max-h-[80%] rounded-2xl p-4 w-full flex flex-col relative justify-between"`}
         >
           <div
             className={`${
@@ -44,7 +44,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
               </span>
               <span>{moment(postedAt).fromNow()}</span>
             </span>
-            <div className="h-10 w-10">
+            <div className="h-10 w-10 border-2 rounded-full border-white">
               <BookmarkButton isBookmarked={isBookmarked} jobId={_id} />
             </div>
           </div>
@@ -83,7 +83,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
               {location?.city}, {location?.state}
             </div>
           </div>
-          {children}
+          <div className="w-fit bg-black relative">{children}</div>
         </div>
       </div>
     </>

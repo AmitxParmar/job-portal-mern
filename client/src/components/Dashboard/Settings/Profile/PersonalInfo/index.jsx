@@ -7,10 +7,10 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { updateUserProfile } from "@/services/userServices";
 import { useForm } from "react-hook-form";
-import { useOutletContext } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const PersonalInfo = () => {
-  const { user } = useOutletContext();
+  const { user } = useAuth();
   const queryClient = useQueryClient();
 
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -69,9 +69,11 @@ const PersonalInfo = () => {
 
   const { mutate } = useMutation({
     mutationFn: ({ data }) => updateUserProfile(data),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries(["user", user._id]);
+    onSuccess: (data) => {
+      // Set currentUser cache with updated user data
+      queryClient.setQueryData(["currentUser"], {
+        user: data.user,
+      });
     },
   });
 

@@ -1,6 +1,17 @@
-import { Bell, BellDotIcon, LucideSettings } from "lucide-react";
+import {
+  Bell,
+  BellDotIcon,
+  LucideSettings,
+  MapPin,
+  LogOut,
+} from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
-
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import HeaderFilter from "./HeaderFilter";
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
@@ -8,11 +19,11 @@ import { cn } from "@/lib/utils";
 import { memo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MapPin } from "lucide-react";
 
 const Navbar = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const notification = false;
+
   console.log("user navbar parsed", user, isAuthenticated);
 
   return (
@@ -43,18 +54,50 @@ const Navbar = () => {
                 <MapPin size={20} className="mr-2" />
                 {user?.address}
               </div>
-              <Button size="icon" className="rounded-full border border-white">
-                <LucideSettings size={20} />
-              </Button>
+
               <Button size="icon" className="rounded-full border border-white">
                 {notification ? <BellDotIcon size={20} /> : <Bell size={20} />}
               </Button>
-              <Link to={`/dashboard/settings`}>
-                <Avatar>
-                  <AvatarImage src={user?.profilePic} alt={user?.fullName} />
-                  <AvatarFallback>{user?.fullName?.charAt(0)}</AvatarFallback>
-                </Avatar>
-              </Link>
+              <Accordion
+                asChild
+                type="single"
+                collapsible
+                className="w-fit h-fit"
+              >
+                <AccordionItem className="border-b-0" value="user-profile">
+                  <AccordionTrigger className="h-11">
+                    <Avatar>
+                      <AvatarImage
+                        src={user?.profilePic}
+                        alt={user?.fullName}
+                      />
+                      <AvatarFallback>
+                        {user?.fullName?.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </AccordionTrigger>
+                  <AccordionContent className="absolute top-20 right-1.5 z-50 border-2 border-cyan-300 h-fit pb-0">
+                    <div className="grid grid-rows-2 divide-y-2 divide-cyan-300 text-3xl w-40">
+                      <Link
+                        className={cn(
+                          buttonVariants({
+                            variant: "default",
+                            size: "default",
+                          }),
+                          "rounded-none gap-2"
+                        )}
+                        to={"/dashboard/settings"}
+                      >
+                        <LucideSettings size={20} /> Settings
+                      </Link>
+                      <Button onClick={logout} className="rounded-none gap-2">
+                        <LogOut />
+                        Logout
+                      </Button>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </>
           ) : (
             <div className="flex flex-row gap-3 font-grotesk">

@@ -11,10 +11,10 @@ import BookmarkButton from "../common/JobCard/BookmarkButton";
 import Container from "../common/Container";
 import Loader from "../common/Loader";
 import { formatSalary } from "@/lib/utils";
-import { useOutletContext } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Bookmarks = () => {
-  const { user, isLoading } = useOutletContext();
+  const { user, isLoading } = useAuth();
 
   if (isLoading) return <Loader />;
   console.log("bookmarks", user?.salaryRange?.min, user?.bookmarkedJobs);

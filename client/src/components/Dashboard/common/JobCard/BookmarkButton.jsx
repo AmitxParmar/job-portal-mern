@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import PropTypes from "prop-types";
 import { toast } from "sonner";
 import { toggleBookmarkJob } from "@/services/userServices";
+import { BookmarkCheck } from "lucide-react";
 
 const BookmarkButton = ({ jobId, isBookmarked }) => {
   const queryClient = useQueryClient();
@@ -16,11 +17,20 @@ const BookmarkButton = ({ jobId, isBookmarked }) => {
   // handle bookmark
   const handleBookmark = () =>
     bookmark(jobId, {
-      onSuccess: (s) => {
-        console.log(s);
-        queryClient.invalidateQueries(["user"]);
+      onSuccess: (data) => {
+        console.log(data);
+        queryClient.invalidateQueries(["currentUser"]);
+
+        //NOTE: improve performance
+        /*   queryClient.setQueryData(["currentUser"], (old) => ({
+          ...old,
+          user: {
+            ...old.user,
+            bookmarkedJobs: data.bookmarkedJobs,
+          },
+        })); */
         toast(`${isBookmarked ? "Unbookmarked" : "Bookmarked"}`, {
-          description: isBookmarked,
+          description: data.message,
           action: {
             label: "Undo",
             onClick: () => bookmark(jobId),
@@ -44,9 +54,13 @@ const BookmarkButton = ({ jobId, isBookmarked }) => {
       onClick={handleBookmark}
       variant="ghost"
       size="icon"
-      className="h-full w-full text-black rounded-full p-1.5"
+      className="h-full w-full transition-all rounded-full p-1.5"
     >
-      <Bookmark fill={isBookmarked ? "black" : "white"} />
+      {isBookmarked ? (
+        <BookmarkCheck className="fill-primary stroke-white" />
+      ) : (
+        <Bookmark className="fill-white" />
+      )}
     </Button>
   );
 };

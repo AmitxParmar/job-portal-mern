@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   Home,
   NotepadText,
+  Copy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PostAJobButton from "../../EmployerComponents/PostAJobButton";
@@ -27,7 +28,6 @@ import { useMutation } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Copy } from "lucide-react";
 
 const SettingsSidebar = () => {
   const navigate = useNavigate();
@@ -83,27 +83,28 @@ const SettingsSidebar = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 min-h-full">
       {isSettingsPage
         ? renderBackButton()
         : isRecruiterDashboard && <PostAJobButton />}
+      <div className="flex flex-col justify-between">
+        <div className="flex min-h-full h-full flex-col space-y-2 py-6 px-2 font-semibold overflow-hidden">
+          {isRecruiter && (
+            <>
+              {renderNavLink(`/dashboard/${user.role}`, <Home />, "Dashboard")}
+              {renderNavLink(
+                "/dashboard/recruiter/job-openings",
+                <NotepadText />,
+                "Job Postings"
+              )}
+            </>
+          )}
 
-      <div className="flex flex-col space-y-2 py-6 px-2 font-semibold overflow-hidden rounded-xl">
-        {isRecruiter && (
-          <>
-            {renderNavLink(`/dashboard/${user.role}`, <Home />, "Dashboard")}
-            {renderNavLink(
-              "/dashboard/recruiter/job-openings",
-              <NotepadText />,
-              "Job Postings"
-            )}
-          </>
-        )}
-
-        {profileMenu.map((item) =>
-          renderNavLink(item.path, item.icon, item.name)
-        )}
-        {<InviteCodeGenerator />}
+          {profileMenu.map((item) =>
+            renderNavLink(item.path, item.icon, item.name)
+          )}
+        </div>
+        {isRecruiter && <InviteCodeGenerator />}
       </div>
     </div>
   );
@@ -142,7 +143,11 @@ export function InviteCodeGenerator() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" className="rounded-3xl">
+        <Button
+          variant=""
+          size="lg"
+          className="bg-cyan-300 border-2 border-black text-primary font-bold rounded-3xl"
+        >
           <UserRoundPlus className="mr-2" />
           Invite
         </Button>

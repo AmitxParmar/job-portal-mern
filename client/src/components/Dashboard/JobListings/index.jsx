@@ -23,10 +23,10 @@ const UserJobListings = () => {
   } = jobQuery;
 
   const isBookmarked = (jobId) => {
-    console.log(
+    return (
       user?.bookmarkedJobs?.some(
         (bookmarkedJob) => bookmarkedJob?._id === jobId
-      )
+      ) || false
     );
   };
   return status === "pending" ? (
@@ -44,7 +44,11 @@ const UserJobListings = () => {
           data?.pages?.map((page, i) => (
             <Fragment key={i}>
               {page?.jobs?.map((job) => (
-                <JobCard key={job._id} job={job}>
+                <JobCard
+                  isBookmarked={isBookmarked(job._id)}
+                  key={job._id}
+                  job={job}
+                >
                   <JobDetails job={job} isBookmarked={isBookmarked(job._id)} />
                 </JobCard>
               ))}

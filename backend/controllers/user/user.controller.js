@@ -69,7 +69,11 @@ export const updateUserAuth = async (req, res, next) => {
     // Remove sensitive information before sending response
     const { password, ...userWithoutPassword } = updatedUser.toObject();
 
-    res.status(200).json(userWithoutPassword);
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully!",
+      user: userWithoutPassword,
+    });
   } catch (error) {
     next(error);
   }
@@ -180,6 +184,7 @@ export const toggleBookmarkJob = async (req, res, next) => {
     console.log("User saved successfully");
 
     res.status(200).json({
+      success: true,
       message: isBookmarked
         ? "Job unbookmarked successfully."
         : "Job bookmarked successfully.",

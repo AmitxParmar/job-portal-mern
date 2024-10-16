@@ -39,8 +39,19 @@ const JobDetails = ({ job, isBookmarked }) => {
   const handleApplyForJob = () => {
     console.log("handleJobApply");
     apply(_id, {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["jobs"]);
+      onSuccess: (data) => {
+        // NOTE: fix the logic later
+        /* queryClient.setQueryData(["user"], (oldData) => {
+          if (oldData) {
+            return {
+              ...oldData,
+              jobs: oldData.jobs.map((job) =>
+                job._id === data.job._id ? data.job : job
+              ),
+            };
+          }
+          return oldData;
+        }); */
         toast.success("Success!", {
           description: "You've applied for this job!",
           style: {
@@ -161,7 +172,7 @@ JobDetails.propTypes = {
     company: PropTypes.shape({
       name: PropTypes.string.isRequired,
       logo: PropTypes.string.isRequired,
-      _id: PropTypes.object.isRequired,
+      _id: PropTypes.string.isRequired,
     }).isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,

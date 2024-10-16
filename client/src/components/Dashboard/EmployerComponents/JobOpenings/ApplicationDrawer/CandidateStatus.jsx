@@ -1,11 +1,6 @@
 import { ArrowRight, Check, Clock, Mail, Phone } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -208,7 +203,7 @@ const CandidateStatus = ({
               <CardHeader className="text-xl font-semibold">
                 Application Details
               </CardHeader>
-              <CardDescription>
+              <div>
                 <div className="p-6 rounded-lg max-w-md">
                   <div className="capitalize mb-6">
                     {steps.map((step, index) => (
@@ -273,7 +268,7 @@ const CandidateStatus = ({
                     </span>
                   </Button>
                 </div>
-              </CardDescription>
+              </div>
             </Card>
           </div>
         )}

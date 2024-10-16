@@ -33,7 +33,9 @@ const ApplicantCard = ({ application }) => {
   const handleSetOpen = (userId, isOpen) => {
     setOpenStates((prev) => ({ ...prev, [userId]: isOpen }));
   };
-
+  const handleReject = (fn) => {
+    fn("rejected");
+  };
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -95,7 +97,12 @@ const ApplicantCard = ({ application }) => {
               ))}
           </div>
           <div>
-            <Button variant="destructive" size="sm" className="rounded-xl">
+            <Button
+              onClick={() => console.log("reject")}
+              variant="destructive"
+              size="sm"
+              className="rounded-xl"
+            >
               <CircleX className="mr-2" />
               Reject
             </Button>

@@ -16,9 +16,9 @@ import { protect } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.post("/register", validateRegistration, register);
-router.post("/login", validateLogin, login);
-router.post("/logout", protect, logout);
+router.post("/register", register);
+router.post("/login", login);
+router.post("/logout", logout);
 router.post("/forget-password", forgetPassword);
 router.put("/reset-password/:token", resetPassword);
 router.get("/verify-email/:token", verifyEmail);

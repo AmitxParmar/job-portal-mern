@@ -26,15 +26,15 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+axiosInstance?.interceptors?.response?.use(
   (response) => {
     return response;
   },
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest = error?.config;
 
     // Check if error status is 401 and if it's the first attempt
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && !originalRequest?._retry) {
       originalRequest._retry = true; // Prevent infinite loop
 
       try {

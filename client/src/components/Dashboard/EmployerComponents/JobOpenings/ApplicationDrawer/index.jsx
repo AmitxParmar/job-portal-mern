@@ -3,7 +3,6 @@ import { Clock, MapPin } from "lucide-react";
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
@@ -93,7 +92,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
             </div>
           </div>
         </DrawerHeader>
-        <DrawerDescription className="overflow-y-auto text-md text-black scrollbar-thin scrollbar-thumb-rounded-full w-full font-medium font-grotesk mx-auto scrollbar-thumb-gray-400 min-h-full my-4">
+        <div className="overflow-y-auto text-md text-black scrollbar-thin scrollbar-thumb-rounded-full w-full font-medium font-grotesk mx-auto scrollbar-thumb-gray-400 min-h-full my-4">
           {isLoading ? (
             <div className="grid lg:grid-cols-2 gap-4">
               {Array.from({ length: 10 }, (_, index) => (
@@ -110,7 +109,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
               ))}
             </div>
           ) : applicants?.length > 0 ? (
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-3 gap-4">
               {applicants?.map((application) => (
                 <ApplicantCard
                   key={application._id}
@@ -121,7 +120,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
           ) : (
             <div>No Applicants</div>
           )}
-        </DrawerDescription>
+        </div>
       </DrawerContent>
     </Drawer>
   );
@@ -147,21 +146,6 @@ Applicants.propTypes = {
       min: PropTypes.string.isRequired,
       max: PropTypes.string.isRequired,
     }).isRequired,
-    applicants: PropTypes.arrayOf({
-      profilePic: PropTypes.string, // Added profilePic to PropTypes
-      fullName: PropTypes.string,
-      bio: PropTypes.string,
-      skills: PropTypes.arrayOf(PropTypes.string),
-      experience: PropTypes.arrayOf(
-        PropTypes.shape({
-          jobTitle: PropTypes.string,
-          recruiter: PropTypes.string,
-          startDate: PropTypes.string,
-          endDate: PropTypes.string,
-          description: PropTypes.string,
-        })
-      ),
-    }),
     tags: PropTypes.arrayOf(PropTypes.string),
     frequency: PropTypes.string.isRequired,
     skillsRequired: PropTypes.arrayOf(PropTypes.string),

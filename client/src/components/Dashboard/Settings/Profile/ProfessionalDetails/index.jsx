@@ -21,11 +21,12 @@ import Education from "./Education";
 import Experience from "./Experience";
 import ItemDialog from "./UpdateItemDialog";
 import Projects from "./Projects";
-import { useOutletContext } from "react-router-dom";
+
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 const ProfessionalDetails = () => {
-  const { user, isLoading } = useOutletContext();
+  const { user, isLoading } = useAuth();
   const [activeSection, setActiveSection] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(null);
@@ -75,9 +76,15 @@ const ProfessionalDetails = () => {
           break;
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["user"]);
+    // NOTE: check the what it returns and set it to cache
+    onSuccess: (data) => {
+      queryClient.setQueryData(["currentUser"], (old) => {
+        return { ...old, ...data };
+      });
       setIsDialogOpen(false);
+      console.log(
+        "Fix data handling here setquerydat current use in profesionalDetails"
+      );
     },
     onError: (error) => {
       console.error("Error:", error);

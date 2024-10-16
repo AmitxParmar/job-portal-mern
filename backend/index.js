@@ -10,7 +10,6 @@ import jobsRouter from "./routes/job.routes.js";
 import morgan from "morgan";
 import userRouter from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
-import { protect } from "./middleware/auth.middleware.js";
 
 dotenv.config();
 
