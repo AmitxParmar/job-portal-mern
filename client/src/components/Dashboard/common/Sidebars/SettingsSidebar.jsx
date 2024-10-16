@@ -28,12 +28,12 @@ import { useMutation } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const SettingsSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
-
   const isRecruiter = user?.role === "recruiter";
   const isSettingsPage = location.pathname.startsWith("/dashboard/settings");
   const isRecruiterDashboard = location.pathname.startsWith(
@@ -49,13 +49,13 @@ const SettingsSidebar = () => {
       <Button
         variant="outline"
         onClick={() => navigate(`/dashboard/${user?.role}`)}
-        className="group transition-all flex items-center justify-center w-full px-4 py-2 text-center border rounded-full hover:bg-white hover:invert"
+        className="group transition-all flex items-center justify-center w-full px-1.5 lg:px-4 py-2 text-center border rounded-full hover:bg-white hover:invert"
       >
         <ArrowLeft
-          className="transition-all duration-500 ease-in-out group-hover:-translate-x-2"
+          className="transition-all duration-500 ease-in-out group-hover:-translate-x-2 lg:mr-2"
           size={30}
         />
-        <span className="ml-2">Back</span>
+        <span className="hidden lg:block">Back</span>
       </Button>
     </motion.div>
   );
@@ -71,24 +71,25 @@ const SettingsSidebar = () => {
       >
         <Link
           to={to}
-          className={`flex items-center justify-center w-full px-4 py-2 text-sm border rounded-full transition-all ${
+          className={`flex items-center justify-center w-10 h-10 lg:w-full p-2.5 lg:px-4 lg:py-2 text-sm border rounded-full transition-all ${
             isActive ? "bg-cyan-400/20" : "bg-white"
           }`}
         >
-          <span className="mr-2">{icon}</span>
-          <span>{label}</span>
+          <span className="lg:mr-2">{icon}</span>
+          <span className="hidden lg:block">{label}</span>
         </Link>
       </motion.div>
     );
   };
 
   return (
-    <div className="space-y-4 min-h-full">
+    <div className="lg:space-y-4 lg:py-2 gap-x- overflow-x-scroll lg:overflow-visible flex flex-row lg:flex-col justify-evenly items-center h-fit w-screen lg:w-full lg:min-h-full">
       {isSettingsPage
         ? renderBackButton()
         : isRecruiterDashboard && <PostAJobButton />}
-      <div className="flex flex-col justify-between">
-        <div className="flex min-h-full h-full flex-col space-y-2 py-6 px-2 font-semibold overflow-hidden">
+
+      <div className="flex flex-row lg:flex-col lg:w-full items-center justify-between">
+        <div className="flex px-1 flex-row lg:flex-col min-h-full border-y-2 w-fit lg:min-w-full lg:space-y-2 py-2 lg:py-6 gap-0.5 lg:gap-0 font-semibold overflow-idden lg:overflow-clip z-20">
           {isRecruiter && (
             <>
               {renderNavLink(`/dashboard/${user.role}`, <Home />, "Dashboard")}
@@ -117,6 +118,7 @@ export function InviteCodeGenerator() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("jobSeeker");
   const [inviteCode, setInviteCode] = useState(""); // State to hold the generated invite code
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const { mutate: generateCode, isLoading } = useMutation({
     mutationFn: generateInviteCode,
@@ -145,11 +147,11 @@ export function InviteCodeGenerator() {
       <SheetTrigger asChild>
         <Button
           variant=""
-          size="lg"
-          className="bg-cyan-300 border-2 border-black text-primary font-bold rounded-3xl"
+          size={isMobile ? "icon" : "lg"}
+          className="bg-cyan-300 border-2 mt-2 border-black text-primary font-bold rounded-3xl flex items-center"
         >
-          <UserRoundPlus className="mr-2" />
-          Invite
+          <UserRoundPlus className="lg:mr-2" />
+          <span className="hidden lg:block">Invite</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left">

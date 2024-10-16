@@ -34,11 +34,11 @@ const PostAJobButton = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="border w-full text-center mx-auto rounded-full px-4 font-bold gap-2 font-grotesk scale-110 border-black transition-all border-b py-2 whitespace-nowrap"
+          className="border w-fit lg:w-fit text-center mx-auto rounded-full px-1.5 lg:px-4 font-bold lg:gap-2 font-grotesk lg:scale-110 border-black transition-all lg:border-b py-2 lg:whitespace-nowrap"
           onClick={() => setOpen(true)} // Open dialog on button click
         >
           <Plus />
-          <span>Post a Job</span>
+          <span className="hidden lg:block">Post a Job</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] lg:max-w-screen-xl max-h-screen overflow-auto">

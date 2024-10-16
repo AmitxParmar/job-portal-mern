@@ -58,10 +58,10 @@ const EmployerDashboard = () => {
     } = data;
 
     return (
-      <div className=" bg-gray-100 bg-blend-saturation overflow-hidden max-h-full h-[calc(100vh-8vh)]">
-        <main className="mx-auto h-full px-4 flex flex-row justify-between sm:px-6 lg:px-8 py-8 gap-8">
+      <div className=" bg-gray-100 bg-blend-saturation  xl:overflow-hidden max-h-full h-[calc(100vh-8vh)]">
+        <main className="mx-auto h-full px gap-0.5 flex flex-row justify-between sm:px-6 lg:px-8 py-8 lg:gap-8">
           <div className="max-h-full h-full w-full">
-            <div className="grid h-fit grid-cols-1 gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid h-fit grid-cols-2 gap-2 lg:gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
               <Card className="shadow-lg bg-orange-500 h-40 font-bold rounded-3xl">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <ChartLine className="h-10 w-10 overflow-visible bg-background/20 p-2 rounded-full" />
@@ -120,7 +120,7 @@ const EmployerDashboard = () => {
               />
             </div>
           </div>
-          <div className="row-span-2">
+          <div className="hidden xl:block lg:row-span-2">
             <Resume
               /* user={user} */
               userId={selectedApplicantId}
