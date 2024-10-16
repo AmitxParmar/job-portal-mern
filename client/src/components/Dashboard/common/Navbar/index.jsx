@@ -24,8 +24,6 @@ const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const notification = false;
 
-  console.log("user navbar parsed", user, isAuthenticated);
-
   return (
     <div className="flex font-grotesk  flex-col">
       <header className="hidden lg:flex sticky top-0 justify-between items-center bg-black text-white p-4 z-50">

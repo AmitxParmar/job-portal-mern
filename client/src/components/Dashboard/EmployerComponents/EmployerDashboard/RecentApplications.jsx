@@ -29,7 +29,7 @@ const RecentApplications = ({ recentApplications, onSelectApplicant }) => {
             <>
               <li
                 key={app._id}
-                className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between hover:bg-muted/50"
+                className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between hover:bg-muted/20"
               >
                 <div
                   className="cursor-pointer"

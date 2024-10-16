@@ -28,7 +28,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
     queryFn: () => getJobApplications(_id),
     enabled: !!_id && open,
   });
-  console.log("Job:", { job, isBookmarked, open, setOpen });
+  console.log(company);
   useEffect(() => {
     if (open) {
       refetch();

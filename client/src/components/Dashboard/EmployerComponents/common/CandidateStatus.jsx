@@ -66,7 +66,6 @@ const CandidateStatus = ({
     mutationFn: ({ applicationId, newStatus }) =>
       updateApplicationStatus(applicationId, newStatus),
     onSuccess: (updated) => {
-      console.log("updatedData", updated);
       if (updated && updated.status) {
         toast.success("Success!", {
           description: `Status updated to: ${updated.status}`,
@@ -101,6 +100,7 @@ const CandidateStatus = ({
 
   const handleStatusChange = (newStatus) => {
     if (newStatus !== status) {
+      toast.success(newStatus);
       changeCandidateStatus({ applicationId, newStatus });
     }
   };

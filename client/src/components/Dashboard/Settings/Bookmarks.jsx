@@ -17,7 +17,7 @@ const Bookmarks = () => {
   const { user, isLoading } = useAuth();
 
   if (isLoading) return <Loader />;
-  console.log("bookmarks", user?.salaryRange?.min, user?.bookmarkedJobs);
+
   return (
     <Container
       className={`max-w-screen-2xl capitalize font-semibold w-screen lg:px-20 mx-6 max-h-full bg-background lg:py-12`}

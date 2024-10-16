@@ -18,7 +18,6 @@ const BookmarkButton = ({ jobId, isBookmarked }) => {
   const handleBookmark = () =>
     bookmark(jobId, {
       onSuccess: (data) => {
-        console.log(data);
         queryClient.invalidateQueries(["currentUser"]);
 
         //NOTE: improve performance
@@ -38,7 +37,6 @@ const BookmarkButton = ({ jobId, isBookmarked }) => {
         });
       },
       onError: (error) => {
-        console.log(error);
         toast(`${"Bookmark failed"}`, {
           description: `${`<div className="border border-red-500 h-20">Failed</div>`}`,
           action: {

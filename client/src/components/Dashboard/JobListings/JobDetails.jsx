@@ -37,7 +37,6 @@ const JobDetails = ({ job, isBookmarked }) => {
 
   // handle job apply
   const handleApplyForJob = () => {
-    console.log("handleJobApply");
     apply(_id, {
       onSuccess: (data) => {
         // NOTE: fix the logic later

@@ -25,11 +25,11 @@ const ApplicantCard = ({ application }) => {
     hired: "bg-hired",
     rejected: "bg-rejected",
   };
-  console.log(applicant);
 
   const handleSetOpen = (userId, isOpen) => {
     setOpenStates((prev) => ({ ...prev, [userId]: isOpen }));
   };
+  const handleReject = (fn) => fn("rejected");
 
   return (
     <Card>
@@ -90,17 +90,6 @@ const ApplicantCard = ({ application }) => {
                   {skill}
                 </Badge>
               ))}
-          </div>
-          <div>
-            <Button
-              onClick={() => console.log("reject")}
-              variant="destructive"
-              size="sm"
-              className="rounded-xl"
-            >
-              <CircleX className="mr-2" />
-              Reject
-            </Button>
           </div>
         </div>
       </CardContent>

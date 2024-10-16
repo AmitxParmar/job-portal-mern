@@ -30,7 +30,7 @@ const SearchDropdown = ({ placeholder, items, _onSelect, icon }) => {
         .slice(0, 20),
     [items, searchValue]
   );
-  console.log("items in searc drop", items[0]);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

@@ -27,7 +27,6 @@ const PostAJobButton = () => {
   });
 
   const handleJobSubmit = (jobData) => {
-    console.log("Job submitted:", jobData);
     mutation.mutate(jobData);
     setOpen(false);
   };

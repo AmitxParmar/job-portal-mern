@@ -111,7 +111,7 @@ export const getRecruiterDashboard = async (req, res, next) => {
     const recentJobs = await Job.find({ company: { $in: companyIds } })
       .sort({ postedAt: -1 })
       .limit(5)
-      .populate("company", "name")
+      .populate("company", "name logo")
       .select(
         "title location.city location.country postedAt company applicants"
       );

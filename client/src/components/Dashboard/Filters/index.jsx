@@ -23,7 +23,6 @@ const Filters = () => {
   };
 
   const handleDateChange = (date, type) => {
-    console.log("date", type, date);
     setFilter({ ...filters, [type]: date });
   };
 

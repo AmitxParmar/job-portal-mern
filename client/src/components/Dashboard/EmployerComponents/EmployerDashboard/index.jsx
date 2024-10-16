@@ -56,7 +56,7 @@ const EmployerDashboard = () => {
       recentJobs,
       recentApplications,
     } = data;
-    console.log(data);
+
     return (
       <div className=" bg-gray-100 bg-blend-saturation overflow-hidden max-h-full h-[calc(100vh-8vh)]">
         <main className="mx-auto h-full px-4 flex flex-row justify-between sm:px-6 lg:px-8 py-8 gap-8">

@@ -54,7 +54,6 @@ export default function AppliedJobs() {
     enabled: true,
   });
 
-  console.log("applied-jobs", data);
   if (status === "pending") {
     return (
       <div className="max-h-[calc(100vh-8vh)] min-h-[calc(100vh-8vh)] min-w-full">
