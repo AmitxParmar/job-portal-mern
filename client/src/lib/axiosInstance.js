@@ -2,7 +2,10 @@ import { refreshToken } from "@/services/authServices";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/api", // Your base API URL
+  baseURL:
+    import.meta.env.MODE === "production"
+      ? import.meta.env.VITE_API_URL_PROD
+      : import.meta.env.VITE_API_URL_DEV + "/api", // Your base API URL
   /*  timeout: 10000, */ // Optional: Set a timeout (in milliseconds)
   headers: {
     "Content-Type": "application/json", // Default content type

@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
+app.set("trust proxy", 1);
 
 // CORS setup
 app.use(
@@ -29,10 +30,12 @@ app.use(
       "http://localhost:5173",
       "http://localhost:8000",
       "http://localhost:3000",
+      process.env.FRONTEND_URL.split(","),
     ], // Allow requests from your frontend URL
     credentials: true, // Enable credentials (cookies)
   })
 );
+
 app.use((err, req, res, next) => {
   next(err);
 });

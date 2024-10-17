@@ -26,11 +26,8 @@ const RecentApplications = ({ recentApplications, onSelectApplicant }) => {
       <CardContent>
         <ul className="grid grid-flow-row-dense gap-2">
           {recentApplications.map((app) => (
-            <>
-              <li
-                key={app._id}
-                className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between hover:bg-muted/20"
-              >
+            <div key={app._id}>
+              <li className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between hover:bg-muted/20">
                 <div
                   className="cursor-pointer"
                   onClick={() => onSelectApplicant(app.applicant._id)}
@@ -65,7 +62,7 @@ const RecentApplications = ({ recentApplications, onSelectApplicant }) => {
                 applicationId={app._id}
                 status={app.status}
               />
-            </>
+            </div>
           ))}
         </ul>
       </CardContent>

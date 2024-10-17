@@ -33,9 +33,8 @@ const RecentJobPostings = ({ recentJobs }) => {
       <CardContent>
         <ul className="grid grid-flow-row-dense gap-2">
           {recentJobs?.map((job) => (
-            <>
+            <div key={job._id}>
               <li
-                key={job._id}
                 className="flex bg-muted rounded-3xl py-4 px-6 border items-center justify-between cursor-pointer hover:bg-muted/20"
                 onClick={() => handleSetOpen(job._id, true)}
               >
@@ -57,7 +56,7 @@ const RecentJobPostings = ({ recentJobs }) => {
                 job={job}
                 isBookmarked={isBookmarked(job?._id)}
               />
-            </>
+            </div>
           ))}
         </ul>
       </CardContent>

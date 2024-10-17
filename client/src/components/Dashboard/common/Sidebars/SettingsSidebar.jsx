@@ -83,7 +83,7 @@ const SettingsSidebar = () => {
   };
 
   return (
-    <div className="lg:space-y-4 lg:py-2 gap-x- overflow-x-scroll lg:overflow-visible flex flex-row lg:flex-col justify-evenly items-center h-fit w-screen lg:w-full lg:min-h-full">
+    <div className="lg:space-y-4 lg:py-2 gap-x- overflow-x-scroll lg:overflow-visible flex flex-row lg:flex-col justify-evenly lg:justify-start items-center lg:items-start h-fit w-screen lg:w-full lg:min-h-full">
       {isSettingsPage
         ? renderBackButton()
         : isRecruiterDashboard && <PostAJobButton />}
@@ -213,9 +213,7 @@ export function InviteCodeGenerator() {
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `${
-                      import.meta.env.VITE_FRONTEND_URL
-                    }/register?inviteCode=${inviteCode}`
+                    `${window.location.origin}/register?inviteCode=${inviteCode}`
                   );
                   toast.success("Invite code copied to clipboard!");
                 }}

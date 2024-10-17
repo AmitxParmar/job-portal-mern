@@ -25,8 +25,8 @@ const Navbar = () => {
   const notification = false;
 
   return (
-    <div className="flex font-grotesk  flex-col">
-      <header className="hidden lg:flex sticky top-0 justify-between items-center bg-black text-white p-4 z-50">
+    <div className="flex font-grotesk flex-col">
+      <header className="flex sticky top-0 justify-between items-center bg-black text-white p-4 z-50">
         {/* Left Section (Navigation) */}
         <div className="flex items-center space-x-6">
           <Link
@@ -48,12 +48,15 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           {isAuthenticated ? (
             <>
-              <div className="grid grid-flow-col-dense items-center h-fit text-sm">
+              <div className="grid ml-2 grid-flow-col-dense items-center h-fit text-sm">
                 <MapPin size={20} className="mr-2" />
                 {user?.address}
               </div>
 
-              <Button size="icon" className="rounded-full border border-white">
+              <Button
+                size="icon"
+                className="hidden lg:block rounded-full border border-white"
+              >
                 {notification ? <BellDotIcon size={20} /> : <Bell size={20} />}
               </Button>
               <Accordion
