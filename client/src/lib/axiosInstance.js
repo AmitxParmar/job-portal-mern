@@ -2,7 +2,7 @@ import { refreshToken } from "@/services/authServices";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL + "/api", // Your base API URL
+  baseURL: "/api", // Your base API URL
   /*  timeout: 10000, */ // Optional: Set a timeout (in milliseconds)
   headers: {
     "Content-Type": "application/json", // Default content type
@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
   },
   withCredentials: true, // This allows the browser to send cookies with cross-origin requests
 });
-
+console.log(import.meta.env.VITE_API_URL);
 // Optional: Add interceptors for request/response
 axiosInstance.interceptors.request.use(
   (config) => {
