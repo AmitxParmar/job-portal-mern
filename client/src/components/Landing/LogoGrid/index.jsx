@@ -1,7 +1,10 @@
 "use client";
+import { Link } from "react-router-dom";
 import TextAnimation from "../../TextAnimation";
 import MarqueeIcons from "./MarqueeIcons";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 const LandingPage = () => {
   return (
@@ -19,6 +22,33 @@ const LandingPage = () => {
             proof of skills and experience
           </p>
         </TextAnimation>
+
+        <div className="mt-4 flex flex-row gap-3 font-grotesk">
+          <Link
+            to="/login"
+            className={cn(
+              buttonVariants({
+                variant: "secondary",
+                size: "lg",
+              }),
+              "font-bold bg-cyan-300 text-lg tracking-wide"
+            )}
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+                size: "lg",
+              }),
+              "font-bold text-lg tracking-wide"
+            )}
+          >
+            Register
+          </Link>
+        </div>
       </div>
 
       <motion.div
