@@ -23,7 +23,7 @@ const Navbar = () => {
         {/* Left Section (Navigation) */}
         <div className="flex items-center space-x-6">
           <Link
-            to="/dashboard"
+            to="/"
             className="font-xl font-grotesk text-muted border py-2 px-6 bg-foreground rounded-xl font-black tracking-wider w-fit border-x-red-400 border-y-cyan-400 hover:invert cursor-pointer"
           >
             HIRECROWD
