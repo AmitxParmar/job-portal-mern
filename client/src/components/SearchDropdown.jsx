@@ -36,16 +36,14 @@ const SearchDropdown = ({ placeholder, items, _onSelect, icon }) => {
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
-          className={`text-secondary group hover:bg-transparent hover:text-secondary/50 text-lg font-grotesk`}
+          className={`w-full justify-start p-0 min-w-full text-secondary group hover:bg-transparent hover:text-secondary/50 text-lg font-grotesk flex items-center`}
         >
-          <span className="mr-4">{icon}</span>
-          <span className="items-baseline group-hover:text-secondary/50">
+          <span className="mr-3">{icon}</span>
+          <span className="text-background/50">
             {(searchValue && <span>{searchValue}</span>) ||
-              (placeholder && (
-                <span className="text-background/50">{placeholder}</span>
-              ))}
+              (placeholder && <span>{placeholder}</span>)}
           </span>
-          <ChevronDown className="ml-2 h-4 w-4" />
+          <ChevronDown className="ml-auto h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0" align="start">

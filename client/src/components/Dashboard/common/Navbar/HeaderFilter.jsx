@@ -1,10 +1,4 @@
-import {
-  Briefcase,
-  CalendarDays,
-  ChevronDown,
-  MapPin,
-  Search,
-} from "lucide-react";
+import { Briefcase, CalendarDays, MapPin, Search } from "lucide-react";
 import { lazy, memo, Suspense } from "react";
 
 import { Input } from "@/components/ui/input";
@@ -33,35 +27,33 @@ const HeaderFilter = () => {
       <Suspense
         fallback={<Loader className={`transition-all duration-1000`} />}
       >
-        <div className="bg-foreground px-4 lg:min-h-24 lg:grid hidden lg:grid-flow-col items-center">
-          {/*  */}
-          <div className="grid grid-flow-col-dense border-r-2 items-center">
-            <Search className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
+        <div className="bg-foreground px-4 flex flex-col lg:space-y-0 space-y-4 py-4 lg:min-h-24 lg:grid lg:grid-flow-col w-full lg:items-center">
+          <div className="flex flex-row gap-2 lg:px-4 items-center">
+            <Search className="text-white h-10 w-11 rounded-full border border-muted/40 p-1.5" />
             <Input
               placeholder={`eg. Full-stack Developer`}
-              className={`w-full text-background bg-transparent placeholder:text-background/50 placeholder:font-semibold placeholder:text-lg border-none focus-visible:ring-0`}
+              className={`w-full text-background bg-transparent placeholder:text-background/50 placeholder:font-semibold placeholder:text-lg h-9 my-0 border border-muted/40 focus-visible:ring-0 rounded-full`}
               onChange={(e) => setFilter({ ...filters, title: e.target.value })}
             />
-            <ChevronDown className="inline text-white h-4 w-4" />
           </div>
           {/* Cities Filter */}
           <SearchDropdown
             items={cities}
             placeholder={`eg. Ahmedabad`}
+            className={`border-r-2`}
             icon={
-              <MapPin className="text-white h-10 w-10 rounded-full border border-white p-1.5" />
+              <MapPin className="text-white h-10 w-10 rounded-full border border-muted/40 p-1.5" />
             }
             _onSelect={(city) =>
               setFilter({ ...filters, location: city.toLowerCase() })
             }
-            className={`border-r-2`}
           />
           <DropdownList
             items={["full time", "part time", "internship"]}
             placeholder={`eg. Junior`}
             name={`jobType`}
             icon={
-              <Briefcase className="text-white bg-black h-10 w-10 rounded-full border border-white p-1.5" />
+              <Briefcase className="text-white bg-black h-10 w-10 rounded-full border border-muted/40 p-1.5" />
             }
             className={`bg-transparent w-fit border-0 text-background/80 text-lg`}
             _onSelect={(experience) => setFilter({ ...filters, experience })}
@@ -71,7 +63,7 @@ const HeaderFilter = () => {
             items={["hourly", "monthly", "yearly"]}
             placeholder={`eg. Per Month`}
             icon={
-              <CalendarDays className="text-white bg-black h-10 w-10 rounded-full border border-white p-1.5" />
+              <CalendarDays className="text-white bg-black h-10 w-10 rounded-full border border-muted/40 p-1.5" />
             }
             className={`bg-transparent w-fit border-0 text-background/80 text-lg`}
             _onSelect={(frequency) => setFilter({ ...filters, frequency })}

@@ -1,10 +1,4 @@
-import {
-  Bell,
-  BellDotIcon,
-  LucideSettings,
-  MapPin,
-  LogOut,
-} from "lucide-react";
+import { BellDotIcon, LucideSettings, MapPin, LogOut } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Accordion,
@@ -47,7 +41,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           {isAuthenticated ? (
             <>
-              <div className="grid ml-2 grid-flow-col-dense items-center h-fit text-sm">
+              <div className="hidden lg:grid ml-2 grid-flow-col-dense items-center h-fit text-sm">
                 <MapPin size={20} className="mr-2" />
                 {user?.address}
               </div>

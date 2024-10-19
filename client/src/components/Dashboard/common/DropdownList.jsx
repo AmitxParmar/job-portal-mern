@@ -10,6 +10,7 @@ import {
 
 import PropTypes from "prop-types";
 import { useFilters } from "@/hooks/useFilters";
+import { cn } from "@/lib/utils";
 
 const DropdownList = ({
   items,
@@ -30,7 +31,7 @@ const DropdownList = ({
           setFilter({ ...filters, [name]: value }); // Update the filter
         }}
       >
-        <SelectTrigger className={className}>
+        <SelectTrigger className={cn(className, "w-full px-0 pl-3")}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>

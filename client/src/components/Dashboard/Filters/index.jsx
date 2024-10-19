@@ -32,26 +32,6 @@ const Filters = () => {
     <>
       <h2 className="text-xl font-grotesk font-semibold mb-4">Filters</h2>
       <div className="space-y-4">
-        {/*     <div>
-          <Label>Skills Required</Label>
-          <div className="space-y-2">
-            {["React", "Node.js", "Python", "Java", "JavaScript"].map(
-              (skill) => (
-                <div key={skill} className="flex items-center">
-                  <Checkbox
-                    id={skill}
-                    checked={filters?.skills?.includes(skill)}
-                    onCheckedChange={() => handleSkillChange(skill)}
-                  />
-                  <label htmlFor={skill} className="ml-2 text-sm">
-                    {skill}
-                  </label>
-                </div>
-              )
-            )}
-          </div>
-        </div> */}
-
         <div>
           <Label>Status</Label>
           <RadioGroup value={filters.status} onValueChange={handleStatusChange}>

@@ -60,6 +60,7 @@ export const useAuth = () => {
     },
     onError: (error) => {
       setIsAuthenticated(false);
+      console.log(error);
     },
   });
 
