@@ -44,7 +44,10 @@ const JobCard = ({ job, isBookmarked, children }) => {
               </span>
               <span>{moment(postedAt).fromNow()}</span>
             </span>
-            <div className="h-10 w-10 border-2 rounded-full border-white">
+            <div
+              title={isBookmarked ? "Unbookmark" : "Bookmark"}
+              className="h-10 w-10 border-2 rounded-full border-white"
+            >
               <BookmarkButton isBookmarked={isBookmarked} jobId={_id} />
             </div>
           </div>
@@ -56,7 +59,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
               </h3>
             </div>
             <Avatar>
-              <AvatarImage src={company?.logo} alt="@shadcn" />
+              <AvatarImage src={company?.logo} />
               <AvatarFallback>{company?.name?.charAt(0)}</AvatarFallback>
             </Avatar>
           </div>

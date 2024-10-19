@@ -13,14 +13,15 @@ export const jobControllers = {
         return next(createError(403, "Only recruiters can post jobs"));
       }
 
-      const company = await Company.findById(recruiter.company);
+      const companyId = req.body.company; // Get company ID from request body
+      const company = await Company.findById(companyId);
       if (!company) {
         return next(createError(404, "Company not found"));
       }
 
       const newJob = new Job({
         ...req.body,
-        company: company._id,
+        company: companyId, // Use the company ID from the request body
         postedBy: recruiter._id,
       });
 
@@ -30,7 +31,11 @@ export const jobControllers = {
       company.jobs.push(savedJob._id);
       await company.save();
 
-      res.status(201).json(savedJob);
+      res.status(201).json({
+        success: true,
+        message: "Job posted successfully!",
+        savedJob,
+      });
     } catch (err) {
       next(err);
     }

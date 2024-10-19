@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/card";
 import PropTypes from "prop-types";
 import { Badge } from "@/components/ui/badge";
-import Applicants from "../common/ApplicationDrawer";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import ApplicantsDrawer from "../common/ApplicationDrawer";
 
 const RecentJobPostings = ({ recentJobs }) => {
   const [openStates, setOpenStates] = useState({});
@@ -25,7 +25,7 @@ const RecentJobPostings = ({ recentJobs }) => {
     );
   };
   return (
-    <Card className="rounded-3xl overflow-y-auto  shadow-xl scrollbar-thin scrollbar-rounded scrollbar-track-muted scrollbar-thumb-foreground">
+    <Card className="rounded-3xl overflow-y-auto h-96 lg:h-full shadow-xl scrollbar-thin scrollbar-rounded scrollbar-track-muted scrollbar-thumb-foreground">
       <CardHeader className="sticky top-0">
         <CardTitle>Recent Job Postings</CardTitle>
         <CardDescription>Overview of your latest job listings</CardDescription>
@@ -50,7 +50,7 @@ const RecentJobPostings = ({ recentJobs }) => {
                 </div>
                 <Badge variant="default">Open</Badge>
               </li>
-              <Applicants
+              <ApplicantsDrawer
                 open={openStates[job?._id] || false}
                 setOpen={(isOpen) => handleSetOpen(job._id, isOpen)}
                 job={job}

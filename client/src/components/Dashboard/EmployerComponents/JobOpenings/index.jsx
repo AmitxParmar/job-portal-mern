@@ -81,13 +81,14 @@ const JobOpenings = () => {
     return <div className="text-red-500 text-5xl">{error?.message}</div>;
   } else if (status === "success")
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none mb-24 lg:mb-0 overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 lg:gap-3">
         {data?.jobs?.length > 0 ? (
           data?.jobs?.map((job) => (
             <div key={job?._id}>
               <JobCard job={job} isBookmarked={isBookmarked(job)}>
                 <div className="grid w-fit grid-cols-2 gap-1">
                   <Button
+                    title="View Applicants"
                     size="icon"
                     className="hover:invert border-primary font-semibold rounded-full"
                     variant={
@@ -100,6 +101,7 @@ const JobOpenings = () => {
                   </Button>
 
                   <Button
+                    title="Edit Job Details"
                     onClick={() => handleEditClick(job)}
                     size="icon"
                     className="hover:invert border-primary font-semibold rounded-full"
@@ -114,6 +116,7 @@ const JobOpenings = () => {
                   >
                     <DialogContent className="max-h-screen py-6 overflow-auto min-w-max">
                       <JobForm
+                        companies={user?.companies}
                         form={form}
                         onSubmit={onSubmit}
                         onCancel={onCancel}

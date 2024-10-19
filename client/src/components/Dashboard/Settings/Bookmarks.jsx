@@ -20,15 +20,15 @@ const Bookmarks = () => {
 
   return (
     <Container
-      className={`max-w-screen-2xl capitalize font-semibold w-screen lg:px-20 mx-6 max-h-full bg-background lg:py-12`}
+      className={`max-w-screen-2xl overflow-auto capitalize font-semibold w-full lg:w-full lg:px-20 lg:mx-6 max-h-full min-h-full bg-background lg:py-12`}
     >
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">
+      <div className="container min-h-full mx-auto p-4">
+        <h1 className="text-xl rounded-full bg-primary text-background py-2 px-4 font-bold mb-4">
           Bookmarked Jobs ({user?.bookmarkedJobs?.length})
         </h1>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid lg:grid-cols-3 gap-4">
           {user?.bookmarkedJobs?.map((job) => (
-            <Card key={job._id} className="antialiased">
+            <Card key={job._id} className="rounded-3xl bg-cyan-300/30">
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div>

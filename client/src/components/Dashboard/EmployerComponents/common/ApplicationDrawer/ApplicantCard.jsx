@@ -8,8 +8,7 @@ import {
 } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Briefcase, CalendarIcon, SquarePen, CircleX } from "lucide-react";
+import { Briefcase, CalendarIcon, SquarePen } from "lucide-react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { useState } from "react";
@@ -29,7 +28,6 @@ const ApplicantCard = ({ application }) => {
   const handleSetOpen = (userId, isOpen) => {
     setOpenStates((prev) => ({ ...prev, [userId]: isOpen }));
   };
-  const handleReject = (fn) => fn("rejected");
 
   return (
     <Card>

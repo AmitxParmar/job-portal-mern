@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import QuillEditor from "../common/QuillEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -16,14 +18,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Plus, X } from "lucide-react";
+import { Plus, X, Ban, CheckCheck } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-import QuillEditor from "../common/QuillEditor";
-import PropTypes from "prop-types";
 import { useEffect } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const JobForm = ({ onSubmit, onCancel, form }) => {
+const JobForm = ({ onSubmit, onCancel, form, companies }) => {
   useEffect(() => {
     // This effect will run when the form is reset with new values
     const subscription = form.watch((value, { name, type }) => {
@@ -34,25 +35,101 @@ const JobForm = ({ onSubmit, onCancel, form }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job Title</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="e.g. Senior Software Engineer"
-                  {...field}
-                  value={field.value || ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid gap-2 px-2 overflow-auto"
+      >
+        <div className="grid grid-cols-3 gap-4">
+          <FormField
+            control={form.control}
+            name="company"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Select Company (Post as)</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value || ""}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select company" />
+                    </SelectTrigger>
 
+                    <SelectContent>
+                      {!!companies &&
+                        companies?.map((company) => (
+                          <SelectItem key={company._id} value={company._id}>
+                            <div className="flex flex-row items-center">
+                              <Avatar className="mr-2 h-7 w-7">
+                                <AvatarImage src={company.logo} />
+                                <AvatarFallback>
+                                  {company.name.charAt(0)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>{company.name}</div>
+                            </div>
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Job Title</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. Senior Software Engineer"
+                    {...field}
+                    value={field.value || ""}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <FormControl>
+                  <Select
+                    value={field.value || "open"}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                      <SelectItem value="open">
+                        <div className="flex flex-row items-center gap-2">
+                          <CheckCheck />
+                          <span>Open</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="closed">
+                        <div className="flex flex-row items-center gap-2">
+                          <Ban /> <span>Closed</span>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="description"
@@ -166,7 +243,7 @@ const JobForm = ({ onSubmit, onCancel, form }) => {
             )}
           />
         </div>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4 items-end">
           <FormField
             control={form.control}
             name="frequency"
@@ -293,7 +370,7 @@ const JobForm = ({ onSubmit, onCancel, form }) => {
         <div className="grid grid-flow-col-dense gap-2">
           <Button
             variant="outline"
-            className="text-lg flex flex-row justify-center rounded-full gap-2 h-9 font-medium"
+            className="text-lg flex flex-row justify-center rounded-full gap-2 h-14 font-medium"
             onClick={(e) => {
               e.preventDefault(); // Prevent form submission
               onCancel();
@@ -305,7 +382,7 @@ const JobForm = ({ onSubmit, onCancel, form }) => {
           </Button>
           <Button
             type="submit"
-            className="text-lg flex flex-row justify-center rounded-full gap-2 h-9 font-medium"
+            className="text-lg flex flex-row justify-center rounded-full gap-2 h-12 font-medium"
           >
             <Plus />
             <Separator orientation="vertical" />
@@ -321,6 +398,13 @@ JobForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   form: PropTypes.object.isRequired,
+  companies: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      logo: PropTypes.string,
+    })
+  ),
 };
 
 export default JobForm;

@@ -26,23 +26,23 @@ const EmployerDashboard = () => {
 
   if (status === "pending") {
     return (
-      <div className=" bg-gray-100 bg-blend-saturation overflow-hidden max-h-full h-[calc(100vh-8vh)]">
-        <main className="mx-auto h-full px-4 flex flex-row justify-between sm:px-6 lg:px-8 py-8 gap-8">
+      <div className="bg-gray-100 overflow-hidden h-[calc(100vh-8vh)]">
+        <main className="mx-auto h-full px-4 flex flex-col sm:flex-row justify-between sm:px-6 lg:px-8 py-8 gap-8">
           <div className="max-h-full h-full w-full">
-            <div className="grid  grid-cols-1 gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
               <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
               <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
               <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
               <Skeleton className={"h-56 rounded-3xl bg-black/20"} />
             </div>
 
-            <div className="mt-8 max-h-[600px] h-full grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="mt-8 max-h-[600px] h-full grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
               <Skeleton className="bg-black/20 rounded-3xl h-[550px] " />
               <Skeleton className="bg-black/20 rounded-3xl h-[550px] " />
             </div>
           </div>
-          <div className="row-span-2">
-            <Skeleton className="h-full w-80 rounded-3xl bg-black/20" />
+          <div className="row-span-2 w-full sm:w-80">
+            <Skeleton className="h-full w-full rounded-3xl bg-black/20" />
           </div>
         </main>
       </div>
@@ -58,8 +58,8 @@ const EmployerDashboard = () => {
     } = data;
 
     return (
-      <div className=" bg-gray-100 bg-blend-saturation  xl:overflow-hidden max-h-full h-[calc(100vh-8vh)]">
-        <main className="mx-auto h-full px gap-0.5 flex flex-row justify-between sm:px-6 lg:px-8 py-8 lg:gap-8">
+      <div className=" bg-gray-100 bg-blend-saturation xl:overflow-hidden max-h-full h-[calc(100vh-8vh)]">
+        <main className="mx-auto h-full gap-0.5 flex flex-row justify-between sm:px-6 lg:px-8 py-8 lg:gap-8">
           <div className="max-h-full h-full w-full">
             <div className="grid h-fit grid-cols-2 gap-2 lg:gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
               <Card className="shadow-lg bg-orange-500 h-40 font-bold rounded-3xl">
@@ -112,7 +112,7 @@ const EmployerDashboard = () => {
               </Card>
             </div>
 
-            <div className="mt-8 h-[600px] grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="mt-8 pb-24 lg:pb-0 lg:h-[600px] grid grid-cols-1 gap-6 lg:grid-cols-2">
               <RecentJobPostings recentJobs={recentJobs} />
               <RecentApplications
                 onSelectApplicant={handleSelectApplicant}

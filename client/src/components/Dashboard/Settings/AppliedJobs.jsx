@@ -1,7 +1,7 @@
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -13,45 +13,49 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Container from "../common/Container";
 import { Input } from "@/components/ui/input";
 import Loader from "../common/Loader";
-import { Search } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Briefcase,
+  Building2,
+  Clock,
+  Calendar,
+} from "lucide-react";
 import { getUserApplications } from "@/services/applicationServices";
-import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import moment from "moment";
 
-const statusClasses = {
-  applied: "bg-applied",
-  reviewing: "bg-reviewing",
-  interviewing: "bg-interview",
-  hired: "bg-hired",
-  rejected: "bg-rejected",
+const statusColors = {
+  applied: "bg-blue-500",
+  reviewing: "bg-yellow-500",
+  interviewing: "bg-purple-500",
+  hired: "bg-green-500",
+  rejected: "bg-red-500",
 };
 
 export default function AppliedJobs() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [selectedJob, setSelectedJob] = useState(null);
 
   const { data, status, error } = useQuery({
     queryKey: ["applied-jobs"],
     queryFn: getUserApplications,
     enabled: true,
+    cacheTime: 1000 * 60 * 30, // Cache for 30 minutes
+    staleTime: 1000 * 60 * 15, // Stale for 15 minutes
   });
 
   if (status === "pending") {
@@ -63,7 +67,7 @@ export default function AppliedJobs() {
   } else if (status === "error") {
     return (
       <Container
-        className={`max-w-screen-2xl bg-background px-8 font-semibold w-screen mx-6 py-12 `}
+        className={`max-w-screen-md bg-background px-8 font-semibold w-screen mx-6 py-12 `}
       >
         <h1 className="text-3xl font-bold mb-6">Applied Jobs</h1>
         <div className="text-center py-12">
@@ -72,39 +76,43 @@ export default function AppliedJobs() {
       </Container>
     );
   } else if (status === "success") {
-    toast.message(data.message);
+    // console.log(data);
     return (
       <Container
-        className={`max-w-screen-2xl bg-background px-8 capitalize w-screen mx-6 py-12 `}
+        className={`max-w-screen-2xl overflow-auto capitalize font-semibold w-full lg:w-full lg:px-20 lg:mx-6 max-h-full min-h-full bg-background lg:py-12`}
       >
-        <h1 className="text-3xl font-bold mb-6">Applied Jobs</h1>
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-            <Input
-              placeholder="Search jobs..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        <div className="px-6 my-6">
+          <h1 className="text-xl rounded-full bg-primary text-background py-2 px-4 font-bold mb-4">
+            Applied Jobs
+          </h1>
+          <div className="border px-4 py-2 bg-cyan-100 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 mb-6 shadow-sm">
+            <div className="relative w-full md:w-64">
+              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Input
+                placeholder="Search jobs..."
+                className="pl-8 mt-0"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Filter by status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="applied">Applied</SelectItem>
+                <SelectItem value="reviewing">Reviewing</SelectItem>
+                <SelectItem value="interview">Interviewing</SelectItem>
+                <SelectItem value="hired">Hired</SelectItem>
+                <SelectItem value="rejected">Rejected</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full md:w-40">
-              <SelectValue placeholder="Filter by status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="applied">Applied</SelectItem>
-              <SelectItem value="reviewing">Reviewing</SelectItem>
-              <SelectItem value="interviewing">Interviewing</SelectItem>
-              <SelectItem value="hired">Hired</SelectItem>
-              <SelectItem value="rejected">Rejected</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
-        <Table>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-6 px-6">
           {data?.applications?.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="text-center py-12 col-span-full">
               <p className="text-xl font-semibold text-gray-600">
                 No applications found
               </p>
@@ -113,100 +121,154 @@ export default function AppliedJobs() {
               </p>
             </div>
           ) : (
-            <>
-              <TableCaption>A list of your recently applied jobs.</TableCaption>
-              <TableHeader>
-                <TableRow className="bg-muted text-foreground text-lg font-semibold">
-                  <TableHead>Company</TableHead>
-                  <TableHead>Position</TableHead>
-                  <TableHead>Job Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Apply Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="bg-muted/50 border">
-                {data?.applications?.map((application) => {
-                  const job = application?.job;
+            data?.applications
+              .filter((application) => {
+                if (statusFilter !== "all") {
+                  return application.status.toLowerCase() === statusFilter;
+                }
+                return true;
+              })
+              .filter((application) => {
+                if (searchTerm) {
                   return (
-                    <TableRow key={application._id} className="border ">
-                      <TableCell className="font-medium">
-                        <div className="flex items-center gap-2">
-                          <Avatar
-                            src={job?.company?.logo}
-                            alt={job?.company?.name}
-                            className="w-10 h-10 overflow-hidden rounded-full"
-                          />
-                          <span>{job?.company?.name}</span>
+                    application.job.title
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    application.job.company.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                  );
+                }
+                return true;
+              })
+              .map((application) => {
+                const job = application?.job;
+                return (
+                  <Card
+                    key={application._id}
+                    className="flex flex-col bg-cyan-300/30 rounded-3xl shadow-sm"
+                  >
+                    <CardHeader className="flex flex-row items-center gap-4">
+                      <Avatar className="h-14 w-14">
+                        <AvatarImage
+                          src={job?.company?.logo}
+                          alt={job?.company?.name}
+                        />
+                        <AvatarFallback>{job?.company?.name[0]}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <CardTitle className="text-lg">{job?.title}</CardTitle>
+                        <p className="text-sm text-muted-foreground">
+                          {job?.company?.name}
+                        </p>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="flex-grow ">
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span>
+                            {job?.location?.city}, {job?.location?.state}
+                          </span>
                         </div>
-                      </TableCell>
-                      <TableCell>{job?.title}</TableCell>
-                      <TableCell>{job?.jobType}</TableCell>
-                      <TableCell>
+                        <div className="flex items-center">
+                          <Briefcase className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span>{job?.jobType}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Building2 className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span>{job?.workFrom}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span>{job?.experience}</span>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex items-center">
+                        <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                        <span className="text-sm">
+                          Applied {moment(application?.appliedAt).fromNow()}
+                        </span>
+                      </div>
+                      <div className="mt-2">
                         <Badge
                           className={`${
-                            statusClasses[application?.status.toLowerCase()]
+                            statusColors[application?.status.toLowerCase()]
                           } text-white`}
                         >
-                          {application?.status}
+                          {application?.status.charAt(0).toUpperCase() +
+                            application?.status.slice(1)}
                         </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {new Date(application?.appliedAt).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => setSelectedJob(application)}
-                            >
-                              View Details
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-[425px]">
-                            <DialogHeader>
-                              <DialogTitle>{job?.title}</DialogTitle>
-                              <DialogDescription>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-between">
+                      <p className="text-sm font-semibold">
+                        ₹{job?.salaryRange?.min} - ₹{job?.salaryRange?.max} /
+                        year
+                      </p>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            View Details
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="h-screen overflow-auto sm:max-w-[425px] lg:max-w-3xl">
+                          <DialogHeader className="flex flex-row items-center gap-4">
+                            <Avatar className="h-14 w-14">
+                              <AvatarImage
+                                src={job?.company?.logo}
+                                alt={job?.company?.name}
+                              />
+                              <AvatarFallback>
+                                {job?.company?.name[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <DialogTitle className="text-lg">
+                                {job?.title}
+                              </DialogTitle>
+                              <p className="text-sm text-muted-foreground">
                                 {job?.company?.name}
-                              </DialogDescription>
-                            </DialogHeader>
-                            <div className="mt-4">
-                              <h4 className="text-sm font-medium mb-2">
-                                Job Description
-                              </h4>
-                              <p className="text-sm text-gray-500">
-                                {job?.description}
                               </p>
                             </div>
-                            <div className="mt-4">
-                              <h4 className="text-sm font-medium mb-2">
-                                Application Details
-                              </h4>
-                              <p className="text-sm text-gray-500">
-                                Status: {application?.status}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                Applied on:{" "}
-                                {new Date(
-                                  application?.appliedAt
-                                ).toLocaleDateString()}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                Job Type: {job?.jobType}
-                              </p>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </>
+                          </DialogHeader>
+
+                          <div className="mt-4">
+                            <h4 className="text-sm font-medium mb-2">
+                              Job Description
+                            </h4>
+                            <p
+                              className="text-sm text-gray-500 bullet_list px-8"
+                              dangerouslySetInnerHTML={{
+                                __html: job?.description,
+                              }}
+                            />
+                          </div>
+                          <div className="mt-4">
+                            <h4 className="text-sm font-medium mb-2">
+                              Application Details
+                            </h4>
+                            <p className="text-sm text-gray-500">
+                              Status: {application?.status}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              Applied on:{" "}
+                              {moment(application?.appliedAt).format(
+                                "MMMM D, YYYY"
+                              )}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              Job Type: {job?.jobType}
+                            </p>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    </CardFooter>
+                  </Card>
+                );
+              })
           )}
-        </Table>
+        </div>
       </Container>
     );
   }

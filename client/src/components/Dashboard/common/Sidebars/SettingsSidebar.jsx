@@ -83,13 +83,13 @@ const SettingsSidebar = () => {
   };
 
   return (
-    <div className="lg:space-y-4 lg:py-2 gap-x- overflow-x-scroll lg:overflow-visible flex flex-row lg:flex-col justify-evenly lg:justify-start items-center lg:items-start h-fit w-screen lg:w-full lg:min-h-full">
+    <div className="lg:space-y-4 lg:py-2 overflow-x-scroll lg:overflow-visible flex flex-row lg:flex-col gap-2 px-6 lg:px-1 lg:justify-start items-center lg:items-start h-fit lg:w-full lg:h-full lg:min-h-full">
       {isSettingsPage
         ? renderBackButton()
         : isRecruiterDashboard && <PostAJobButton />}
 
-      <div className="flex flex-row lg:flex-col lg:w-full items-center justify-between">
-        <div className="flex px-1 flex-row lg:flex-col min-h-full border-y-2 w-fit lg:min-w-full lg:space-y-2 py-2 lg:py-6 gap-0.5 lg:gap-0 font-semibold overflow-idden lg:overflow-clip z-20">
+      <div className=" lg:w-full items-center ">
+        <div className="flex px-1 lg:px-1 flex-row lg:flex-col min-h-full border rounded-3xl w-fit lg:min-w-full space-x-1.5 lg:space-x-0 lg:space-y-2 p-1 bg-cyan-300/20 lg:p-3 gap-0.5 lg:gap-0 font-semibold overflow-hidden lg:overflow-clip z-20">
           {isRecruiter && (
             <>
               {renderNavLink(`/dashboard/${user.role}`, <Home />, "Dashboard")}
@@ -100,12 +100,11 @@ const SettingsSidebar = () => {
               )}
             </>
           )}
-
           {profileMenu.map((item) =>
             renderNavLink(item.path, item.icon, item.name)
           )}
+          {isRecruiter && <InviteCodeGenerator />}
         </div>
-        {isRecruiter && <InviteCodeGenerator />}
       </div>
     </div>
   );
@@ -146,9 +145,10 @@ export function InviteCodeGenerator() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
+          title="Generate Invite Code"
           variant=""
           size={isMobile ? "icon" : "lg"}
-          className="bg-cyan-300 border-2 mt-2 border-black text-primary font-bold rounded-3xl flex items-center"
+          className="bg-cyan-300 border-2 xl:mt-2 border-white text-primary font-bold rounded-3xl flex items-center"
         >
           <UserRoundPlus className="lg:mr-2" />
           <span className="hidden lg:block">Invite</span>

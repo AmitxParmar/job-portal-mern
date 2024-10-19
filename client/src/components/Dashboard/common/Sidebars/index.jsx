@@ -1,8 +1,8 @@
 import { Suspense, lazy, memo } from "react";
-import Container from "@/components/Dashboard/common/Container";
 import SettingsSidebar from "./SettingsSidebar";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { Card, CardContent } from "@/components/ui/card";
 
 const Filters = lazy(() => import("../../Filters"));
 
@@ -25,11 +25,13 @@ const Sidebars = () => {
 
   return (
     <Suspense fallback={`Loading....`}>
-      <Container
-        className={`absolute my-1 mx-1 bottom-0 lg:sticky border-none font-inter border-0 lg:ml-4 inset-x-0 bg-card w-screen  overflow-auto p-0.5 px-0 lg:p-4 lg:w-56`}
+      <Card
+        className={`absolute lg:sticky bottom-0 inset-x-2 lg:w-56 h-fit lg:min-h-full my-2 lg:h-full max-h-full py-2 lg:p-0 lg:ml-2 rounded-3xl z-50 overflow-auto`}
       >
-        {renderSidebar()}
-      </Container>
+        <CardContent className="p-0 min-h-full h-full mx-1">
+          {renderSidebar()}
+        </CardContent>
+      </Card>
     </Suspense>
   );
 };

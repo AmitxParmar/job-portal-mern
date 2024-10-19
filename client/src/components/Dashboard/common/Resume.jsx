@@ -67,7 +67,7 @@ const Resume = ({ user, userId, className }) => {
   return (
     <Container
       className={cn(
-        `min-w-96 border-none font-inter border-0 my-0 bg-background max-h-full py-12 px-10 w-96`,
+        `min-w-96 w-full relative h-full font-inter border my-0 bg-background overflow-y-auto max-h-full py-12 px-10 `,
         className
       )}
     >
@@ -136,14 +136,14 @@ const Resume = ({ user, userId, className }) => {
       </section>
 
       {/* Projects */}
-      <section className="pb-4">
+      <section className="relative pb-4">
         <h2 className="text-lg flex items-center border-black border-b-2 py-1 font-bold">
           <FolderOpen className="h-5 w-5 fill-black stroke-white mr-2" />
           Projects
         </h2>
         <ul className="mt-2 max-w-96 relative text-sm space-y-2">
           {projects?.map((project, index) => (
-            <li key={index}>
+            <li key={index} className="relative">
               <div className="flex flex-row">
                 <div className="flex flex-row ">
                   <h3 className="font-semibold text-nowrap mr-1">
@@ -154,7 +154,7 @@ const Resume = ({ user, userId, className }) => {
                     </span>
                   </h3>
                 </div>
-                <p className="right-0 absolute w-fit h-fit ">
+                <p className="absolute right-0">
                   {moment(project?.endDate).format("MMM YYYY")}
                 </p>
               </div>
@@ -183,7 +183,7 @@ const Resume = ({ user, userId, className }) => {
         </h2>
         <ul className="mt-2 relative text-sm space-y-2">
           {experience?.map((exp, index) => (
-            <li key={index}>
+            <li key={index} className="relative">
               <div className="flex flex-row flex-wrap">
                 <p className="font-semibold">{exp?.employer}</p>
                 <h3 className="italic">{exp?.jobTitle}</h3>

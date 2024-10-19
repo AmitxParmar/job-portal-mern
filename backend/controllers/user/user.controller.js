@@ -11,7 +11,8 @@ export const getUserProfile = async (req, res, next) => {
       .populate("projects")
       .populate("experience")
       .populate("education")
-      .populate("bookmarkedJobs");
+      .populate("bookmarkedJobs")
+      .populate("company", "name logo");
 
     if (!user) return next(createError(404, "User not found!"));
     res.status(200).json(user);
@@ -32,7 +33,8 @@ export const fetchCurrentUser = async (req, res, next) => {
       .populate("projects")
       .populate("experience")
       .populate("education")
-      .populate("bookmarkedJobs");
+      .populate("bookmarkedJobs")
+      .populate("companies", "name logo");
 
     if (!user) {
       return next(createError(404, "User not found"));

@@ -8,7 +8,10 @@ import { UserRoundPen } from "lucide-react";
 
 const Profile = () => {
   return (
-    <Tabs defaultValue="personal-details" className="px-6 w-screen h-screen ">
+    <Tabs
+      defaultValue="personal-details"
+      className="px-1 lg:px-4 mx-auto w-full h-full max-h-[calc(100vh-19vh)]"
+    >
       <TabsList className="">
         <TabsTrigger
           className="flex text-background gap-2"
@@ -26,12 +29,12 @@ const Profile = () => {
         </TabsTrigger>
       </TabsList>
       <Container
-        className={`w-full h-[calc(100dvh-18dvh)] bg-background max-w-screen-2xl`}
+        className={`max-w-screen-2xl overflow-auto capitalize font-semibold w-full px-2 lg:px-6 lg:mx-2 max-h-full min-h-full bg-background lg:py-12`}
       >
-        <TabsContent className="" value="personal-details">
+        <TabsContent value="personal-details">
           <PersonalInfo />
         </TabsContent>
-        <TabsContent className="" value="professional-details">
+        <TabsContent value="professional-details">
           <ProfessionalDetails />
         </TabsContent>
       </Container>

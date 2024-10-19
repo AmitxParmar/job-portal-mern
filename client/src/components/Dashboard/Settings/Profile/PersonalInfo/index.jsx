@@ -67,7 +67,7 @@ const PersonalInfo = () => {
     fileInputRef.current?.click();
   };
 
-  const { mutate } = useMutation({
+  const { mutate: updateProfile } = useMutation({
     mutationFn: ({ data }) => updateUserProfile(data),
     onSuccess: (data) => {
       // Set currentUser cache with updated user data
@@ -78,7 +78,7 @@ const PersonalInfo = () => {
   });
 
   const onSubmit = (data) => {
-    mutate(
+    updateProfile(
       { data },
       {
         onSuccess: () =>
@@ -95,13 +95,13 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <div className="flex w-full flex-row justify-between px-5 items-baseline">
+      <div className="flex flex-row justify-between py-0 lg:py-8 px-5 items-baseline">
         <h3 className="text-3xl py-2 font-grotesk border-b border-r-8 px-4 border-black">
           Profile Information
         </h3>
         <Separator className="w-auto" />
       </div>
-      <div className="border w-full h-full p-4 m-4 rounded-xl flex flex-row">
+      <div className="border w-full h-full lg:p-4 my-4 rounded-xl flex flex-row">
         (
         <PersonalInfoForm
           form={form}

@@ -17,7 +17,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-const Applicants = ({ job, isBookmarked, open, setOpen }) => {
+const ApplicantsDrawer = ({ job, isBookmarked, open, setOpen }) => {
   const { _id, title, location, company, postedAt, combinedField } = job;
   const {
     data: applicants,
@@ -109,7 +109,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
               ))}
             </div>
           ) : applicants?.length > 0 ? (
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid xl:grid-cols-3 gap-4">
               {applicants?.map((application) => (
                 <ApplicantCard
                   key={application._id}
@@ -128,7 +128,7 @@ const Applicants = ({ job, isBookmarked, open, setOpen }) => {
   );
 };
 
-Applicants.propTypes = {
+ApplicantsDrawer.propTypes = {
   isBookmarked: PropTypes.bool.isRequired,
   job: PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -156,4 +156,4 @@ Applicants.propTypes = {
   setOpen: PropTypes.func.isRequired,
 };
 
-export default Applicants;
+export default ApplicantsDrawer;

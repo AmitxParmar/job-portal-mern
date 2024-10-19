@@ -22,7 +22,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
-  const notification = false;
 
   return (
     <div className="flex font-grotesk flex-col">
@@ -55,9 +54,9 @@ const Navbar = () => {
 
               <Button
                 size="icon"
-                className="hidden lg:block rounded-full border border-white"
+                className="hidden lg:flex items-center rounded-full border border-white"
               >
-                {notification ? <BellDotIcon size={20} /> : <Bell size={20} />}
+                <BellDotIcon size={20} />
               </Button>
               <Accordion
                 asChild

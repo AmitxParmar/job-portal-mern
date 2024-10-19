@@ -102,7 +102,7 @@ const ProfessionalDetails = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="bg-muted">Loading...</div>;
   }
 
   return (
@@ -110,7 +110,7 @@ const ProfessionalDetails = () => {
       <Accordion
         type="single"
         collapsible
-        className="px-12 rounded-t-xl space-y-2"
+        className="p-1 lg:px-12 rounded-t-xl space-y-2"
       >
         <AccordionItem value="projects">
           <AccordionTrigger className="px-4 rounded-t-2xl bg-muted border">

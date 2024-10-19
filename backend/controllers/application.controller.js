@@ -1,3 +1,4 @@
+import { populate } from "dotenv";
 import Application from "../models/Application.js";
 import Job from "../models/Job.js";
 import { User } from "../models/User.js";
@@ -71,11 +72,16 @@ export const getRecruiterDashboard = async (req, res, next) => {
 
     // Get the recruiter's companies
     const recruiter = await User.findById(recruiterId).populate("company");
-    if (!recruiter || !recruiter.company || recruiter.company.length === 0) {
+
+    if (
+      !recruiter ||
+      !recruiter.companies ||
+      recruiter.companies.length === 0
+    ) {
       return next(createError(404, "Recruiter or companies not found"));
     }
 
-    const companyIds = recruiter.company.map((company) => company._id);
+    const companyIds = recruiter.companies.map((company) => company._id);
 
     // Count of active jobs across all companies
     const activeJobsCount = await Job.countDocuments({
@@ -100,6 +106,7 @@ export const getRecruiterDashboard = async (req, res, next) => {
 
     // New applications (last 7 days) across all companies
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
     const newApplications = await Application.countDocuments({
       job: {
         $in: await Job.find({ company: { $in: companyIds } }).select("_id"),
@@ -184,7 +191,13 @@ export const getUserApplications = async (req, res, next) => {
 
     const applications = await Application.find({
       applicant: userId,
-    }).populate("job");
+    }).populate({
+      path: "job",
+      populate: {
+        path: "company",
+        select: "name logo",
+      },
+    });
 
     res.status(200).json({
       success: true,
