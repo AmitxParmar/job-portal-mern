@@ -2,7 +2,7 @@ import { refreshToken } from "@/services/authServices";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: String(import.meta.env.VITE_API_URL) + "/api", // Your base API URL
+  baseURL: `${import.meta.env.VITE_API_URL}/api`, // Your base API URL
   /*  timeout: 10000, */ // Optional: Set a timeout (in milliseconds)
   headers: {
     "Content-Type": "application/json", // Default content type
@@ -38,7 +38,8 @@ axiosInstance?.interceptors?.response?.use(
       originalRequest._retry = true; // Prevent infinite loop
 
       try {
-        await refreshToken(); // Refresh token endpoint
+        /*   const { accessToken } = await refreshToken(); // Refresh token endpoint
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`; // Update the Authorization header with the new token */
         return axiosInstance(originalRequest); // Retry original request
       } catch (err) {
         console.error("Token refresh failed:", err);

@@ -6,10 +6,16 @@ export const protect = async (req, res, next) => {
   let token;
 
   if (req.cookies.token) {
-    try {
-      // Get token from cookie
-      token = req.cookies.token;
+    token = req.cookies.token;
+  } else if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer ")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
+  if (token) {
+    try {
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
@@ -21,9 +27,7 @@ export const protect = async (req, res, next) => {
       console.error(error);
       return next(createError(401, "Not authorized, token failed"));
     }
-  }
-
-  if (!token) {
+  } else {
     return next(createError(401, "Not authorized, no token"));
   }
 };
