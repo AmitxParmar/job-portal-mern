@@ -26,6 +26,8 @@ app.set("trust proxy", 1);
 // CORS setup
 app.use(
   cors({
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
     origin: [
       "http://localhost:5173",
       "http://localhost:4173",
@@ -39,6 +41,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.options("*", cors());
 
 app.use((err, req, res, next) => {
