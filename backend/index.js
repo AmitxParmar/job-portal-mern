@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.set("trust proxy", 1);
-
+// Handle preflight requests
 // CORS setup
 app.use(
   cors({
@@ -31,13 +31,15 @@ app.use(
       "http://localhost:4173",
       "http://localhost:8000",
       "http://localhost:3000",
-      process.env.FRONTEND_URL.split(","),
+      process.env.FRONTEND_URL.split(",").map((url) => url.trim()),
     ], // Allow requests from your frontend URL
     credentials: true, // Enable credentials (cookies)
   })
 );
+app.options("*", cors());
 
 app.use((err, req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
   next(err);
 });
 
