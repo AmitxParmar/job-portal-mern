@@ -29,10 +29,10 @@ export const generateInviteCode = async (req, res, next) => {
     });
 
     await newInviteCode.save();
-    res.status(201).json({ inviteCode: code, expiresAt });
+    return res.status(201).json({ success: true, inviteCode: code, expiresAt });
   } catch (error) {
     console.log(error);
-    next(error);
+    return next(createError(500, "Failed to generate invite code."));
   }
 };
 
@@ -54,10 +54,14 @@ export const verifyInviteCode = async (req, res, next) => {
     inviteCode.isUsed = true;
     await inviteCode.save();
 
-    res
+    return res
       .status(200)
-      .json({ message: "Invite code verified.", role: inviteCode.role });
+      .json({
+        success: true,
+        message: "Invite code verified.",
+        role: inviteCode.role,
+      });
   } catch (error) {
-    next(error);
+    return next(createError(500, "Failed to verify invite code."));
   }
 };

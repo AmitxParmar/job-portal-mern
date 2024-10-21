@@ -4,12 +4,22 @@ export const getExperiences = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate("experience");
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
-    res.status(200).json(user.experience);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Experiences fetched successfully",
+        experiences: user.experience,
+      });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Failed to get experiences" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to get experiences" });
   }
 };
 
@@ -29,10 +39,18 @@ export const addExperience = async (req, res) => {
       { new: true }
     ).populate("experience");
 
-    res.status(201).json(user.experience);
+    res
+      .status(201)
+      .json({
+        success: true,
+        message: "Experience added successfully",
+        experiences: user.experience,
+      });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Failed to add experience" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to add experience" });
   }
 };
 
@@ -48,12 +66,22 @@ export const updateExperience = async (req, res) => {
     );
 
     if (!updatedExperience) {
-      return res.status(404).json({ error: "Experience not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Experience not found" });
     }
 
-    res.status(200).json(updatedExperience);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Experience updated successfully",
+        experience: updatedExperience,
+      });
   } catch (error) {
-    res.status(500).json({ error: "Failed to update experience" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update experience" });
   }
 };
 
@@ -70,8 +98,16 @@ export const removeExperience = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json(user);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Experience removed successfully",
+        experiences: user.experience,
+      });
   } catch (error) {
-    res.status(500).json({ error: "Failed to remove experience" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to remove experience" });
   }
 };

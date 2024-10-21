@@ -1,16 +1,18 @@
-import { Project } from "../../models/User.js";
+import { Project, User } from "../../models/User.js";
 
 // Get all projects of the user
 export const getProjects = async (req, res) => {
   try {
     const projects = await Project.find({ userId: req.user.id });
-    if (!projects) {
-      return res.status(404).json({ error: "Projects not found" });
+    if (!projects || projects.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Projects not found" });
     }
-    res.status(200).json(projects);
+    res.status(200).json({ success: true, projects });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Failed to get projects" });
+    res.status(500).json({ success: false, message: "Failed to get projects" });
   }
 };
 
@@ -29,9 +31,9 @@ export const addProject = async (req, res) => {
       { new: true }
     ).populate("projects");
 
-    res.status(201).json(user.projects);
+    res.status(201).json({ success: true, projects: user.projects });
   } catch (error) {
-    res.status(500).json({ error: "Failed to add project" });
+    res.status(500).json({ success: false, message: "Failed to add project" });
   }
 };
 
@@ -39,7 +41,7 @@ export const addProject = async (req, res) => {
 export const updateProject = async (req, res) => {
   const { projectId } = req.params;
   const updatedData = req.body;
-  console.log("request recieved");
+  console.log("request received");
   try {
     const updatedProject = await Project.findByIdAndUpdate(
       projectId,
@@ -48,13 +50,17 @@ export const updateProject = async (req, res) => {
     );
 
     if (!updatedProject) {
-      return res.status(404).json({ error: "Project not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Project not found" });
     }
     console.log("updated data", updatedProject);
-    res.status(200).json(updatedProject);
+    res.status(200).json({ success: true, project: updatedProject });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Failed to update project" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update project" });
   }
 };
 
@@ -72,8 +78,10 @@ export const removeProject = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json(user);
+    res.status(200).json({ success: true, projects: user.projects });
   } catch (error) {
-    res.status(500).json({ error: "Failed to remove project" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to remove project" });
   }
 };

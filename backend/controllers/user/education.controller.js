@@ -4,9 +4,15 @@ export const getEducations = async (req, res) => {
   const { id } = req.user;
   try {
     const education = await Education.find({ _id: { $in: id.education } });
-    res.status(200).json(education);
+    res.status(200).json({
+      success: true,
+      message: "Education records fetched successfully.",
+      education,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch education records" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to fetch education records" });
   }
 };
 
@@ -25,9 +31,15 @@ export const addEducation = async (req, res) => {
       { new: true }
     ).populate("education");
 
-    res.status(201).json(user.education);
+    res.status(201).json({
+      success: true,
+      message: "Education record added successfully.",
+      education: user.education,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to add education record" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to add education record" });
   }
 };
 
@@ -43,12 +55,20 @@ export const updateEducation = async (req, res) => {
     );
 
     if (!updatedEducation) {
-      return res.status(404).json({ error: "Education record not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Education record not found" });
     }
 
-    res.status(200).json(updatedEducation);
+    res.status(200).json({
+      success: true,
+      message: "Education record updated successfully.",
+      education: updatedEducation,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to update education record" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update education record" });
   }
 };
 
@@ -64,8 +84,14 @@ export const removeEducation = async (req, res) => {
       { $pull: { education: eduId } },
       { new: true }
     );
-    res.status(200).json(user);
+    res.status(200).json({
+      success: true,
+      message: "Education record removed successfully.",
+      education: user.education,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to remove education record" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to remove education record" });
   }
 };

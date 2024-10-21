@@ -15,7 +15,11 @@ export const getUserProfile = async (req, res, next) => {
       .populate("company", "name logo");
 
     if (!user) return next(createError(404, "User not found!"));
-    res.status(200).json(user);
+    res.status(200).json({
+      success: true,
+      message: "User profile fetched successfully!",
+      user,
+    });
   } catch (error) {
     next(error);
   }
@@ -106,7 +110,11 @@ export const updateProfile = async (req, res, next) => {
     Object.assign(user, updatedProfileData);
     const updatedUser = await user.save();
 
-    res.status(200).json(updatedUser);
+    res.status(200).json({
+      success: true,
+      message: "User profile updated successfully!",
+      updatedUser,
+    });
   } catch (error) {
     console.log("Error updating profile", req.user.id);
     next(error);
@@ -119,7 +127,9 @@ export const deleteUserAccount = async (req, res, next) => {
     const user = await User.findByIdAndDelete(req.user.id);
     if (!user) return next(createError(404, "User not found!"));
 
-    res.status(200).json({ message: "User account deleted successfully." });
+    res
+      .status(200)
+      .json({ success: true, message: "User account deleted successfully." });
   } catch (error) {
     next(error);
   }
@@ -142,7 +152,10 @@ export const changePassword = async (req, res, next) => {
     user.password = newPassword;
     await user.save();
 
-    res.status(200).json({ message: "Password changed successfully" });
+    res.status(200).json({
+      success: true,
+      message: "Password changed successfully",
+    });
   } catch (error) {
     next(error);
   }

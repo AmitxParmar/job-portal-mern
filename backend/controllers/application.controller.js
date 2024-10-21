@@ -1,4 +1,3 @@
-import { populate } from "dotenv";
 import Application from "../models/Application.js";
 import Job from "../models/Job.js";
 import { User } from "../models/User.js";
@@ -27,7 +26,7 @@ export const applyForJob = async (req, res, next) => {
     if (existingApplication) {
       // If application exists, remove it
       const deletedApplication = await Application.findByIdAndDelete(
-        deletedApplication._id
+        existingApplication._id
       );
 
       // Remove applicant from job
@@ -55,14 +54,15 @@ export const applyForJob = async (req, res, next) => {
     // Fetch the updated job
     const updatedJob = await Job.findById(jobId).populate("applicants");
 
-    res.status(200).json({
+    return res.status(200).json({
+      success: true,
       message,
       job: updatedJob,
       application: application || null,
     });
   } catch (error) {
     console.error("Error applying/unapplying for job:", error);
-    next(error);
+    return next(error);
   }
 };
 
@@ -141,7 +141,7 @@ export const getRecruiterDashboard = async (req, res, next) => {
       select: "name",
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       activeJobsCount,
       totalApplications,
       totalInterviews,
@@ -150,7 +150,7 @@ export const getRecruiterDashboard = async (req, res, next) => {
       recentApplications,
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -173,9 +173,9 @@ export const getJobApplications = async (req, res, next) => {
       })
       .populate("job", "title");
 
-    res.status(200).json(applications);
+    return res.status(200).json(applications);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -199,14 +199,14 @@ export const getUserApplications = async (req, res, next) => {
       },
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       applications,
       message: "User Applications fetched successfully!",
     });
   } catch (error) {
     console.log("UserAppErrr:", error);
-    next(error);
+    return next(error);
   }
 };
 
@@ -222,8 +222,8 @@ export const updateApplicationStatus = async (req, res, next) => {
 
     application.status = status;
     const updatedApplication = await application.save();
-    res.status(200).json(updatedApplication);
+    return res.status(200).json(updatedApplication);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };

@@ -10,6 +10,9 @@ import jobsRouter from "./routes/job.routes.js";
 import morgan from "morgan";
 import userRouter from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { swaggerOptions } from "./config/swaggerOptions.js"; // Ensure correct import
 
 dotenv.config();
 
@@ -22,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.set("trust proxy", 1);
-// Handle preflight requests
+
 // CORS setup
 app.use(
   cors({
@@ -48,6 +51,10 @@ app.use((err, req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
   next(err);
 });
+
+// Swagger setup
+const specs = swaggerJsdoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // Test route (can be removed later)
 app.get("/", (req, res) => {
