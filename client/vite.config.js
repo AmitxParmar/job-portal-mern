@@ -17,7 +17,11 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       proxy: {
-        "/api": API_URL,
+        "/api": {
+          target: API_URL,
+          changeOrigin: true,
+          secure: false,
+        },
       },
       port: PORT,
     },

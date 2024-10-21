@@ -83,12 +83,13 @@ export const useAuth = () => {
       navigate("/login");
     },
     onError: (error) => {
+      toast.error("Logout failed! retry");
       console.error("Logout error:", error);
       // Even if logout fails on the server, clear local state
-      setIsAuthenticated(false);
+      /*  setIsAuthenticated(false);
       queryClient.clear();
       axiosInstance.defaults.headers.common["Authorization"] = "";
-      navigate("/login");
+      navigate("/login"); */
     },
   });
   const logout = () => {

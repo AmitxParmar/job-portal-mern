@@ -1,13 +1,13 @@
-import { Fragment, Suspense, lazy } from "react";
-
-import { Button } from "@/components/ui/button";
+import { Fragment, Suspense } from "react";
+import JobCard from "../common/JobCard";
 import CardSkeleton from "../common/JobCard/CardSkeleton";
 import JobDetails from "./JobDetails";
 import Loader from "../common/Loader";
+
+import { Button } from "@/components/ui/button";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useFilters } from "@/hooks/useFilters";
-
-const JobCard = lazy(() => import("../common/JobCard"));
 
 const UserJobListings = () => {
   const { jobQuery } = useFilters();
@@ -29,6 +29,7 @@ const UserJobListings = () => {
       ) || false
     );
   };
+
   return status === "pending" ? (
     <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
       {Array.from({ length: 10 }, (_, index) => (
