@@ -31,9 +31,12 @@ app.use(
       "http://localhost:4173",
       "http://localhost:8000",
       "http://localhost:3000",
-      process.env.FRONTEND_URL.split(",").map((url) => url.trim()),
-    ], // Allow requests from your frontend URL
-    credentials: true, // Enable credentials (cookies)
+      "https://job-portal-mern-sigma.vercel.app",
+      ...(process.env.FRONTEND_URL
+        ? process.env.FRONTEND_URL.split(",").map((url) => url.trim())
+        : []),
+    ],
+    credentials: true,
   })
 );
 app.options("*", cors());
@@ -45,7 +48,10 @@ app.use((err, req, res, next) => {
 
 // Test route (can be removed later)
 app.get("/", (req, res) => {
-  res.json({ status: "Server is running!" });
+  res.json({
+    status: "Server is running!",
+    allowedURL: process.env.FRONTEND_URL.split(",").map((url) => url.trim()),
+  });
 });
 
 // Route handlers
