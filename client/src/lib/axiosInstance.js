@@ -1,8 +1,9 @@
 import { refreshToken } from "@/services/authServices";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const axiosInstance = axios.create({
-  baseURL: "/api", // Your base API URL
+  baseURL: API_URL, // Your base API URL
   /*  timeout: 10000, */ // Optional: Set a timeout (in milliseconds)
   headers: {
     "Content-Type": "application/json", // Default content type
@@ -19,6 +20,12 @@ axiosInstance.interceptors.request.use(
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`;
     // }
+    if (config.url && config.url.startsWith("/api/")) {
+      config.url = config.url.replace("/api/", "/");
+    }
+    (error) => {
+      return Promise.reject(error);
+    };
     return config;
   },
   (error) => {

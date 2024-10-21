@@ -12,10 +12,10 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
   const API_URL = `${env.VITE_API_URL ?? "http://localhost:3000"}`;
-  const PORT = `${env.VITE_PORT ?? "3000"}`;
+  /*   const PORT = `${env.VITE_PORT ?? "3000"}`; */
 
   return {
-    server: {
+    /*     server: {
       proxy: {
         "/api": {
           target: API_URL,
@@ -24,9 +24,12 @@ export default defineConfig(({ mode }) => {
         },
       },
       port: PORT,
-    },
+    }, */
     build: {
       outDir: "dist",
+      define: {
+        "process.env.VITE_API_URL": API_URL,
+      },
     },
     plugins: [react()],
     resolve: {
