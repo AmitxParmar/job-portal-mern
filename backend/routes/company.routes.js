@@ -35,12 +35,29 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+import cloudinary from "../config/cloudinary.js"; // Import Cloudinary configuration
+import { v2 as cloudinaryV2 } from "cloudinary"; // Import Cloudinary v2
+
 // Update a company
 router.patch("/:id", async (req, res) => {
   try {
-    const company = await Company.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    let companyData = req.body;
+
+    // Check if an image is provided
+    if (req.body.logo) {
+      const result = await cloudinaryV2.uploader.upload(req.body.logo, {
+        folder: "companyLogos",
+      });
+      companyData.logo = result.secure_url; // Store the secure URL of the uploaded image
+    }
+
+    const company = await Company.findByIdAndUpdate(
+      req.params.id,
+      companyData,
+      {
+        new: true,
+      }
+    );
     if (!company) return res.status(404).json({ message: "Company not found" });
     res.json(company);
   } catch (error) {

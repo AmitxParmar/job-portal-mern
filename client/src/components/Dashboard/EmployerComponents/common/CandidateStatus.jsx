@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Clock, Mail, Phone } from "lucide-react";
+import { ArrowRight, Check, Clock, Mail, Phone, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import {
@@ -20,7 +20,6 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
 import PropTypes from "prop-types";
 import { fetchUserById } from "@/services/userServices";
 import { toast } from "sonner";
@@ -50,12 +49,8 @@ const CandidateStatus = ({
     getStepNumberFromStatus(status)
   );
 
-  const {
-    data: candidate,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["candidate", candidateId],
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["user", candidateId],
     queryFn: () => fetchUserById(candidateId),
     enabled: !!candidateId && open,
   });
@@ -156,18 +151,18 @@ const CandidateStatus = ({
               <CardHeader>
                 <div className="flex flex-col items-center">
                   <Avatar className="h-16 w-16">
-                    <AvatarImage src="/pngegg.png" alt="" />
+                    <AvatarImage src={data?.user?.profilePic} alt="" />
                     <AvatarFallback>
-                      {candidate?.fullName
-                        .split(" ")
+                      {data?.user?.fullName
+                        ?.split(" ")
                         .map((n) => n[0])
                         .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div className="text-center p-2 leading-none font-grotesk">
-                    <p className="font-bold text-2xl">{candidate?.fullName}</p>
+                    <p className="font-bold text-2xl">{data?.user?.fullName}</p>
                     <p className="font-semibold text-lg text-gray-500/50">
-                      {candidate?.designation}
+                      {data?.user?.designation}
                     </p>
                   </div>
                 </div>
@@ -182,7 +177,7 @@ const CandidateStatus = ({
                     <div className="">
                       <div className="text-gray-500 font-semibold">Email:</div>
                       <div>
-                        {candidate?.contactEmail || "amitparmar901@gmail.com"}
+                        {data?.user?.contactEmail || "amitparmar901@gmail.com"}
                       </div>
                     </div>
                   </div>
@@ -192,7 +187,7 @@ const CandidateStatus = ({
                     </div>
                     <div className="">
                       <div className="text-gray-500 font-semibold">Phone:</div>
-                      <div>{candidate?.contact || "91038 23987"}</div>
+                      <div>{data?.user?.contact || "91038 23987"}</div>
                     </div>
                   </div>
                 </div>

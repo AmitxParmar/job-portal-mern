@@ -19,7 +19,7 @@ import { fetchUserById } from "@/services/userServices";
 import { useQuery } from "@tanstack/react-query";
 
 const Resume = ({ user, userId, className }) => {
-  const { data: fetchedUser, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["candidate", userId],
     queryFn: () => fetchUserById(userId),
     enabled: !user && !!userId,
@@ -28,7 +28,7 @@ const Resume = ({ user, userId, className }) => {
     staleTime: 1000 * 60 * 100, // Data is fresh for 2 minutes
   });
 
-  const resumeData = user || fetchedUser;
+  const resumeData = user || data?.user;
 
   if (isLoading) {
     return (

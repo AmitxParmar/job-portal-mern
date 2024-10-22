@@ -1,17 +1,18 @@
-const { Label } = require("@/components/ui/label");
+import { useState, useRef } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
-const ProfilePicture = ({ register }) => {
-  const hiddenInputRef = useRef();
-
-  const [preview, setPreview] = useState();
+const ProfileImage = ({ register }) => {
+  const hiddenInputRef = useRef(null);
+  const [preview, setPreview] = useState(null);
 
   const { ref: registerRef, ...rest } = register("profilePicture");
 
   const handleUploadedFile = (event) => {
     const file = event.target.files[0];
-
     const urlImage = URL.createObjectURL(file);
-
     setPreview(urlImage);
   };
 
@@ -25,7 +26,7 @@ const ProfilePicture = ({ register }) => {
     <div>
       <Label>Profile picture</Label>
 
-      <HiddenInput
+      <Input
         type="file"
         name="profilePicture"
         {...rest}
@@ -44,3 +45,5 @@ const ProfilePicture = ({ register }) => {
     </div>
   );
 };
+
+export default ProfileImage;

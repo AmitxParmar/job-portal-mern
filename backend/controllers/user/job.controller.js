@@ -230,7 +230,11 @@ export const jobControllers = {
           experience: job.experience,
         },
       }));
-      res.status(200).json({ jobs: formattedJobs });
+      res.status(200).json({
+        success: true,
+        message: "Recruiter Jobs fetched successfully!",
+        jobs: formattedJobs,
+      });
     } catch (err) {
       next(err);
     }
