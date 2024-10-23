@@ -58,7 +58,13 @@ export const fetchCurrentUser = async (req, res, next) => {
 // Update User Profile
 export const updateUserAuth = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id)
+      .select("-password")
+      .populate("projects")
+      .populate("experience")
+      .populate("education")
+      .populate("bookmarkedJobs")
+      .populate("companies", "name logo");
     if (!user) return next(createError(404, "User not found!"));
 
     const updatedAuthData = {
@@ -77,7 +83,7 @@ export const updateUserAuth = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "User updated successfully!",
+      message: "User Auth updated successfully!",
       user: userWithoutPassword,
     });
   } catch (error) {
@@ -90,7 +96,14 @@ export const updateProfile = async (req, res, next) => {
   const userId = req.user.id;
   console.log("upating profile", req.user.id);
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate("projects")
+      .populate("experience")
+      .populate("education")
+      .populate("bookmarkedJobs")
+      .populate("companies", "name logo");
+
     if (!user) return next(createError(404, "User not found!"));
 
     const updatedProfileData = {

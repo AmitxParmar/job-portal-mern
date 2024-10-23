@@ -39,12 +39,20 @@ axiosInstance?.interceptors?.response?.use(
       originalRequest._retry = true; // Prevent infinite loop
 
       try {
-        /*   const { accessToken } = await refreshToken(); // Refresh token endpoint
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`; // Update the Authorization header with the new token */
+        const { accessToken } = await refreshToken(); // Refresh token endpoint
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`; // Update the Authorization header with the new token
         return axiosInstance(originalRequest); // Retry original request
       } catch (err) {
         console.error("Token refresh failed:", err);
-        // Redirect to login or handle session expiration
+        // Clear cookies and redirect to login
+        //  document.cookie.split(";").forEach(function (c) {
+        //  document.cookie = c.replace(
+        //   /=.*/,
+        //  "=;expires=" + new Date().toUTCString() + ";path=/"
+        //   );
+        // });
+        // window.location.href = "/";
+        // localStorage.removeItem("isAuthenticated");
       }
     }
     return Promise.reject(error);

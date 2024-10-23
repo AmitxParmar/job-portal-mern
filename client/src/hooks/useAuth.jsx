@@ -1,5 +1,3 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { loginUser, registerUser, logoutUser } from "@/services/authServices";
@@ -8,31 +6,25 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "@/lib/axiosInstance";
 
 // Zustand store for persisting auth state
-const useAuthStore = create(
-  persist(
-    (set) => ({
-      isAuthenticated: false,
-      setIsAuthenticated: (value) => set({ isAuthenticated: value }),
-    }),
-    {
-      name: "auth-storage",
-      getStorage: () => localStorage,
-    }
-  )
-);
 
 // React Query hook for auth operations
 export const useAuth = () => {
   const queryClient = useQueryClient();
-  const { isAuthenticated, setIsAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
   const clearAuthState = () => {
-    setIsAuthenticated(false);
+    localStorage.removeItem("isAuthenticated");
     queryClient.clear();
     axiosInstance.defaults.headers.common["Authorization"] = "";
   };
 
+  const updateAuthState = (isAuthenticated) => {
+    localStorage.setItem("isAuthenticated", isAuthenticated);
+  };
+
+  const isAuthenticated = !!JSON.parse(localStorage.getItem("isAuthenticated"));
+
+  console.log("isAuthenticated", isAuthenticated);
   const {
     isLoading,
     error,
@@ -43,23 +35,31 @@ export const useAuth = () => {
     queryFn: fetchCurrentUser,
     enabled: isAuthenticated,
     onSuccess: () => {
-      setIsAuthenticated(true);
+      console.log("loggedIn");
+      updateAuthState(true);
     },
     onError: (error) => {
       console.log("currentUser fetching error", error);
       clearAuthState();
       toast.error("Session expired. Please log in again.");
     },
-    staleTime: 1000 * 60 * 60, // Cache for 1 hour
+    cacheTime: 1000 * 60 * 15, // Cache for 15 minutes
+    staleTime: 1000 * 60 * 30, // Cache for 30 minutes
   });
+
+  /* useEffect(() => {
+    if (isAuthenticated && data.user && !isLoading) {
+      navigate(`/dashboard/${data.user?.role}`);
+    }
+  }, [isAuthenticated]); */
 
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
-      setIsAuthenticated(true);
+      updateAuthState(true);
     },
     onError: (error) => {
-      setIsAuthenticated(false);
+      updateAuthState(false);
       console.log(error);
     },
   });
@@ -77,10 +77,9 @@ export const useAuth = () => {
   const logoutMutation = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
-      setIsAuthenticated(false);
-      queryClient.clear();
-      axiosInstance.defaults.headers.common["Authorization"] = "";
-      navigate("/login");
+      clearAuthState();
+      queryClient.removeQueries(["currentUser"]); // Remove the currentUser query from the cache
+      navigate("/");
     },
     onError: (error) => {
       toast.error("Logout failed! retry");
@@ -92,21 +91,15 @@ export const useAuth = () => {
       navigate("/login"); */
     },
   });
-  const logout = () => {
-    if (isAuthenticated) {
-      logoutMutation.mutate();
-    }
-  };
+
   return {
     user: data?.user,
     isLoading,
     error,
-    isAuthenticated,
-    login: loginMutation.mutate,
-    register: registerMutation.mutate,
-    logout,
+    isAuthenticated: JSON.parse(localStorage.getItem("isAuthenticated")),
+    login: loginMutation,
+    register: registerMutation,
+    logout: logoutMutation,
     refetchUser,
   };
 };
-
-export default useAuthStore;

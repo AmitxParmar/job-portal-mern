@@ -4,7 +4,11 @@ import { createError } from "../utils/error.js";
 import { createRateLimiter } from "../middleware/rateLimiter.js";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { sendEmail } from "../utils/sendEmail.js"; // You'll need to implement this
+import { sendEmail } from "../utils/sendEmail.js";
+import {
+  generateToken,
+  generateRefreshToken,
+} from "../utils/generateTokens.js";
 
 const authRateLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
@@ -12,34 +16,30 @@ const authRateLimiter = createRateLimiter({
   message: "Too many login attempts, please try again later.",
 });
 
-const generateToken = (user) => {
-  return jwt.sign(
-    { id: user._id, email: user.email, role: user.role },
-    process.env.JWT_ACCESS_SECRET,
-    { expiresIn: "30m" } // Short-lived access token
-  );
-};
-
-const generateRefreshToken = (user) => {
-  return jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: "14d",
-  });
-};
-
 const setTokenCookie = (res, token, refreshToken) => {
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none", // Changed to 'none' to allow cross-site requests
-    maxAge: 20 * 60 * 1000, // 20 minutes
-  });
+  if (process.env.NODE_ENV === "development") {
+    // In development, don't set cookies, just return tokens directly
+    res.status(200).json({
+      success: true,
+      message: "Tokens generated",
+      accessToken: token,
+      refreshToken: refreshToken,
+    });
+  } else {
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none", // Changed to 'none' to allow cross-site requests
+      maxAge: 20 * 60 * 1000, // 20 minutes
+    });
 
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none", // Changed to 'none' to allow cross-site requests
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none", // Changed to 'none' to allow cross-site requests
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+  }
 };
 
 export const register = [

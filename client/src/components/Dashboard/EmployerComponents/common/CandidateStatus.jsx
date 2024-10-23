@@ -50,7 +50,7 @@ const CandidateStatus = ({
   );
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["user", candidateId],
+    queryKey: ["candiate-status", candidateId],
     queryFn: () => fetchUserById(candidateId),
     enabled: !!candidateId && open,
   });

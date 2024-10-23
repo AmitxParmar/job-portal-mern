@@ -1,4 +1,10 @@
-import { BellDotIcon, LucideSettings, MapPin, LogOut } from "lucide-react";
+import {
+  BellDotIcon,
+  LucideSettings,
+  MapPin,
+  LogOut,
+  Loader2,
+} from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Accordion,
@@ -16,6 +22,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
+  const { mutate: logoutUser, isLoading } = logout;
 
   return (
     <div className="flex font-grotesk flex-col">
@@ -84,8 +91,16 @@ const Navbar = () => {
                       >
                         <LucideSettings size={20} /> Settings
                       </Link>
-                      <Button onClick={logout} className="rounded-none gap-2">
-                        <LogOut />
+                      <Button
+                        disabled={isLoading}
+                        onClick={logoutUser}
+                        className="rounded-none gap-2"
+                      >
+                        {isLoading ? (
+                          <Loader2 className="animate-spin" />
+                        ) : (
+                          <LogOut />
+                        )}
                         Logout
                       </Button>
                     </div>

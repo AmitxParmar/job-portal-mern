@@ -1,7 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { CircleAlert, CircleCheck, CircleX, Info } from "lucide-react";
 import { Toaster } from "./components/ui/sonner";
-import { Suspense } from "react";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -25,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated && user) navigate(`/dashboard/${user?.role}`);
@@ -39,20 +38,21 @@ function App() {
   };
 
   const RoleBasedRoute = ({ children, allowedRole }) => {
-    if (isAuthenticated && user?.role !== allowedRole) {
+    if (!isLoading && isAuthenticated && user?.role !== allowedRole) {
       return <Navigate to="/unauthorized" replace />; // Handle unauthorized
     }
     return children;
   };
 
+  if (isLoading)
+    return (
+      <div className="absolute h-screen w-screen bg-black/20 flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+
   return (
-    <Suspense
-      fallback={
-        <div className="absolute h-screen w-screen blur">
-          <Loader />
-        </div>
-      }
-    >
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -66,9 +66,7 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <RoleBasedRoute allowedRole={user?.role}>
-                <Layout role={user?.role} />
-              </RoleBasedRoute>
+              <Layout />
             </ProtectedRoute>
           }
         >
@@ -77,13 +75,27 @@ function App() {
             element={<Navigate to={`/dashboard/${user?.role}`} replace />}
           />
 
-          <Route path="jobSeeker" element={<Dashboard role="jobSeeker" />}>
+          <Route
+            path="jobSeeker"
+            element={
+              <RoleBasedRoute allowedRole="jobSeeker">
+                <Dashboard />
+              </RoleBasedRoute>
+            }
+          >
             <Route index element={<UserJobListings />} />
             <Route path="applied-jobs" element={<AppliedJobs />} />
             <Route path="bookmarks" element={<Bookmarks />} />
           </Route>
 
-          <Route path="recruiter" element={<Dashboard role="recruiter" />}>
+          <Route
+            path="recruiter"
+            element={
+              <RoleBasedRoute allowedRole="recruiter">
+                <Dashboard />
+              </RoleBasedRoute>
+            }
+          >
             <Route index element={<EmployerDashboard />} />
             <Route path="job-openings" element={<JobOpenings />} />
           </Route>
@@ -107,7 +119,7 @@ function App() {
           loading: <Loader />,
         }}
       />
-    </Suspense>
+    </>
   );
 }
 

@@ -47,10 +47,6 @@ const userSchema = new Schema({
   profileLinks: {
     linkedIn: { type: String },
     github: { type: String },
-    other: {
-      platform: { type: String },
-      url: { type: String },
-    },
   },
 
   companies: [{ type: Schema.Types.ObjectId, ref: "Company" }],

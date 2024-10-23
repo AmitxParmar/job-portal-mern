@@ -18,11 +18,12 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const form = useForm();
-  const { login, isLoading } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const { mutate: loginUser, isLoading } = login;
 
   const handleSubmit = (credentials) => {
-    login(credentials, {
+    loginUser(credentials, {
       onSuccess: (data) => {
         toast.success("Login Success!");
         navigate(`/dashboard/${data?.user?.role}`);

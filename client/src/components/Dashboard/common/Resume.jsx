@@ -126,8 +126,8 @@ const Resume = ({ user, userId, className }) => {
         <ul className="mt-2 items-center flex flex-row justify-stretch flex-wrap gap-1">
           {skills
             ?.join(", ")
-            .split(", ")
-            .map((skill, index) => (
+            ?.split(", ")
+            ?.map((skill, index) => (
               <li key={index}>
                 <Badge className="w-fit">{skill}</Badge>
               </li>
@@ -150,7 +150,7 @@ const Resume = ({ user, userId, className }) => {
                     {project?.title},
                     <span className="font-normal text-gray-500 text-wrap text-sm italic ">
                       {" "}
-                      {project?.skills.join(", ")}
+                      {project?.skills?.join(", ")}
                     </span>
                   </h3>
                 </div>

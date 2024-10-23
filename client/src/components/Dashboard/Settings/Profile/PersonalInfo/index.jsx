@@ -28,7 +28,6 @@ const PersonalInfo = () => {
       profileLinks: {
         linkedIn: user?.profileLinks?.linkedIn ?? "",
         github: user?.profileLinks?.github ?? "",
-        other: user?.profileLinks?.other ?? "",
       },
     },
     values: {
@@ -71,9 +70,10 @@ const PersonalInfo = () => {
     mutationFn: ({ data }) => updateUserProfile(data),
     onSuccess: (data) => {
       // Set currentUser cache with updated user data
-      queryClient.setQueryData(["currentUser"], {
-        user: data.user,
-      });
+      queryClient.setQueryData(["currentUser"], (oldData) => ({
+        ...oldData,
+        user: data.updatedUser,
+      }));
     },
   });
 
@@ -102,7 +102,6 @@ const PersonalInfo = () => {
         <Separator className="w-auto" />
       </div>
       <div className="border w-full h-full lg:p-4 my-4 rounded-xl flex flex-row">
-        (
         <PersonalInfoForm
           form={form}
           onSubmit={onSubmit}
@@ -111,7 +110,6 @@ const PersonalInfo = () => {
           handleFileChange={handleFileChange}
           fileInputRef={fileInputRef}
         />
-        )
       </div>
     </>
   );
@@ -128,14 +126,11 @@ PersonalInfo.propTypes = {
     contactEmail: PropTypes.string,
     designation: PropTypes.string,
     address: PropTypes.string,
+    //NOTE: change schema to only string instead of array
     skills: PropTypes.arrayOf(PropTypes.string),
     profileLinks: PropTypes.shape({
       linkedIn: PropTypes.string,
       github: PropTypes.string,
-      other: PropTypes.shape({
-        platform: PropTypes.string,
-        url: PropTypes.string,
-      }),
     }),
   }),
   isLoading: PropTypes.bool,

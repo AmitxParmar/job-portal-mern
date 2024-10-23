@@ -1,20 +1,21 @@
-import { Navigate, Outlet } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
-import PropTypes from "prop-types"; // Import PropTypes
+// Role Based Route Component
+const RoleBasedRoute = ({ allowedRole, children }) => {
+  const { user } = useAuth();
 
-const RoleBasedRoute = ({ allowedRoles, fallbackPath }) => {
-  const role = "recruiter";
-
-  if (allowedRoles.includes(role)) {
-    return <Outlet />;
-  } else {
-    return <Navigate to={fallbackPath} replace />;
+  if (user?.role !== allowedRole) {
+    return <Navigate to="/unauthorized" />;
   }
+
+  return children;
 };
 
 RoleBasedRoute.propTypes = {
-  allowedRoles: PropTypes.arrayOf(PropTypes.string).isRequired, // Validate allowedRoles as an array of strings
-  fallbackPath: PropTypes.string.isRequired, // Validate fallbackPath as a string
+  allowedRole: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default RoleBasedRoute;

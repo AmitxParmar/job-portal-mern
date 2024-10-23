@@ -12,8 +12,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import BookmarkButton from "../common/JobCard/BookmarkButton";
 import { Button } from "@/components/ui/button";
-import { Clock } from "lucide-react";
-import { MapPin } from "lucide-react";
+import { Clock, MapPin } from "lucide-react";
 import PropTypes from "prop-types";
 import { applyForJob } from "@/services/applicationServices";
 import moment from "moment";
@@ -22,7 +21,7 @@ import { toast } from "sonner";
 const JobDetails = ({ job, isBookmarked }) => {
   const queryClient = useQueryClient();
   const {
-    _id,
+    _id: jobId,
     title,
     description,
     location,
@@ -37,20 +36,15 @@ const JobDetails = ({ job, isBookmarked }) => {
 
   // handle job apply
   const handleApplyForJob = () => {
-    apply(_id, {
+    apply(jobId, {
       onSuccess: (data) => {
         // NOTE: fix the logic later
-        /* queryClient.setQueryData(["user"], (oldData) => {
-          if (oldData) {
-            return {
-              ...oldData,
-              jobs: oldData.jobs.map((job) =>
-                job._id === data.job._id ? data.job : job
-              ),
-            };
-          }
-          return oldData;
-        }); */
+        queryClient.setQueryData(["currentUser"], (oldData) => ({
+          ...oldData,
+          jobs: oldData.jobs.map((job) =>
+            job._id === data.job._id ? data.job : job
+          ),
+        }));
         toast.success("Success!", {
           description: "You've applied for this job!",
           style: {
@@ -133,7 +127,7 @@ const JobDetails = ({ job, isBookmarked }) => {
                 Apply Now
               </Button>
               <div className="rounded-sm border h-fit bg-background">
-                <BookmarkButton jobId={_id} isBookmarked={isBookmarked} />
+                <BookmarkButton jobId={jobId} isBookmarked={isBookmarked} />
               </div>
             </div>
           </div>
@@ -198,4 +192,5 @@ JobDetails.propTypes = {
     }).isRequired,
   }).isRequired,
 };
+
 export default JobDetails;

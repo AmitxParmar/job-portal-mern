@@ -10,6 +10,7 @@ import { UserCircle } from "lucide-react";
 const Settings = () => {
   const { user, isLoading, error } = useAuth();
   const isMobile = useMediaQuery("(max-width: 768px)");
+
   if (error) return <div className="text-3xl text-red-500">Error:{error}</div>;
 
   return (

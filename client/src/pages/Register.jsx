@@ -13,26 +13,21 @@ import { Input } from "@/components/ui/input";
 import { LucideUserPlus2 } from "lucide-react";
 
 import { useForm } from "react-hook-form";
-
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
 
 const Register = () => {
-  const [loading, setLoading] = useState(false);
-  const { registerUser } = useAuth();
   const form = useForm();
+  const { register } = useAuth();
   const navigate = useNavigate();
+  const { mutate: registerUser, isLoading } = register;
 
   const handleSubmit = (credentials) => {
-    setLoading(true);
     registerUser(credentials, {
       onSuccess: (data) => {
-        setLoading(false);
         navigate(`/dashboard/${data?.user?.role}`);
       },
       onError: (error) => {
-        setLoading(false);
         console.log(error);
       },
     }); // on save button press send data to the apis
@@ -84,7 +79,7 @@ const Register = () => {
                           autoCapitalize="none"
                           autoComplete="password"
                           autoCorrect="off"
-                          disabled={loading}
+                          disabled={isLoading}
                           {...field}
                           value={field.value || ""}
                         />
@@ -107,7 +102,7 @@ const Register = () => {
                           autoCapitalize="none"
                           autoComplete="password"
                           autoCorrect="off"
-                          disabled={loading}
+                          disabled={isLoading}
                           {...field}
                           value={field.value || ""}
                         />
@@ -117,8 +112,8 @@ const Register = () => {
                   )}
                 />
 
-                <Button disabled={loading}>
-                  {loading && (
+                <Button disabled={isLoading}>
+                  {isLoading && (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Sign In with Email
@@ -136,8 +131,8 @@ const Register = () => {
               </span>
             </div>
           </div>
-          <Button variant="outline" type="button" disabled={loading}>
-            {loading ? (
+          <Button variant="outline" type="button" disabled={isLoading}>
+            {isLoading ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <Icons.google className="mr-2 h-4 w-4" />

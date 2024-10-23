@@ -470,7 +470,7 @@ router.put("/change-password", changePassword);
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Job bookmarked successfully." or "Job unbookmarked successfully."
+ *                   example: "Job bookmarked successfully or Job unbookmarked successfully!"
  *                 bookmarkedJobs:
  *                   type: array
  *                   items:

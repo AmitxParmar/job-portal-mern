@@ -73,10 +73,10 @@ app.use("/api/applications", applicationRouter);
 app.use("/api/company", companyRoutes);
 
 // Connect to MongoDB
-connectDB();
-
-// Start the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+connectDB().then(() => {
+  // Start the server
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
 });

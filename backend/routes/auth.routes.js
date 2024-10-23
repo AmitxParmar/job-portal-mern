@@ -164,7 +164,7 @@ router.post("/logout", logout);
  *       500:
  *         description: Server error
  */
-router.post("/forget-password", forgetPassword);
+router.post("/forget-password", protect, forgetPassword);
 
 /**
  * @swagger
@@ -207,7 +207,7 @@ router.post("/forget-password", forgetPassword);
  *       500:
  *         description: Server error
  */
-router.put("/reset-password/:token", resetPassword);
+router.put("/reset-password/:token", protect, resetPassword);
 
 /**
  * @swagger
@@ -238,7 +238,7 @@ router.put("/reset-password/:token", resetPassword);
  *       500:
  *         description: Server error
  */
-router.get("/verify-email/:token", verifyEmail);
+router.get("/verify-email/:token", protect, verifyEmail);
 
 /**
  * @swagger
