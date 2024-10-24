@@ -1,100 +1,13 @@
 ## Table of Contents
 
-- [Project Structure](#project-structure)
-- [Frontend](#frontend)
-- [Backend](#backend)
-- [Setup and Installation](#setup-and-installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Table of Contents](#table-of-contents)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
+  - [Running the Project](#running-the-project)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-## Project Structure
-
-This project is a MERN stack application, meaning it uses:
-
-- **MongoDB:** A NoSQL database for storing data.
-- **Express.js:** A Node.js framework for building the backend API.
-- **React:** A JavaScript library for building the frontend user interface.
-- **Node.js:** The runtime environment for both the backend and frontend.
-
-The project is structured as follows:
-
-```
-├── backend
-│   ├── controllers
-│   │   ├── user
-│   │   │   ├── auth.controller.js
-│   │   │   ├── job.controller.js
-│   │   │   └── user.controller.js
-│   │   └── company
-│   │       └── company.controller.js
-│   ├── models
-│   │   ├── User.js
-│   │   ├── Company.js
-│   │   └── Job.js
-│   ├── routes
-│   │   ├── user
-│   │   │   ├── auth.routes.js
-│   │   │   ├── job.routes.js
-│   │   │   └── user.routes.js
-│   │   └── company
-│   │       └── company.routes.js
-│   ├── config
-│   │   └── db.js
-│   ├── app.js
-│   └── index.js
-├── client
-│   ├── src
-│   │   ├── components
-│   │   │   ├── Dashboard
-│   │   │   │   ├── common
-│   │   │   │   │   ├── Navbar
-│   │   │   │   │   │   └── index.jsx
-│   │   │   │   │   ├── Filters
-│   │   │   │   │   │   └── index.jsx
-│   │   │   │   │   └── JobCard
-│   │   │   │   │   │   └── index.jsx
-│   │   │   │   ├── JobDetails
-│   │   │   │   │   └── index.jsx
-│   │   │   │   ├── JobList
-│   │   │   │   │   └── index.jsx
-│   │   │   │   └── SearchDropdown.jsx
-│   │   ├── hooks
-│   │   │   ├── useFilters.js
-│   │   │   └── useJobs.js
-│   │   ├── pages
-│   │   │   ├── _app.jsx
-│   │   │   ├── dashboard
-│   │   │   │   └── index.jsx
-│   │   │   ├── login
-│   │   │   │   └── index.jsx
-│   │   │   ├── register
-│   │   │   │   └── index.jsx
-│   │   │   ├── settings
-│   │   │   │   └── index.jsx
-│   │   │   └── job
-│   │   │       └── [id].jsx
-│   │   ├── utils
-│   │   │   └── api.js
-│   │   ├── layouts
-│   │   │   └── MainLayout.jsx
-│   │   ├── app
-│   │   │   └── index.jsx
-│   │   ├── styles
-│   │   │   └── globals.css
-│   │   └── constants
-│   │       └── routes.js
-│   ├── public
-│   │   └── index.html
-│   └── next.config.js
-├── .env
-├── .eslintrc.js
-├── .prettierrc.js
-├── tsconfig.json
-├── package.json
-└── README.md
-
-```
+This project is a MERN stack application, utilizing MongoDB, Express.js, React, and Node.js. The project is structured with a `backend` and `client` directory, each containing their respective components and functionalities.
 
 ### Backend
 
@@ -127,20 +40,30 @@ To run the project, follow these steps:
    npm install
    ```
 
-2. **Start the backend server:**
+2. **Set up environment variables:**
+
+   ```bash
+   cd backend
+   cp .env.example .env
+   cd ../client
+   cp .env.example .env
+   ```
+
+3. **Start the backend server:**
 
    ```bash
    cd backend
    npm start
    ```
 
-3. **Start the frontend development server:**
+4. **Start the frontend development server:**
    ```bash
    cd client
    npm run dev
    ```
 
 The frontend will be accessible at `http://localhost:3000`.
+The backend will be accessible at `http://localhost:8000`.
 
 ### Contributing
 
