@@ -2,14 +2,12 @@ import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
-// Role Based Route Component
-const RoleBasedRoute = ({ allowedRole, children }) => {
-  const { user } = useAuth();
+const RoleBasedRoute = ({ children, allowedRole }) => {
+  const { user, isAuthenticated, isLoading } = useAuth();
 
-  if (user?.role !== allowedRole) {
-    return <Navigate to="/unauthorized" />;
+  if (!isLoading && isAuthenticated && user?.role !== allowedRole) {
+    return <Navigate to="/unauthorized" replace />; // Handle unauthorized
   }
-
   return children;
 };
 

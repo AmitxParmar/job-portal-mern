@@ -97,7 +97,7 @@
 @layer base {
 
   body {
-    @apply bg-muted text-primary font-inter !antialiased;
+    @apply font-inter !antialiased;
   }
 
   .bullet_list ul>li {

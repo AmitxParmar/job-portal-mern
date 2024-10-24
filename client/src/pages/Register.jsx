@@ -13,13 +13,30 @@ import { Input } from "@/components/ui/input";
 import { LucideUserPlus2 } from "lucide-react";
 
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const Register = () => {
-  const form = useForm();
+  const form = useForm({
+    resolver: zodResolver(
+      z.object({
+        email: z.string().email("Please enter a valid email"),
+        password: z
+          .string()
+          .min(8, "Password must be at least 8 characters long")
+          .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+            "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character"
+          ),
+        inviteCode: z.string().optional(),
+      })
+    ),
+  });
   const { register } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { mutate: registerUser, isLoading } = register;
 
   const handleSubmit = (credentials) => {
@@ -57,7 +74,7 @@ const Register = () => {
                         <Input
                           placeholder="example@example.com"
                           {...field}
-                          value={field.value || ""}
+                          value={field.value ?? ""}
                           className=""
                         />
                       </FormControl>
@@ -81,7 +98,7 @@ const Register = () => {
                           autoCorrect="off"
                           disabled={isLoading}
                           {...field}
-                          value={field.value || ""}
+                          value={field.value ?? ""}
                         />
                       </FormControl>
                       <FormMessage />
@@ -90,21 +107,27 @@ const Register = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="inviteCode"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="sr-only">Email</FormLabel>
+                      <FormLabel className="sr-only">
+                        Enter invite code eg.#9ubn789
+                      </FormLabel>
                       <FormControl>
                         <Input
-                          id="password"
-                          placeholder="password"
-                          type="password"
+                          id="inviteCode"
+                          placeholder="Enter invite code eg.#9ubn789"
+                          type="text"
                           autoCapitalize="none"
-                          autoComplete="password"
+                          autoComplete="off"
                           autoCorrect="off"
-                          disabled={isLoading}
+                          disabled={
+                            isLoading || !!searchParams.get("inviteCode")
+                          }
                           {...field}
-                          value={field.value || ""}
+                          value={
+                            field.value || searchParams.get("inviteCode") || ""
+                          }
                         />
                       </FormControl>
                       <FormMessage />

@@ -1,7 +1,22 @@
-import { Route, Routes, Navigate } from "react-router-dom";
-import { CircleAlert, CircleCheck, CircleX, Info } from "lucide-react";
+import {
+  Route,
+  Routes,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import {
+  CircleAlert,
+  CircleCheck,
+  CircleX,
+  Info,
+  RefreshCw,
+} from "lucide-react";
 import { Toaster } from "./components/ui/sonner";
+import { useEffect } from "react";
 
+import Layout from "./components/Dashboard/common/Layouts/Layout";
+import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -13,41 +28,33 @@ import Settings from "./components/Dashboard/Settings";
 import Profile from "./components/Dashboard/Settings/Profile";
 import AppliedJobs from "./components/Dashboard/Settings/AppliedJobs";
 import Bookmarks from "./components/Dashboard/Settings/Bookmarks";
-
-import Layout from "./components/Dashboard/common/Layouts/Layout";
-import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
 import Navbar from "./components/Dashboard/common/Navbar";
 import Loader from "./components/Dashboard/common/Loader";
+import ProtectedRoute from "./ProtectedRoutes/ProtectedRoute";
+import RoleBasedRoute from "./ProtectedRoutes/RoleBasedRoute";
 import { useAuth } from "./hooks/useAuth";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 function App() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
-    if (isAuthenticated && user) navigate(`/dashboard/${user?.role}`);
-  }, [isAuthenticated]);
-
-  const ProtectedRoute = ({ children }) => {
-    if (!isAuthenticated) {
-      return <Navigate to="/login" replace />;
+    if (isAuthenticated && !location.pathname.startsWith("/dashboard")) {
+      navigate(`/dashboard/${user?.role}`);
     }
-    return children;
-  };
-
-  const RoleBasedRoute = ({ children, allowedRole }) => {
-    if (!isLoading && isAuthenticated && user?.role !== allowedRole) {
-      return <Navigate to="/unauthorized" replace />; // Handle unauthorized
-    }
-    return children;
-  };
+  }, [isAuthenticated, user, navigate, location]);
 
   if (isLoading)
     return (
-      <div className="absolute h-screen w-screen bg-black/20 flex items-center justify-center">
-        <Loader />
+      <div className="max-h-screen h-screen w-screen">
+        <div className="w-full h-full bg-black/10 flex flex-col gap-5 items-center justify-center">
+          <RefreshCw className="animate-spin h-14 w-14 stroke-primary/60" />
+          <p className="text-primary/70 text-center font-semibold underline">
+            Loading... Please be patient, the backend server is starting up and
+            may take a minute.
+          </p>
+        </div>
       </div>
     );
 
@@ -65,7 +72,7 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Layout />
             </ProtectedRoute>
           }

@@ -3,7 +3,7 @@ import Card from "./Card";
 const cardData = [
   {
     iconBg: "bg-[#D1FADF]",
-    src: "/src/assets/role/ForStudents.png",
+    src: "/roles/ForStudents.png",
     title: "For students",
     titleColor: "text-[#0AA482]",
     paragraph:
@@ -11,7 +11,7 @@ const cardData = [
   },
   {
     iconBg: "bg-[#FFEAE0]",
-    src: "/src/assets/role/ForCompanies.png",
+    src: "/roles/ForCompanies.png",
     title: "For companies",
     titleColor: "text-[#FF6E76]",
     paragraph:
@@ -19,7 +19,7 @@ const cardData = [
   },
   {
     iconBg: "bg-[#EFEDFF]",
-    src: "/src/assets/role/ForColleges.png",
+    src: "/roles/ForColleges.png",
     title: "For college/universities",
     titleColor: "text-[#693CF3]",
     paragraph:

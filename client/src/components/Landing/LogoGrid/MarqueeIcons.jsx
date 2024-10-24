@@ -1,35 +1,23 @@
 import Marquee from "react-fast-marquee";
 import Icon from "./Icon";
-import GoogleIcon from "@/assets/Icons/GoogleIcon.png";
-import MetaIcon from "@/assets/Icons/MetaIcon.png";
-import MicrosoftIcon from "@/assets/Icons/MicrosoftIcon.png";
-import AmazonIcon from "@/assets/Icons/AmazonIcon.png";
-import NetflixIcon from "@/assets/Icons/NetflixIcon.png";
-import AppleIcon from "@/assets/Icons/AppleIcon.png";
-import TeslaIcon from "@/assets/Icons/TeslaIcon.png";
-import IonIcon from "@/assets/Icons/IonIcon.png";
-import CoinIcon from "@/assets/Icons/CoinIcon.png";
+import {
+  Google,
+  Meta,
+  Microsoft,
+  Amazon,
+  Netflix,
+  Apple,
+  Tesla,
+  Ion,
+  Coin,
+} from "@/constants/compnayIcons";
 
 const MarqueeIcons = () => {
-  const rowOne = [
-    GoogleIcon,
-    MetaIcon,
-    MicrosoftIcon,
-    GoogleIcon,
-    MetaIcon,
-    MicrosoftIcon,
-  ];
+  const rowOne = [Google, Meta, Microsoft, Google, Meta, Microsoft];
 
-  const rowTwo = [
-    AmazonIcon,
-    NetflixIcon,
-    AppleIcon,
-    AmazonIcon,
-    NetflixIcon,
-    AppleIcon,
-  ];
+  const rowTwo = [Amazon, Netflix, Apple, Amazon, Netflix, Apple];
 
-  const rowThree = [TeslaIcon, IonIcon, CoinIcon, TeslaIcon, IonIcon, CoinIcon];
+  const rowThree = [Tesla, Ion, Coin, Tesla, Ion, Coin];
 
   return (
     <>

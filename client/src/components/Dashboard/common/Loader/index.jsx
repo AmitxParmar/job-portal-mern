@@ -34,6 +34,7 @@ export default function Loader({
     </div>
   );
 }
+
 Loader.propTypes = {
   color: PropTypes.string,
   size: PropTypes.number,
