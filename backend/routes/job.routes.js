@@ -7,7 +7,7 @@ router.use(protect);
 
 /**
  * @swagger
- * /api/jobs:
+ * /api/jobs/create:
  *   post:
  *     summary: Create a new job
  *     tags: [Jobs]
@@ -79,11 +79,11 @@ router.use(protect);
  *       404:
  *         description: Company not found
  */
-router.post("/", authorize("recruiter"), jobControllers.createJob);
+router.post("/create", authorize("recruiter"), jobControllers.createJob);
 
 /**
  * @swagger
- * /api/jobs:
+ * /api/jobs/get-all:
  *   get:
  *     summary: Get all jobs with optional filtering
  *     tags: [Jobs]
@@ -189,11 +189,11 @@ router.post("/", authorize("recruiter"), jobControllers.createJob);
  *                   items:
  *                     $ref: '#/components/schemas/Job'
  */
-router.get("/", authorize("jobSeeker"), jobControllers.getAllJobs);
+router.get("/get-all", authorize("jobSeeker"), jobControllers.getAllJobs);
 
 /**
  * @swagger
- * /api/jobs/{jobId}:
+ * /api/jobs/{jobId}/job-data:
  *   get:
  *     summary: Get a specific job by ID
  *     tags: [Jobs]
@@ -215,7 +215,7 @@ router.get("/", authorize("jobSeeker"), jobControllers.getAllJobs);
  *       404:
  *         description: Job not found
  */
-router.get("/:jobId", jobControllers.getJobById);
+router.get("/:jobId/job-data", jobControllers.getJobById);
 
 /**
  * @swagger
@@ -245,11 +245,11 @@ router.get("/:jobId", jobControllers.getJobById);
  *       404:
  *         description: Job not found
  */
-router.put("/:jobId", jobControllers.updateJob);
+router.put("/:jobId/update", jobControllers.updateJob);
 
 /**
  * @swagger
- * /api/jobs/{jobId}:
+ * /api/jobs/{jobId}/delete:
  *   delete:
  *     summary: Delete a job
  *     tags: [Jobs]
@@ -269,7 +269,7 @@ router.put("/:jobId", jobControllers.updateJob);
  *       404:
  *         description: Job not found
  */
-router.delete("/:jobId", jobControllers.deleteJob);
+router.delete("/:jobId/delete", jobControllers.deleteJob);
 
 /**
  * @swagger
@@ -293,7 +293,7 @@ router.delete("/:jobId", jobControllers.deleteJob);
  *                     $ref: '#/components/schemas/Job'
  */
 router.get(
-  "/recruiter/jobs",
+  "/get-recruiter-jobs",
   authorize("recruiter"),
   jobControllers.getRecruiterJobs
 );

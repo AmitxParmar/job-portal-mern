@@ -103,7 +103,8 @@ const JobForm = ({ onSubmit, onCancel, form, companies }) => {
                 <FormLabel>Status</FormLabel>
                 <FormControl>
                   <Select
-                    value={field.value || "open"}
+                    defaultValue="open"
+                    value={field.value}
                     onValueChange={field.onChange}
                   >
                     <SelectTrigger>
