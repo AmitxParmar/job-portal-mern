@@ -58,7 +58,7 @@ const EmployerDashboard = () => {
     } = data;
 
     return (
-      <div className=" bg-gray-100 bg-blend-saturation xl:overflow-hidden max-h-full h-[calc(100vh-8vh)]">
+      <div className="xl:overflow-hidden max-h-full h-[calc(100vh-8vh)]">
         <main className="mx-auto h-full gap-0.5 flex flex-row justify-between sm:px-6 lg:px-8 py-8 lg:gap-8">
           <div className="max-h-full h-full w-full">
             <div className="grid h-fit grid-cols-2 gap-2 lg:gap-6 font-grotesk md:grid-cols-2 lg:grid-cols-4">
