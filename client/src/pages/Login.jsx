@@ -29,7 +29,7 @@ const Login = () => {
         navigate(`/dashboard/${data?.user?.role}`);
       },
       onError: (error) => {
-        toast.error("onErrror:loginmutate", { description: error.message });
+        toast.error("Error Loggin In!", { description: error.message });
       },
     }); // on save button press send data to the apis
   };

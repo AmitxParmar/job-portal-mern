@@ -39,8 +39,12 @@ axiosInstance?.interceptors?.response?.use(
       originalRequest._retry = true; // Prevent infinite loop
 
       try {
-        const { accessToken } = await refreshToken(); // Refresh token endpoint
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`; // Update the Authorization header with the new token
+        const isAllowed = JSON.parse(localStorage.getItem("isAuthenticated"));
+        console.log("IS authentication", isAllowed);
+        if (isAllowed) {
+          const { accessToken } = await refreshToken(); // Refresh token endpoint
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`; // Update the Authorization header with the new token
+        }
         return axiosInstance(originalRequest); // Retry original request
       } catch (err) {
         console.error("Token refresh failed:", err);
