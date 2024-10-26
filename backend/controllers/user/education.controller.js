@@ -18,6 +18,7 @@ export const getEducations = async (req, res) => {
 
 export const addEducation = async (req, res) => {
   const educationData = req.body;
+  console.log("Education Data:", educationData);
 
   try {
     // Create a new education record

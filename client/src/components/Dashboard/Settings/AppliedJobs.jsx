@@ -208,7 +208,11 @@ export default function AppliedJobs() {
                       </p>
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="rounded-full"
+                          >
                             View Details
                           </Button>
                         </DialogTrigger>

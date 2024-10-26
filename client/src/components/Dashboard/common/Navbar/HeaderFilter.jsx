@@ -50,7 +50,7 @@ const HeaderFilter = () => {
           />
           <DropdownList
             items={["full time", "part time", "internship"]}
-            placeholder={`eg. Junior`}
+            placeholder={`eg. Part time`}
             name={`jobType`}
             icon={
               <Briefcase className="text-white bg-black h-10 w-10 rounded-full border border-muted/40 p-1.5" />
@@ -68,7 +68,7 @@ const HeaderFilter = () => {
             className={`bg-transparent w-fit border-0 text-background/80 text-lg`}
             _onSelect={(frequency) => setFilter({ ...filters, frequency })}
           />
-          <div className="w-full text-white">
+          <div className="w-full hidden xl:block text-white">
             <Label>Salary Range</Label>
             <Slider
               className=""

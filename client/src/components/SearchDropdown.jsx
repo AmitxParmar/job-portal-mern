@@ -16,8 +16,9 @@ import { memo, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import PropTypes from "prop-types";
+import { cn } from "@/lib/utils";
 
-const SearchDropdown = ({ placeholder, items, _onSelect, icon }) => {
+const SearchDropdown = ({ placeholder, items, _onSelect, icon, className }) => {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -36,10 +37,13 @@ const SearchDropdown = ({ placeholder, items, _onSelect, icon }) => {
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
-          className={`w-full justify-start p-0 min-w-full text-secondary group hover:bg-transparent hover:text-secondary/50 text-lg font-grotesk flex items-center`}
+          className={cn(
+            `w-full justify-start border-r-transparent min-w-full p-3 text-gray-600 group hover:bg-transparent/50 hover:text-secondary/50 text-lg font-grotesk flex items-center`,
+            className
+          )}
         >
           <span className="mr-3">{icon}</span>
-          <span className="text-background/50">
+          <span className="">
             {(searchValue && <span>{searchValue}</span>) ||
               (placeholder && <span>{placeholder}</span>)}
           </span>
@@ -79,6 +83,7 @@ const SearchDropdown = ({ placeholder, items, _onSelect, icon }) => {
 // Define prop types
 SearchDropdown.propTypes = {
   placeholder: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,

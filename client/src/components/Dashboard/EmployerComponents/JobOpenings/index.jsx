@@ -5,14 +5,73 @@ import JobCard from "../../common/JobCard";
 import { getRecruiterJobs, updateJob } from "@/services/JobServices";
 import { useAuth } from "@/hooks/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Users, PencilIcon } from "lucide-react";
 import JobForm from "../JobForm";
 import { toast } from "sonner";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 
 const JobOpenings = () => {
+  const form = useForm({
+    defaultValues: {
+      company: "",
+      title: "",
+      description: "",
+      location: {
+        city: "",
+        state: "",
+        country: "",
+      },
+      salaryRange: {
+        min: "",
+        max: "",
+      },
+      tags: [],
+      socials: {
+        linkedin: "",
+        twitter: "",
+        website: "",
+      },
+      frequency: "yearly",
+      skillsRequired: "",
+      status: "open",
+      jobType: "full time",
+      workFrom: "on-site",
+      experience: "entry-level",
+    },
+    values: {
+      company: "",
+      title: "",
+      description: "",
+      location: {
+        city: "",
+        state: "",
+        country: "",
+      },
+      salaryRange: {
+        min: "",
+        max: "",
+      },
+      tags: [],
+      socials: {
+        linkedin: "",
+        twitter: "",
+        website: "",
+      },
+      frequency: "yearly",
+      skillsRequired: "",
+      status: "open",
+      jobType: "full time",
+      workFrom: "on-site",
+      experience: "entry-level",
+    },
+  });
   const [openStates, setOpenStates] = useState({});
   const [editingJob, setEditingJob] = useState(null);
   const { user } = useAuth();
@@ -23,6 +82,7 @@ const JobOpenings = () => {
     retry: 1,
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 2,
+    enabled: !editingJob,
   });
 
   const { mutate: editJob } = useMutation({
@@ -32,8 +92,8 @@ const JobOpenings = () => {
       toast.success("Success!", {
         description: data.message,
       });
-      refetch(); // Refetch the jobs after successful update
-      setEditingJob(null); // Close the dialog
+      refetch();
+      setEditingJob(null);
     },
     onError: () => {
       toast.error("Error", {
@@ -42,15 +102,26 @@ const JobOpenings = () => {
     },
   });
 
-  const form = useForm();
+  const onSubmit = useCallback(
+    (jobData) => {
+      editJob({ id: editingJob._id, jobData });
+    },
+    [editingJob?._id, editJob]
+  );
 
-  const onSubmit = (jobData) => {
-    editJob({ id: editingJob._id, jobData });
-  };
-
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
     setEditingJob(null);
-  };
+  }, []);
+
+  const handleDialogChange = useCallback(
+    (open) => {
+      if (!open) {
+        setEditingJob(null);
+        form.reset({}); // Clear form
+      }
+    },
+    [form]
+  );
 
   const isBookmarked = (jobId) => {
     return (
@@ -65,8 +136,13 @@ const JobOpenings = () => {
   };
 
   const handleEditClick = (job) => {
+    /* setLoading(true); */ // Add loading state
     setEditingJob(job);
-    form.reset(job); // Pre-fill the form with job data
+    form.reset(job, {
+      keepErrors: false,
+      keepDirty: false,
+    });
+    /* setLoading(false); */
   };
 
   if (status === "pending") {
@@ -77,11 +153,15 @@ const JobOpenings = () => {
         ))}
       </div>
     );
-  } else if (status === "error") {
+  }
+
+  if (status === "error") {
     return <div className="text-red-500 text-5xl">{error?.message}</div>;
-  } else if (status === "success")
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none mb-24 lg:mb-0 overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 lg:gap-3">
+  }
+
+  return (
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 xl:px-12 scrollbar-none mb-24 lg:mb-0 overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 lg:gap-3">
         {data?.jobs?.length > 0 ? (
           data?.jobs?.map((job) => (
             <div key={job?._id}>
@@ -108,21 +188,6 @@ const JobOpenings = () => {
                   >
                     <PencilIcon size={20} />
                   </Button>
-
-                  <Dialog
-                    className=""
-                    open={!!editingJob}
-                    onOpenChange={() => setEditingJob(null)}
-                  >
-                    <DialogContent className="max-h-screen py-6 overflow-auto min-w-max">
-                      <JobForm
-                        companies={user?.companies}
-                        form={form}
-                        onSubmit={onSubmit}
-                        onCancel={onCancel}
-                      />
-                    </DialogContent>
-                  </Dialog>
                 </div>
               </JobCard>
               <ApplicantsDrawer
@@ -135,11 +200,32 @@ const JobOpenings = () => {
           ))
         ) : (
           <div className="text-center absolute inset-x-0 inset-y-2/4 text-gray-500 font-grotesk text-xl">
-            No Jobs Found
+            No Jobs Found....try clearing filters
           </div>
         )}
       </div>
-    );
+
+      <Dialog open={!!editingJob} onOpenChange={handleDialogChange}>
+        <DialogContent
+          className="max-h-screen py-6 overflow-auto w-screen min-w-full  "
+          aria-describedby="dialog-description"
+        >
+          <DialogTitle>JOB FORM</DialogTitle>
+          <DialogDescription id="dialog-description" className="sr-only">
+            Form to edit job details
+          </DialogDescription>
+          {editingJob && (
+            <JobForm
+              companies={user?.companies}
+              form={form}
+              onSubmit={onSubmit}
+              onCancel={onCancel}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
+  );
 };
 
 export default JobOpenings;

@@ -40,7 +40,7 @@ const UserJobListings = () => {
     <div className="text-red-500 text-5xl">{error?.message}</div>
   ) : (
     <Suspense fallback={<Loader />}>
-      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 max-h-full md:grid-cols-2 scroll-smooth py-2 scrollbar-none overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 gap-3">
         {data?.pages?.length > 0 ? (
           data?.pages?.map((page, i) => (
             <Fragment key={i}>
@@ -57,7 +57,7 @@ const UserJobListings = () => {
           ))
         ) : (
           <div className="text-center absolute inset-x-0 inset-y-2/4 text-gray-500 font-grotesk text-xl">
-            No Jobs Found
+            No Jobs Found....try clearing filters.
           </div>
         )}
       </div>

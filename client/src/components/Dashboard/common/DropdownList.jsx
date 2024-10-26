@@ -31,10 +31,10 @@ const DropdownList = ({
           setFilter({ ...filters, [name]: value }); // Update the filter
         }}
       >
-        <SelectTrigger className={cn(className, "w-full px-0 pl-3")}>
+        <SelectTrigger className={cn(className, "w-full capitalize px-0 pl-3")}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="capitalize">
           <SelectGroup>
             <SelectLabel>{name}</SelectLabel>
             {items.map((item, index) => (

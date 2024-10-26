@@ -119,7 +119,7 @@ export const fetchProjects = async () => {
 };
 
 // Add project
-export const addProject = async (userId, projectData) => {
+export const addProject = async (projectData) => {
   const { data } = await axiosInstance.post(
     `${BASE_URL}/add-project`,
     projectData
@@ -128,7 +128,7 @@ export const addProject = async (userId, projectData) => {
 };
 
 // Update project
-export const updateProject = async (userId, projectId, projectData) => {
+export const updateProject = async (projectId, projectData) => {
   const { data } = await axiosInstance.put(
     `${BASE_URL}/update-project/${projectId}`,
     projectData
@@ -137,7 +137,7 @@ export const updateProject = async (userId, projectId, projectData) => {
 };
 
 // Remove project
-export const removeProject = async (userId, projectId) => {
+export const removeProject = async (projectId) => {
   const { data } = await axiosInstance.delete(
     `${BASE_URL}/delete-project/${projectId}`
   );

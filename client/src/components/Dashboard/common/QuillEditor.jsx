@@ -1,4 +1,5 @@
 import "react-quill/dist/quill.snow.css";
+import { useRef, useEffect } from "react";
 
 import PropTypes from "prop-types";
 import ReactQuill from "react-quill";
@@ -13,6 +14,17 @@ const QuillEditor = ({
   className,
   ...props
 }) => {
+  const editorRef = useRef(null);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      // Delay initialization slightly to prevent layout thrashing
+      requestAnimationFrame(() => {
+        editorRef.current.focus();
+      });
+    }
+  }, []);
+
   const defaultModules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],

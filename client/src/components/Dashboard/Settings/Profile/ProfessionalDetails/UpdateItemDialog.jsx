@@ -17,22 +17,13 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import PropTypes from "prop-types";
 import QuillEditor from "@/components/Dashboard/common/QuillEditor";
-import { toast } from "sonner";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const ItemDialog = ({ isOpen, setIsOpen, activeSection, item, onSubmit }) => {
   const form = useForm();
 
   const handleSubmit = (data) => {
-    toast(`experience updated`, {
-      description: JSON.stringify(data),
-      /* action: {
-        label: "Undo",
-        onClick: () => bookmark(jobId),
-      }, */
-    });
-    /* onSubmit(data); */
+    onSubmit(data);
   };
 
   const renderForm = () => {
@@ -78,7 +69,10 @@ const ItemDialog = ({ isOpen, setIsOpen, activeSection, item, onSubmit }) => {
                 <FormItem>
                   <FormLabel>End Date</FormLabel>
                   <FormControl>
-                    <DatePicker {...field} />
+                    <DatePicker
+                      selected={field.value ? new Date(field.value) : ""}
+                      onSelect={(date) => field.onChange(date)}
+                    />
                   </FormControl>
                 </FormItem>
               )}

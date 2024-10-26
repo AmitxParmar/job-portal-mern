@@ -15,9 +15,59 @@ import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const jobSchema = z.object({
+  company: z
+    .string()
+    .min(1)
+    .transform((val) => val.trim()),
+  title: z
+    .string()
+    .min(1)
+    .transform((val) => val.trim()),
+  description: z
+    .string()
+    .min(1)
+    .transform((val) => val.trim()),
+  location: z.object({
+    city: z
+      .string()
+      .min(1)
+      .transform((val) => val.trim()),
+    state: z
+      .string()
+      .optional()
+      .transform((val) => val.trim()),
+    country: z
+      .string()
+      .min(1)
+      .transform((val) => val.trim()),
+  }),
+  salaryRange: z.object({
+    min: z
+      .string()
+      .optional()
+      .transform((val) => val.trim()),
+    max: z
+      .string()
+      .optional()
+      .transform((val) => val.trim()),
+  }),
+  frequency: z.enum(["hourly", "monthly", "yearly"]),
+  skillsRequired: z
+    .string()
+    .transform((val) => val.trim().replace(/,\s+/g, ",").replace(/\s+,/g, ",")),
+  jobType: z.enum(["full time", "part time", "internship"]),
+  workFrom: z.enum(["remote", "on-site", "hybrid"]),
+  experience: z.enum(["entry-level", "mid-level", "senior-level"]),
+});
 
 const PostAJobButton = () => {
-  const form = useForm();
+  const form = useForm({
+    resolver: zodResolver(jobSchema),
+  });
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -33,6 +83,16 @@ const PostAJobButton = () => {
 
   // Submit job @{params} jobData
   const handleJobSubmit = (jobData) => {
+    // check erros
+    const { errors } = form.formState;
+
+    // Log validation errors if they exist
+    if (Object.keys(errors).length > 0) {
+      toast.error(errors);
+      console.log("Validation errors:", errors);
+      return;
+    }
+
     mutation.mutate(jobData, {
       onSuccess: (data) =>
         toast.success("Successfully posted!", {

@@ -37,6 +37,7 @@ export const jobControllers = {
         savedJob,
       });
     } catch (err) {
+      console.log("ERROR.message", err.message);
       next(err);
     }
   },
@@ -79,7 +80,7 @@ export const jobControllers = {
       if (frequency) filter.frequency = frequency;
       if (skills && skills.length > 0) {
         filter.skillsRequired = {
-          $in: skills.split(",").map((skill) => new RegExp(skill.trim(), "i")),
+          $all: skills.split(",").map((skill) => skill.trim()),
         };
       }
       if (salaryMin) filter["salaryRange.min"] = { $gte: parseInt(salaryMin) };
@@ -115,13 +116,19 @@ export const jobControllers = {
 
       console.log("Query executed. Number of jobs found:", _jobs.length);
 
+      if (_jobs.length === 0) {
+        return next(createError(404, "No jobs found matching the criteria"));
+      }
+
       const hasNextPage = _jobs.length > parseInt(limit);
       const jobs = hasNextPage ? _jobs.slice(0, -1) : _jobs;
-
+      // console.log("requiredSkills", jobs[0].skillsRequired); // This line was causing the error
       const formattedJobs = jobs.map((job) => ({
         ...job.toObject(),
         combinedField: {
-          requiredSkills: job.skillsRequired[0] || null,
+          requiredSkills: job.skillsRequired
+            ? job.skillsRequired.split(",").map((skill) => skill.trim())[0]
+            : [], // Return an empty array if skillsRequired is undefined
           jobType: job.jobType,
           workFrom: job.workFrom,
           experience: job.experience,
@@ -224,7 +231,9 @@ export const jobControllers = {
       const formattedJobs = jobs.map((job) => ({
         ...job.toObject(),
         combinedField: {
-          requiredSkills: job.skillsRequired[0] || null,
+          requiredSkills: job.skillsRequired
+            ? job.skillsRequired.split(",").map((skill) => skill.trim())[0]
+            : null,
           jobType: job.jobType,
           workFrom: job.workFrom,
           experience: job.experience,

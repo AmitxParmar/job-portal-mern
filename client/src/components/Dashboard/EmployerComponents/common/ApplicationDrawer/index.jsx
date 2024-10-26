@@ -28,7 +28,7 @@ const ApplicantsDrawer = ({ job, isBookmarked, open, setOpen }) => {
     queryFn: () => getJobApplications(_id),
     enabled: !!_id && open,
   });
-  console.log(company);
+
   useEffect(() => {
     if (open) {
       refetch();
@@ -118,7 +118,7 @@ const ApplicantsDrawer = ({ job, isBookmarked, open, setOpen }) => {
               ))}
             </div>
           ) : (
-            <div className="border h-56 min-w-full rounded-3xl">
+            <div className="border-dashed border-4 text-center flex flex-col justify-center items-center h-56 min-w-full rounded-3xl">
               No Applicants
             </div>
           )}

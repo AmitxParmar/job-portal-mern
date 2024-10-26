@@ -54,7 +54,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
           <div className="mt-2 flex flex-row items-center justify-between">
             <div>
               <p className="font-bold">{company.name}</p>
-              <h3 className="text-3xl font-bold font-grotesk tracking-normal leading-none">
+              <h3 className="text-ellipsis line-clamp-2 overflow-hidden text max-h-20 w-full text-3xl font-bold font-grotesk tracking-normal leading-none">
                 {title}
               </h3>
             </div>
@@ -63,7 +63,6 @@ const JobCard = ({ job, isBookmarked, children }) => {
               <AvatarFallback>{company?.name?.charAt(0)}</AvatarFallback>
             </Avatar>
           </div>
-
           <div className="flex h-1/2 justify-stretch overflow-hidden flex-row flex-wrap gap-1 py-4 font-grotesk font-bold">
             {skillsRequired &&
               Object.values(combinedField)?.map((skill) => (
@@ -132,7 +131,7 @@ JobCard.propTypes = {
     }), */
     tags: PropTypes.arrayOf(PropTypes.string),
     frequency: PropTypes.string.isRequired,
-    skillsRequired: PropTypes.arrayOf(PropTypes.string),
+    skillsRequired: PropTypes.string,
     status: PropTypes.string,
     postedAt: PropTypes.string.isRequired,
     combinedField: PropTypes.shape({

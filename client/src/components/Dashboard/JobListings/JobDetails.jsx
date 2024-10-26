@@ -7,7 +7,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { Badge } from "@/components/ui/badge";
 import BookmarkButton from "../common/JobCard/BookmarkButton";
@@ -19,7 +19,6 @@ import moment from "moment";
 import { toast } from "sonner";
 
 const JobDetails = ({ job, isBookmarked }) => {
-  const queryClient = useQueryClient();
   const {
     _id: jobId,
     title,
@@ -38,23 +37,11 @@ const JobDetails = ({ job, isBookmarked }) => {
   const handleApplyForJob = () => {
     apply(jobId, {
       onSuccess: (data) => {
-        // NOTE: fix the logic later
-        queryClient.setQueryData(["currentUser"], (oldData) => ({
-          ...oldData,
-          jobs: oldData.jobs.map((job) =>
-            job._id === data.job._id ? data.job : job
-          ),
-        }));
         toast.success("Success!", {
-          description: "You've applied for this job!",
-          style: {
-            border: "blue",
-            background: "black",
-          },
+          description: data.message,
         });
       },
       onError: (error) => {
-        queryClient.invalidateQueries(["jobs"]);
         toast.error("Error!", {
           description: error.message,
         });
@@ -181,7 +168,7 @@ JobDetails.propTypes = {
 
     tags: PropTypes.arrayOf(PropTypes.string),
     frequency: PropTypes.string.isRequired,
-    skillsRequired: PropTypes.arrayOf(PropTypes.string),
+    skillsRequired: PropTypes.string,
     status: PropTypes.string,
     postedAt: PropTypes.string.isRequired,
     combinedField: PropTypes.shape({

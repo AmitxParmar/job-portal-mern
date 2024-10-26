@@ -18,26 +18,37 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Plus, X, Ban, CheckCheck } from "lucide-react";
+import { Plus, X, Ban, CheckCheck, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-import { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import SearchDropdown from "@/components/SearchDropdown";
+import { cities } from "@/constants/constants";
+import { memo, useMemo } from "react";
+import debounce from "lodash.debounce";
 
 const JobForm = ({ onSubmit, onCancel, form, companies }) => {
-  useEffect(() => {
-    // This effect will run when the form is reset with new values
-    const subscription = form.watch((value, { name, type }) => {
-      console.log(value, name, type);
-    });
-    return () => subscription.unsubscribe();
-  }, [form]);
+  const containerStyle = useMemo(
+    () => ({
+      transform: "translate3d(0,0,0)", // Forces GPU acceleration
+    }),
+    []
+  );
+
+  const debouncedOnChange = useMemo(
+    () =>
+      debounce((value) => {
+        form.setValue("description", value);
+      }, 150),
+    [form]
+  );
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid gap-2 px-2 overflow-auto"
+        style={containerStyle}
       >
         <div className="grid grid-cols-3 gap-4">
           <FormField
@@ -104,7 +115,7 @@ const JobForm = ({ onSubmit, onCancel, form, companies }) => {
                 <FormControl>
                   <Select
                     defaultValue="open"
-                    value={field.value}
+                    value={field.value || ""}
                     onValueChange={field.onChange}
                   >
                     <SelectTrigger>
@@ -139,9 +150,9 @@ const JobForm = ({ onSubmit, onCancel, form, companies }) => {
               <FormLabel>Job Description</FormLabel>
               <FormControl>
                 <QuillEditor
-                  className={`h-auto`}
+                  className={`h-auto w-full overflow-auto `}
                   value={field.value || ""}
-                  onChange={field.onChange}
+                  onChange={debouncedOnChange}
                   placeholder="Describe the job role and responsibilities"
                 />
               </FormControl>
@@ -158,10 +169,14 @@ const JobForm = ({ onSubmit, onCancel, form, companies }) => {
               <FormItem>
                 <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder="Enter city"
+                  <SearchDropdown
+                    items={cities}
+                    placeholder={`eg. Ahmedabad`}
+                    className={`border`}
+                    icon={
+                      <MapPin className="h-10 w-10 rounded-full border border-muted/40 p-1.5" />
+                    }
+                    _onSelect={(city) => field.onChange(city)}
                   />
                 </FormControl>
                 <FormMessage />
@@ -313,7 +328,7 @@ const JobForm = ({ onSubmit, onCancel, form, companies }) => {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="remote">Remote</SelectItem>
-                    <SelectItem value="onsite">Onsite</SelectItem>
+                    <SelectItem value="on-site">On-site</SelectItem>
                     <SelectItem value="hybrid">Hybrid</SelectItem>
                   </SelectContent>
                 </Select>
@@ -408,4 +423,9 @@ JobForm.propTypes = {
   ),
 };
 
-export default JobForm;
+export default memo(JobForm, (prevProps, nextProps) => {
+  return (
+    prevProps.form === nextProps.form &&
+    prevProps.companies === nextProps.companies
+  );
+});

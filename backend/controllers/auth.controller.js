@@ -17,21 +17,22 @@ const authRateLimiter = createRateLimiter({
 });
 
 const setTokenCookie = (res, token, refreshToken) => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none", // Changed to 'none' to allow cross-site requests
+    secure: isProduction, // Only secure in production
+    sameSite: isProduction ? "none" : "lax", // 'none' in production, 'lax' in development
     maxAge: 20 * 60 * 1000, // 20 minutes
   });
 
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none", // Changed to 'none' to allow cross-site requests
+    secure: isProduction, // Only secure in production
+    sameSite: isProduction ? "none" : "lax", // 'none' in production, 'lax' in development
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 };
-
 export const register = [
   authRateLimiter,
   async (req, res, next) => {

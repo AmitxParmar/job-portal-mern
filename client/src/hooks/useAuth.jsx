@@ -24,7 +24,6 @@ export const useAuth = () => {
 
   const isAuthenticated = !!JSON.parse(localStorage.getItem("isAuthenticated"));
 
-  console.log("isAuthenticated", isAuthenticated);
   const {
     isLoading,
     error,

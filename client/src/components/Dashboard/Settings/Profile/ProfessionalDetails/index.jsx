@@ -24,6 +24,7 @@ import Projects from "./Projects";
 
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const ProfessionalDetails = () => {
   const { user, isLoading } = useAuth();
@@ -39,11 +40,11 @@ const ProfessionalDetails = () => {
         case "create":
           switch (type) {
             case "projects":
-              return addProject(user._id, item);
+              return addProject(item);
             case "education":
-              return addEducation(user._id, item);
+              return addEducation(item);
             case "experience":
-              return addExperience(user._id, item);
+              return addExperience(item);
             default:
               break;
           }
@@ -51,11 +52,11 @@ const ProfessionalDetails = () => {
         case "update":
           switch (type) {
             case "projects":
-              return updateProject(user._id, id, item);
+              return updateProject(id, item);
             case "education":
-              return updateEducation(user._id, id, item);
+              return updateEducation(id, item);
             case "experience":
-              return updateExperience(user._id, id, item);
+              return updateExperience(id, item);
             default:
               break;
           }
@@ -63,11 +64,11 @@ const ProfessionalDetails = () => {
         case "delete":
           switch (type) {
             case "projects":
-              return removeProject(user._id, id);
+              return removeProject(id);
             case "education":
-              return removeEducation(user._id, id);
+              return removeEducation(id);
             case "experience":
-              return removeExperience(user._id, id);
+              return removeExperience(id);
             default:
               break;
           }
@@ -78,9 +79,13 @@ const ProfessionalDetails = () => {
     },
     // NOTE: check the what it returns and set it to cache
     onSuccess: (data) => {
-      queryClient.setQueryData(["currentUser"], (old) => {
-        return { ...old, ...data };
+      queryClient.invalidateQueries(["currentUser"]);
+      toast.success("Success!", {
+        description: data.message,
       });
+      /* queryClient.setQueryData(["currentUser"], (old) => {
+        return { ...old, ...data };s
+      }); */
       setIsDialogOpen(false);
       console.log(
         "Fix data handling here setquerydat current use in profesionalDetails"

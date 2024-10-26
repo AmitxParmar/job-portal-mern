@@ -18,16 +18,16 @@ const BookmarkButton = ({ jobId, isBookmarked }) => {
   const handleBookmark = () =>
     bookmark(jobId, {
       onSuccess: (data) => {
-        queryClient.invalidateQueries(["currentUser"]);
+        /* queryClient.invalidateQueries(["currentUser"]); */
 
         //NOTE: improve performance
-        /*   queryClient.setQueryData(["currentUser"], (old) => ({
+        queryClient.setQueryData(["currentUser"], (old) => ({
           ...old,
           user: {
             ...old.user,
             bookmarkedJobs: data.bookmarkedJobs,
           },
-        })); */
+        }));
         toast(`${isBookmarked ? "Unbookmarked" : "Bookmarked"}`, {
           description: data.message,
           action: {
@@ -37,8 +37,8 @@ const BookmarkButton = ({ jobId, isBookmarked }) => {
         });
       },
       onError: (error) => {
-        toast(`${"Bookmark failed"}`, {
-          description: `${`<div className="border border-red-500 h-20">Failed</div>`}`,
+        toast("Bookmark failed", {
+          description: error.message,
           action: {
             label: "Undo",
             onClick: () => bookmark(jobId),

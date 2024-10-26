@@ -176,7 +176,7 @@ export const changePassword = async (req, res, next) => {
 
 export const toggleBookmarkJob = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).populate("bookmarkedJobs");
     console.log("User found:", user ? "Yes" : "No");
     if (!user) return next(createError(404, "User not found!"));
 
@@ -205,8 +205,6 @@ export const toggleBookmarkJob = async (req, res, next) => {
       console.log("Adding bookmark");
       user.bookmarkedJobs.push(jobObjectId);
     }
-
-    console.log("Bookmarked jobs after modification:", user.bookmarkedJobs);
 
     await user.save();
     console.log("User saved successfully");

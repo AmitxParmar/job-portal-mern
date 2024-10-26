@@ -31,7 +31,11 @@ export const addProject = async (req, res) => {
       { new: true }
     ).populate("projects");
 
-    res.status(201).json({ success: true, projects: user.projects });
+    res.status(201).json({
+      success: true,
+      message: "Project added successfully!",
+      projects: user.projects,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: "Failed to add project" });
   }
@@ -55,7 +59,11 @@ export const updateProject = async (req, res) => {
         .json({ success: false, message: "Project not found" });
     }
     console.log("updated data", updatedProject);
-    res.status(200).json({ success: true, project: updatedProject });
+    res.status(200).json({
+      success: true,
+      message: "Project updated successfully!",
+      project: updatedProject,
+    });
   } catch (error) {
     console.log(error);
     res
@@ -78,7 +86,13 @@ export const removeProject = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json({ success: true, projects: user.projects });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Project removed successfully!",
+        projects: user.projects,
+      });
   } catch (error) {
     res
       .status(500)
