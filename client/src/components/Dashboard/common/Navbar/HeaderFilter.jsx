@@ -40,7 +40,7 @@ const HeaderFilter = () => {
           <SearchDropdown
             items={cities}
             placeholder={`eg. Ahmedabad`}
-            className={`border-r-2`}
+            className={`border-r-2 p-0`}
             icon={
               <MapPin className="text-white h-10 w-10 rounded-full border border-muted/40 p-1.5" />
             }
@@ -55,7 +55,7 @@ const HeaderFilter = () => {
             icon={
               <Briefcase className="text-white bg-black h-10 w-10 rounded-full border border-muted/40 p-1.5" />
             }
-            className={`bg-transparent w-fit border-0 text-background/80 text-lg`}
+            className={`bg-transparent w-fit border-0 lg:px-6 text-background/80 text-lg`}
             _onSelect={(experience) => setFilter({ ...filters, experience })}
           />
           <DropdownList
@@ -65,7 +65,7 @@ const HeaderFilter = () => {
             icon={
               <CalendarDays className="text-white bg-black h-10 w-10 rounded-full border border-muted/40 p-1.5" />
             }
-            className={`bg-transparent w-fit border-0 text-background/80 text-lg`}
+            className={`bg-transparent lg:px-6 w-fit border-0 text-background/80 text-lg`}
             _onSelect={(frequency) => setFilter({ ...filters, frequency })}
           />
           <div className="w-full hidden xl:block text-white">

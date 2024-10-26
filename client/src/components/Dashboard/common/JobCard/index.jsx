@@ -24,7 +24,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
 
   return (
     <>
-      <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border border-input bg-white border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col m-2">
+      <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border border-input bg-white border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col">
         <div
           className={`${
             status === "open" ? "bg-cyan-200" : "bg-slate-500"

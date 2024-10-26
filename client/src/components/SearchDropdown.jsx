@@ -38,7 +38,7 @@ const SearchDropdown = ({ placeholder, items, _onSelect, icon, className }) => {
         <Button
           variant="ghost"
           className={cn(
-            `w-full justify-start border-r-transparent min-w-full p-3 text-gray-600 group hover:bg-transparent/50 hover:text-secondary/50 text-lg font-grotesk flex items-center`,
+            `w-full justify-start border-r-transparent min-w-full lg:p-3 text-gray-600 group hover:bg-transparent/50 hover:text-secondary/50 text-lg font-grotesk flex items-center`,
             className
           )}
         >

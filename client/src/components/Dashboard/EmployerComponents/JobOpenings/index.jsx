@@ -161,42 +161,46 @@ const JobOpenings = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2 xl:px-12 scrollbar-none mb-24 lg:mb-0 overflow-y-scroll mx-auto lg:grid-cols-3 xl:grid-cols-5 lg:gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 scroll-smooth py-2  scrollbar-thin lg:px-4 pb-24 lg:pb-0 lg:mb-0 overflow-auto mx-auto lg:grid-cols-3 xl:grid-cols-5 lg:gap-3 h-[calc(100vh-8vh)] rounded-md scrollbar-w-2 scrollbar-track-gray-200 scrollbar-thumb-primary">
         {data?.jobs?.length > 0 ? (
           data?.jobs?.map((job) => (
-            <div key={job?._id}>
-              <JobCard job={job} isBookmarked={isBookmarked(job)}>
-                <div className="grid w-fit grid-cols-2 gap-1">
-                  <Button
-                    title="View Applicants"
-                    size="icon"
-                    className="hover:invert border-primary font-semibold rounded-full"
-                    variant={
-                      job?.applicants?.length === 0 ? "destructive" : "outline"
-                    }
-                    onClick={() => handleSetOpen(job._id, true)}
-                    disabled={job?.applicants?.length === 0}
-                  >
-                    <Users size={20} />
-                  </Button>
+            <>
+              <div key={job?._id}>
+                <JobCard job={job} isBookmarked={isBookmarked(job)}>
+                  <div className="grid w-fit grid-cols-2 gap-1">
+                    <Button
+                      title="View Applicants"
+                      size="icon"
+                      className="hover:invert border-primary font-semibold rounded-full"
+                      variant={
+                        job?.applicants?.length === 0
+                          ? "destructive"
+                          : "outline"
+                      }
+                      onClick={() => handleSetOpen(job._id, true)}
+                      disabled={job?.applicants?.length === 0}
+                    >
+                      <Users size={20} />
+                    </Button>
 
-                  <Button
-                    title="Edit Job Details"
-                    onClick={() => handleEditClick(job)}
-                    size="icon"
-                    className="hover:invert border-primary font-semibold rounded-full"
-                  >
-                    <PencilIcon size={20} />
-                  </Button>
-                </div>
-              </JobCard>
-              <ApplicantsDrawer
-                open={openStates[job?._id] || false}
-                setOpen={(isOpen) => handleSetOpen(job?._id, isOpen)}
-                job={job}
-                isBookmarked={isBookmarked(job._id)}
-              />
-            </div>
+                    <Button
+                      title="Edit Job Details"
+                      onClick={() => handleEditClick(job)}
+                      size="icon"
+                      className="hover:invert border-primary font-semibold rounded-full"
+                    >
+                      <PencilIcon size={20} />
+                    </Button>
+                  </div>
+                </JobCard>
+                <ApplicantsDrawer
+                  open={openStates[job?._id] || false}
+                  setOpen={(isOpen) => handleSetOpen(job?._id, isOpen)}
+                  job={job}
+                  isBookmarked={isBookmarked(job._id)}
+                />
+              </div>
+            </>
           ))
         ) : (
           <div className="text-center absolute inset-x-0 inset-y-2/4 text-gray-500 font-grotesk text-xl">
