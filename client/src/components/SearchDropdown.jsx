@@ -72,6 +72,17 @@ const SearchDropdown = ({ placeholder, items, _onSelect, icon, className }) => {
                   {item.name}
                 </CommandItem>
               ))}
+              {/* If no matching item is found, allow user to input their own value */}
+              {filteredItems.length === 0 && (
+                <CommandItem
+                  onSelect={() => {
+                    _onSelect(searchValue);
+                    setOpen(false);
+                  }}
+                >
+                  {searchValue}
+                </CommandItem>
+              )}
             </CommandGroup>
           </CommandList>
         </Command>

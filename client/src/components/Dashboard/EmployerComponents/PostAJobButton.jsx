@@ -55,6 +55,7 @@ const jobSchema = z.object({
       .optional()
       .transform((val) => val.trim()),
   }),
+  status: z.enum(["open", "closed"]).default("open"),
   frequency: z.enum(["hourly", "monthly", "yearly"]),
   skillsRequired: z
     .string()
@@ -78,6 +79,7 @@ const PostAJobButton = () => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["jobs"]);
+      form.reset(); // Reset the form fields
     },
   });
 
@@ -94,10 +96,11 @@ const PostAJobButton = () => {
     }
 
     mutation.mutate(jobData, {
-      onSuccess: (data) =>
+      onSuccess: (data) => {
         toast.success("Successfully posted!", {
           description: data?.message,
-        }),
+        });
+      },
       onError: (error) =>
         toast.error("Failed posting!", {
           description: error.message,
