@@ -20,7 +20,9 @@ const Login = () => {
   const form = useForm();
   const { login } = useAuth();
   const navigate = useNavigate();
-  const { mutate: loginUser, isLoading } = login;
+  const { mutate: loginUser, status } = login;
+
+  const isPending = status === "pending";
 
   const handleSubmit = (credentials) => {
     loginUser(credentials, {
@@ -80,7 +82,7 @@ const Login = () => {
                           autoCapitalize="none"
                           autoComplete="password"
                           autoCorrect="off"
-                          disabled={isLoading}
+                          disabled={isPending}
                           {...field}
                           value={field.value || ""}
                         />
@@ -90,8 +92,8 @@ const Login = () => {
                   )}
                 />
 
-                <Button disabled={isLoading}>
-                  {isLoading && (
+                <Button disabled={isPending}>
+                  {isPending && (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Sign In with Email
@@ -109,12 +111,12 @@ const Login = () => {
               </span>
             </div>
           </div>
-          <Button variant="outline" type="button" disabled={isLoading}>
-            {isLoading ? (
+          <Button variant="outline" type="button" disabled={isPending}>
+            {isPending ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <Icons.google className="mr-2 h-4 w-4" />
-            )}{" "}
+            )}
             Google
           </Button>
         </div>
