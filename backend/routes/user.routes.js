@@ -7,6 +7,7 @@ import {
   toggleBookmarkJob,
   updateProfile,
   updateUserAuth,
+  updateProfilePic,
 } from "../controllers/user/user.controller.js";
 import {
   getEducations,
@@ -37,6 +38,8 @@ import { authorize, protect } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 router.use(protect);
+
+router.put("/profile-pic", updateProfilePic);
 
 /**
  * @swagger

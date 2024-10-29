@@ -3,6 +3,29 @@ import axiosInstance from "@/lib/axiosInstance";
 // Base API URL
 const BASE_URL = "/user";
 
+export const updateProfilePicture = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("profilePic", file);
+
+    const { data } = await axiosInstance.put(
+      `${BASE_URL}/profile-pic`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Error updating profile picture"
+    );
+  }
+};
+
 // Fetch current user
 export const fetchCurrentUser = async () => {
   const { data } = await axiosInstance.get(`${BASE_URL}/current-user`);

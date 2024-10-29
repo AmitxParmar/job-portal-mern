@@ -47,6 +47,7 @@ const Login = () => {
         <p className="text-sm font-grotesk font-medium tracking-normal text-muted-foreground">
           Enter your email and password below to login to your account
         </p>
+
         <div className={"grid gap-6"}>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -99,8 +100,13 @@ const Login = () => {
                   Sign In with Email
                 </Button>
               </div>
+              <p className="text-xs mt-3 text-red-600">
+                NOTE: The backend server may take up to a minute to respond on
+                the first request after being inactive.
+              </p>
             </form>
           </Form>
+
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />

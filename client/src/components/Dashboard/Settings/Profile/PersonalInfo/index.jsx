@@ -5,7 +5,10 @@ import PersonalInfoForm from "./PersonalInfoForm";
 import PropTypes from "prop-types";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { updateUserProfile } from "@/services/userServices";
+import {
+  updateProfilePicture,
+  updateUserProfile,
+} from "@/services/userServices";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -17,31 +20,38 @@ const PersonalInfo = () => {
   const fileInputRef = useRef(null);
 
   const form = useForm({
-    defaultValues: {
-      fullName: user?.fullName ?? "",
-      bio: user?.bio ?? "",
-      designation: user?.designation ?? "",
-      contact: user?.contact ?? "",
-      contactEmail: user?.contactEmail ?? "",
-      address: user?.address ?? "",
-      skills: user?.skills ?? "",
-      profileLinks: {
-        linkedIn: user?.profileLinks?.linkedIn ?? "",
-        github: user?.profileLinks?.github ?? "",
-      },
+    defaultValues: Object.assign({}, user),
+    values: Object.assign({}, user),
+  });
+
+  const { mutate: updateProfile } = useMutation({
+    mutationFn: ({ data }) => updateUserProfile(data),
+    onSuccess: (data) => {
+      // Set currentUser cache with updated user data
+      queryClient.setQueryData(["currentUser"], (oldData) => ({
+        ...oldData,
+        user: data.updatedUser,
+      }));
     },
-    values: {
-      fullName: user?.fullName ?? "",
-      bio: user?.bio ?? "",
-      designation: user?.designation ?? "",
-      contact: user?.contact ?? "",
-      contactEmail: user?.contactEmail ?? "",
-      address: user?.address ?? "",
-      skills: user?.skills ?? "",
-      profileLinks: {
-        linkedIn: user?.profileLinks?.linkedIn ?? "",
-        github: user?.profileLinks?.github ?? "",
-      },
+  });
+
+  const { mutate: updateProfilePic } = useMutation({
+    mutationFn: (file) => updateProfilePicture(file),
+    onSuccess: (data) => {
+      // Update profile pic in cache
+      queryClient.setQueryData(["currentUser"], (oldData) => ({
+        ...oldData,
+        user: {
+          ...oldData.user,
+          profilePic: data.profilePic,
+        },
+      }));
+
+      setPreviewUrl(data.profilePic);
+      toast.success("Profile picture updated successfully!");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Error updating profile picture");
     },
   });
 
@@ -59,23 +69,14 @@ const PersonalInfo = () => {
         setPreviewUrl(reader.result);
       };
       reader.readAsDataURL(file);
+
+      updateProfilePic(file);
     }
   };
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
-
-  const { mutate: updateProfile } = useMutation({
-    mutationFn: ({ data }) => updateUserProfile(data),
-    onSuccess: (data) => {
-      // Set currentUser cache with updated user data
-      queryClient.setQueryData(["currentUser"], (oldData) => ({
-        ...oldData,
-        user: data.updatedUser,
-      }));
-    },
-  });
 
   const onSubmit = (data) => {
     updateProfile(

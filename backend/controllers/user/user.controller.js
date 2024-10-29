@@ -1,7 +1,10 @@
+import fs from "fs/promises";
+import mongoose from "mongoose";
 import Job from "../../models/Job.js";
 import { User } from "../../models/User.js";
 import { createError } from "../../utils/error.js";
-import mongoose from "mongoose";
+import { upload } from "../../config/multer.js";
+import { uploadToCloudinary } from "../../config/cloudinary.js";
 
 // Get User Profile (public route)
 export const getUserProfile = async (req, res, next) => {
@@ -133,6 +136,45 @@ export const updateProfile = async (req, res, next) => {
     next(error);
   }
 };
+
+// Update profile
+export const updateProfilePic = [
+  upload.single("profilePic"),
+  async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return next(createError(400, "No file uploaded"));
+      }
+
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        return next(createError(404, "User not found!"));
+      }
+
+      // Upload to Cloudinary and get URL
+      const profilePicUrl = await uploadToCloudinary(req.file);
+
+      // Update user's profile picture URL
+      user.profilePic = profilePicUrl;
+      await user.save();
+
+      // Clean up uploaded file
+      await fs.unlink(req.file.path);
+
+      res.status(200).json({
+        success: true,
+        message: "Profile picture updated successfully!",
+        profilePic: profilePicUrl,
+      });
+    } catch (error) {
+      // Clean up uploaded file if it exists
+      if (req.file) {
+        await fs.unlink(req.file.path).catch(console.error);
+      }
+      next(error);
+    }
+  },
+];
 
 // Delete User Account
 export const deleteUserAccount = async (req, res, next) => {

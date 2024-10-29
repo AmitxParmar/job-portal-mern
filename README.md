@@ -3,6 +3,8 @@
 - [Table of Contents](#table-of-contents)
   - [Backend](#backend)
   - [Frontend](#frontend)
+  - [Recruiter](#recruiter)
+  - [Job Seeker](#job-seeker)
   - [Running the Project](#running-the-project)
   - [Contributing](#contributing)
   - [License](#license)
@@ -26,6 +28,25 @@ The frontend is located in the `client` directory. It is responsible for:
 - **Data fetching:** Making API requests to the backend to retrieve data.
 - **State management:** Managing the application state using React hooks.
 - **Routing:** Handling navigation between different pages.
+
+### Recruiter
+
+- **Create jobs from different companies.** - [Screenshot 1: Creating a Job](./screenshots/recruiter/recruiter-create-job.png)
+- **Recruiter dashboard (recent applicants, recent jobs, status data in number).** - [Screenshot 1: Recruiter Dashboard](./screenshots/recruiter/recruiter-dashboard.png)
+- **Check candidate's resume using inbuilt resume.** - [Screenshot 3: Viewing Applicants](./screenshots/recruiter/recruiter-view-applicant-resume.png)
+- **View applicants in each jobs.** - [Screenshot 3: Viewing Applicants](./screenshots/recruiter/recruiter-view-applicants.png)
+- **Update candidate status (interviewing, hired, applied, reviewing).** - [Screenshot 4: Updating Candidate Status](./screenshots/recruiter/recruiter-update-status.png)
+- **Invite user using codes.** - [Screenshot 5: Inviting Users](./screenshots/recruiter/recruiter-invite-users.png)
+
+### Job Seeker
+
+- **Bookmark job.** - [Screenshot 1: Job Listing](./screenshots/job-seeker-job-listing.png)
+- **Infinite joblist scroll.** - [Screenshot 1: Job Listing](./screenshots/job-seeker-job-listing.png)
+- **Apply and view jobs.** - [Screenshot 2: Job Details](./screenshots/job-seeker-job-details.png)
+- **View applied job and bookmarks.** - [Screenshot 3: Applying for a Job](./screenshots/job-seeker-apply-job.png)
+- **Resume builder using data inputs.** - [Screenshot 4: Resume Builder](./screenshots/job-seeker-resume-builder.png)
+- **ProfilePic update caching.** - [Screenshot 5: Profile Settings](./screenshots/job-seeker-profile-settings.png)
+- **JobFilters mobile responsiveness.** - [Screenshot 1: Job Listing](./screenshots/job-seeker-job-listing.png)
 
 ### Running the Project
 
