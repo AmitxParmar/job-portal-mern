@@ -1,13 +1,17 @@
-## Table of Contents
+# Table of Contents
 
 - [Table of Contents](#table-of-contents)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
-  - [Recruiter](#recruiter)
-  - [Job Seeker](#job-seeker)
-  - [Running the Project](#running-the-project)
-  - [Contributing](#contributing)
-  - [License](#license)
+  - [Project Overview](#project-overview)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Recruiter \[Features and Previews\]](#recruiter-features-and-previews)
+  - [Job Seeker \[Features and Previews\]](#job-seeker-features-and-previews)
+  - [Project References](#project-references)
+    - [Running the Project](#running-the-project)
+    - [Contributing](#contributing)
+    - [License](#license)
+
+## Project Overview
 
 This project is a MERN stack application, utilizing MongoDB, Express.js, React, and Node.js. The project is structured with a `backend` and `client` directory, each containing their respective components and functionalities.
 
@@ -29,24 +33,44 @@ The frontend is located in the `client` directory. It is responsible for:
 - **State management:** Managing the application state using React hooks.
 - **Routing:** Handling navigation between different pages.
 
-### Recruiter
+## Recruiter [Features and Previews]
 
-- **Create jobs from different companies.** - [Screenshot 1: Creating a Job](./screenshots/recruiter/recruiter-create-job.png)
-- **Recruiter dashboard (recent applicants, recent jobs, status data in number).** - [Screenshot 1: Recruiter Dashboard](./screenshots/recruiter/recruiter-dashboard.png)
-- **Check candidate's resume using inbuilt resume.** - [Screenshot 3: Viewing Applicants](./screenshots/recruiter/recruiter-view-applicant-resume.png)
-- **View applicants in each jobs.** - [Screenshot 3: Viewing Applicants](./screenshots/recruiter/recruiter-view-applicants.png)
-- **Update candidate status (interviewing, hired, applied, reviewing).** - [Screenshot 4: Updating Candidate Status](./screenshots/recruiter/recruiter-update-status.png)
-- **Invite user using codes.** - [Screenshot 5: Inviting Users](./screenshots/recruiter/recruiter-invite-users.png)
+- **Create jobs from different companies.**
+  ![Screenshot 1: Creating a Job](./screenshots/recruiter/recruiter-create-job.png)
+- **Recruiter dashboard (recent applicants, recent jobs, status data in number).**
+  ![Screenshot 1: Recruiter Dashboard](./screenshots/recruiter/recruiter-dashboard.png)
+- **Check candidate's resume using inbuilt resume.**
+  ![Screenshot 3: Viewing Applicants](./screenshots/recruiter/recruiter-view-applicant-resume.png)
+- **View applicants in each jobs.**
+  ![Screenshot 3: Viewing Applicants](./screenshots/recruiter/recruiter-view-applicants.png)
+- **Update candidate status (interviewing, hired, applied, reviewing).**
+  ![Screenshot 4: Updating Candidate Status](./screenshots/recruiter/recruiter-update-status.png)
+- **Invite user using codes.**
+  ![Screenshot 5: Inviting Users](./screenshots/recruiter/recruiter-invite-users.png)
 
-### Job Seeker
+## Job Seeker [Features and Previews]
 
-- **Bookmark job.** - [Screenshot 1: Job Listing](./screenshots/job-seeker-job-listing.png)
-- **Infinite joblist scroll.** - [Screenshot 1: Job Listing](./screenshots/job-seeker-job-listing.png)
-- **Apply and view jobs.** - [Screenshot 2: Job Details](./screenshots/job-seeker-job-details.png)
-- **View applied job and bookmarks.** - [Screenshot 3: Applying for a Job](./screenshots/job-seeker-apply-job.png)
-- **Resume builder using data inputs.** - [Screenshot 4: Resume Builder](./screenshots/job-seeker-resume-builder.png)
-- **ProfilePic update caching.** - [Screenshot 5: Profile Settings](./screenshots/job-seeker-profile-settings.png)
-- **JobFilters mobile responsiveness.** - [Screenshot 1: Job Listing](./screenshots/job-seeker-job-listing.png)
+- **Infinite joblist scroll, JobFilters mobile responsiveness, Apply and view jobs.**  
+  ![Screenshot 1: Job Listing](./screenshots/jobSeeker/job-seeker-job-listing.png)
+- **Bookmarked job.**
+  ![Screenshot 1: Job Listing](./screenshots/jobSeeker/job-seeker-bookmarkedJobs.png)
+- **View applied job**
+  ![Screenshot 3: Applying for a Job](./screenshots/jobSeeker/job-seeker-applied-job.png)
+- **Job Details Drawer**
+  ![Screenshot 2: Job Details](./screenshots/jobSeeker/job-seeker-job-details.png)
+- **Resume builder using data inputs.**
+  ![Screenshot 4: Resume Builder](./screenshots/jobSeeker/job-seeker-resume-builder.png)
+
+## Project References
+
+- **[[Inspiration for Job listings](https://dribbble.com/shots/21587286-Job-Search-Platform)]**
+  ![Screenshot 1: Dribbble Design](https://cdn.dribbble.com/userupload/7381601/file/original-c56e86447d5486885da6d6297ca1043b.png?resize=1024x768kk)
+- **[Recruiter Dashboard]**
+  ![Screenshot 1: Behance Design](./screenshots/Recruiter_Dashboard.png)
+- **[Candidate Status]**
+  ![Screenshot 1: Behance Design](./screenshots/Candidate_Status.png)
+- **[Job Details Drawer]**
+  ![Screenshot 1: Behance Design](./screenshots/Job_Details_Drawer.png)
 
 ### Running the Project
 

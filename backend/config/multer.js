@@ -1,10 +1,16 @@
 import multer from "multer";
 import path from "path";
 import { createError } from "../utils/error.js";
+import fs from "fs";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    const uploadsPath = "uploads/";
+    // Check if the uploads directory exists, if not create it
+    if (!fs.existsSync(uploadsPath)) {
+      fs.mkdirSync(uploadsPath, { recursive: true });
+    }
+    cb(null, uploadsPath);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
