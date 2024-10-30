@@ -24,7 +24,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
 
   return (
     <>
-      <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border border-input bg-white border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col">
+      <div className="p-2 mx-auto capitalize font-grotesk border-l-8 border-l-gray-400 border border-input bg-white border-black max-h-[360px] hover:border hover:border-r-8 hover:shadow-lg transition-all rounded-3xl w-[90%] sm:w-64 md:w-72 lg:w-80 min-h-[350px] justify-around group space-y-2 bg-muted flex flex-col">
         <div
           className={`${
             status === "open" ? "bg-cyan-200" : "bg-slate-500"
@@ -76,7 +76,7 @@ const JobCard = ({ job, isBookmarked, children }) => {
           </div>
         </div>
         <div className="px-2.5 items-center flex flex-row justify-between">
-          <div className="grid grid-flow-row leading-none truncate">
+          <div className="mr-2 p-0.5 break-words text-wrap overflow-hidden grid grid-flow-row leading-none truncate">
             <div className="font-bold h-fit text-gray-700">
               {formatSalary(salaryRange?.min)} -{" "}
               {formatSalary(salaryRange?.max)} / {frequency}

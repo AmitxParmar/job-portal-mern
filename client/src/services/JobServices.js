@@ -37,8 +37,10 @@ export const deleteJob = async (jobId) => {
   return data;
 };
 
-export const getRecruiterJobs = async () => {
-  const { data } = await axiosInstance.get(`${BASE_URL}/get-recruiter-jobs`);
+export const getRecruiterJobs = async (filters) => {
+  const { data } = await axiosInstance.get(`${BASE_URL}/get-recruiter-jobs`, {
+    params: filters,
+  });
   return data;
 };
 

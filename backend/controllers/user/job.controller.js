@@ -83,8 +83,19 @@ export const jobControllers = {
           $all: skills.split(",").map((skill) => skill.trim()),
         };
       }
-      if (salaryMin) filter["salaryRange.min"] = { $gte: parseInt(salaryMin) };
-      if (salaryMax) filter["salaryRange.max"] = { $lte: parseInt(salaryMax) };
+      if (salaryMin) {
+        filter.$expr = filter.$expr || { $and: [] }; // Initialize $expr if not already done
+        filter.$expr.$and.push({
+          $gte: [{ $toInt: "$salaryRange.min" }, parseInt(salaryMin)],
+        });
+      }
+
+      if (salaryMax) {
+        filter.$expr = filter.$expr || { $and: [] };
+        filter.$expr.$and.push({
+          $lte: [{ $toInt: "$salaryRange.max" }, parseInt(salaryMax)],
+        });
+      }
       if (postedAfter) filter.postedAt = { $gte: new Date(postedAfter) };
       if (postedBefore) filter.postedAt = { $lte: new Date(postedBefore) };
       if (status) filter.status = status;
@@ -222,12 +233,40 @@ export const jobControllers = {
   getRecruiterJobs: async (req, res, next) => {
     const recruiterId = req.user.id;
     try {
-      const recruiter = await User.findById(recruiterId);
+      const {
+        status,
+        cursor = null,
+        limit = 10,
+        sortBy = "postedAt",
+        sortOrder = "desc",
+      } = req.query;
 
-      console.log("gettings recruiters job", recruiter.email);
-      const jobs = await Job.find({ postedBy: recruiter._id })
+      const filter = { postedBy: recruiterId }; // Add postedBy filter
+      if (status) filter.status = status;
+
+      const sort = {};
+      sort[sortBy] = sortOrder === "asc" ? 1 : -1;
+
+      const query = Job.find(filter)
+        .sort(sort)
+        .limit(parseInt(limit) + 1);
+
+      if (cursor) {
+        query.where("_id").gt(cursor);
+      }
+
+      const _jobs = await query
         .populate("company", "name logo")
         .populate("applicants", "fullName email");
+
+      // if no job is found return status 404 and message
+      if (_jobs.length === 0) {
+        return next(createError(404, "No jobs found matching the criteria"));
+      }
+
+      const hasNextPage = _jobs.length > parseInt(limit);
+      const jobs = hasNextPage ? _jobs.slice(0, -1) : _jobs;
+
       const formattedJobs = jobs.map((job) => ({
         ...job.toObject(),
         combinedField: {
@@ -239,9 +278,9 @@ export const jobControllers = {
           experience: job.experience,
         },
       }));
+
       res.status(200).json({
-        success: true,
-        message: "Recruiter Jobs fetched successfully!",
+        nextCursor: hasNextPage ? jobs[jobs.length - 1]._id : null,
         jobs: formattedJobs,
       });
     } catch (err) {

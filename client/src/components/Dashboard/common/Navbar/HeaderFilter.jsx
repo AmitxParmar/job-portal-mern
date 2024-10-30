@@ -73,8 +73,8 @@ const HeaderFilter = () => {
             <Slider
               className=""
               min={0}
-              max={1000000}
-              step={1000}
+              max={20000000}
+              step={20}
               value={[filters.salaryMin || 0, filters.salaryMax || 1000000]}
               onValueChange={(value) =>
                 setFilter({

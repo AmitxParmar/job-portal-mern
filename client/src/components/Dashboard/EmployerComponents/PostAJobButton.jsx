@@ -21,20 +21,20 @@ import { z } from "zod";
 const jobSchema = z.object({
   company: z
     .string()
-    .min(1)
+    .min(1, "Company field is required")
     .transform((val) => val.trim()),
   title: z
     .string()
-    .min(1)
+    .min(1, "Title field is required")
     .transform((val) => val.trim()),
   description: z
     .string()
-    .min(1)
+    .min(1, "Description field is required")
     .transform((val) => val.trim()),
   location: z.object({
     city: z
       .string()
-      .min(1)
+      .min(1, "City field is required")
       .transform((val) => val.trim()),
     state: z
       .string()
@@ -42,7 +42,7 @@ const jobSchema = z.object({
       .transform((val) => val.trim()),
     country: z
       .string()
-      .min(1)
+      .min(1, "Country field is required")
       .transform((val) => val.trim()),
   }),
   salaryRange: z.object({
@@ -66,19 +66,19 @@ const jobSchema = z.object({
 });
 
 const PostAJobButton = () => {
+  const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
+  const { user } = useAuth();
   const form = useForm({
     resolver: zodResolver(jobSchema),
   });
-  const { user } = useAuth();
-  const [open, setOpen] = useState(false);
-  const queryClient = useQueryClient();
 
   // mutation initialization
   const mutation = useMutation({
     mutationFn: createJob, // Specify mutation function
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries(["jobs"]);
+      queryClient.invalidateQueries(["recruiter-jobs"]);
       form.reset(); // Reset the form fields
     },
   });
