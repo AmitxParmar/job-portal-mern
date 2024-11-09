@@ -1,7 +1,7 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { createError } from "../utils/error.js";
-import { createRateLimiter } from "../middleware/rateLimiter.js";
+
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { sendEmail } from "../utils/sendEmail.js";
@@ -9,12 +9,6 @@ import {
   generateToken,
   generateRefreshToken,
 } from "../utils/generateTokens.js";
-
-const authRateLimiter = createRateLimiter({
-  windowMs: 15 * 60 * 1000,
-  max: 5,
-  message: "Too many login attempts, please try again later.",
-});
 
 const setTokenCookie = (res, token, refreshToken) => {
   const isProduction = process.env.NODE_ENV === "production";
@@ -34,7 +28,6 @@ const setTokenCookie = (res, token, refreshToken) => {
   });
 };
 export const register = [
-  authRateLimiter,
   async (req, res, next) => {
     try {
       const { email, password, ...otherDetails } = req.body;
@@ -81,7 +74,6 @@ export const register = [
 ];
 
 export const login = [
-  authRateLimiter,
   async (req, res, next) => {
     try {
       const { email, password } = req.body;
