@@ -72,6 +72,15 @@ app.use("/api/invitecode", inviteCodeRouter);
 app.use("/api/applications", applicationRouter);
 app.use("/api/company", companyRoutes);
 
+// Error-handling middleware (place this at the end)
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Optional: log the error stack for debugging
+  res.status(err.status || 500).json({
+    message: err.message || "Internal Server Error",
+    status: err.status || 500,
+  });
+});
+
 // Connect to MongoDB
 connectDB().then(() => {
   // Start the server

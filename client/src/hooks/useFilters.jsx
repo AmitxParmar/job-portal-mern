@@ -33,6 +33,8 @@ export const useFilters = () => {
       fetchJobs({ ...filters, cursor: pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor || undefined,
     keepPreviousData: true,
+    retry: 2,
+    retryDelay: 1000,
     staleTime: 5000,
     enabled: user?.role === "jobSeeker",
   });

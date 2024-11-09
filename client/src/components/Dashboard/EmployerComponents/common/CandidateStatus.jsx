@@ -95,7 +95,6 @@ const CandidateStatus = ({
 
   const handleStatusChange = (newStatus) => {
     if (newStatus !== status) {
-      toast.success(newStatus);
       changeCandidateStatus({ applicationId, newStatus });
     }
   };

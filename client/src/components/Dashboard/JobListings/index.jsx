@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useFilters } from "@/hooks/useFilters";
-import { XCircle, PlusCircle } from "lucide-react";
+import { XCircle, PlusCircle, Search } from "lucide-react";
 
 const UserJobListings = () => {
   const { jobQuery } = useFilters();
@@ -22,7 +22,7 @@ const UserJobListings = () => {
     isFetchingNextPage,
     status,
   } = jobQuery;
-
+  console.log(error);
   const isBookmarked = (jobId) => {
     return (
       user?.bookmarkedJobs?.some(
@@ -38,7 +38,11 @@ const UserJobListings = () => {
       ))}
     </div>
   ) : status === "error" ? (
-    <div className="text-red-500 text-5xl">{error?.message}</div>
+    <div className="text-gray-500 text-3xl py-4 font-grotesk min-h-[calc(100vh-18vh)] flex flex-col items-center justify-center">
+      <Search className="text-gray-500 w-16 h-16 mb-4" />
+      {error?.response?.data?.message || "An unexpected error occurred."}
+      <p>(Try clearing the filters)</p>
+    </div>
   ) : (
     <Suspense fallback={<Loader />}>
       <div className="scroll-smooth py-2 scrollbar-thin lg:px-4 pb-24 lg:pb-0 lg:mb-0 overflow-auto mx-auto h-[calc(100vh-8vh)] rounded-md scrollbar-w-2 scrollbar-track-gray-200 scrollbar-thumb-primary">

@@ -128,7 +128,7 @@ export const jobControllers = {
       console.log("Query executed. Number of jobs found:", _jobs.length);
 
       if (_jobs.length === 0) {
-        return next(createError(404, "No jobs found matching the criteria"));
+        return next(createError(404, "No jobs found matching the criteria!"));
       }
 
       const hasNextPage = _jobs.length > parseInt(limit);

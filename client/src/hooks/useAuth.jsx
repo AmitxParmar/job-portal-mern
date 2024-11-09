@@ -42,6 +42,8 @@ export const useAuth = () => {
       clearAuthState();
       toast.error("Session expired. Please log in again.");
     },
+    retry: 3,
+    retryDelay: 1000,
     cacheTime: 1000 * 60 * 15, // Cache for 15 minutes
     staleTime: 1000 * 60 * 30, // Cache for 30 minutes
   });
