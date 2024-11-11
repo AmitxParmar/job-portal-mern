@@ -17,10 +17,13 @@ import { useEffect } from "react";
 
 import Layout from "./components/Dashboard/common/Layouts/Layout";
 import LoginRegisterLayout from "./components/Dashboard/common/Layouts/LoginRegisterLayout";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import VerifyEmail from "./pages/VerifyEmail";
+
 import EmployerDashboard from "@/components/Dashboard/EmployerComponents/EmployerDashboard";
 import UserJobListings from "@/components/Dashboard/JobListings";
 import JobOpenings from "./components/Dashboard/EmployerComponents/JobOpenings";
@@ -116,6 +119,7 @@ function App() {
 
         <Route path="/unauthorized" element={<div>Unauthorized</div>} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
       </Routes>
       <Toaster
         icons={{

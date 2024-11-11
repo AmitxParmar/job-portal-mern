@@ -238,7 +238,7 @@ router.put("/reset-password/:token", protect, resetPassword);
  *       500:
  *         description: Server error
  */
-router.get("/verify-email/:token", protect, verifyEmail);
+router.get("/verify-email/:token", verifyEmail);
 
 /**
  * @swagger

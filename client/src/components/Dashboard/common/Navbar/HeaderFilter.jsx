@@ -31,9 +31,11 @@ const HeaderFilter = () => {
           <div className="flex flex-row gap-2 lg:px-4 items-center">
             <Search className="text-white h-10 w-11 rounded-full border border-muted/40 p-1.5" />
             <Input
-              placeholder={`eg. Full-stack Developer`}
+              placeholder="eg. Full-stack Developer"
               className={`w-full text-background bg-transparent placeholder:text-background/50 placeholder:font-semibold placeholder:text-lg h-9 my-0 border border-muted/40 focus-visible:ring-0 rounded-full`}
-              onChange={(e) => setFilter({ ...filters, title: e.target.value })}
+              onChange={(e) =>
+                setFilter({ ...filters, title: e.target.value.trim() })
+              }
             />
           </div>
           {/* Cities Filter */}

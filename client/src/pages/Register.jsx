@@ -17,6 +17,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { toast } from "sonner";
 
 const Register = () => {
   const form = useForm({
@@ -45,6 +46,9 @@ const Register = () => {
         navigate(`/dashboard/${data?.user?.role}`);
       },
       onError: (error) => {
+        toast.error("Error!", {
+          description: error?.response?.data?.message,
+        });
         console.log(error);
       },
     }); // on save button press send data to the apis

@@ -234,10 +234,15 @@ export const verifyEmail = async (req, res, next) => {
       return next(createError(400, "Invalid or expired verification token"));
     }
 
-    user.isVerified = true;
-    user.verificationToken = undefined;
+    if (user.isVerified) {
+      return next(createError(400, "Email already verified"));
+    }
 
-    await user.save();
+    await User.findOneAndUpdate(
+      { verificationToken: token },
+      { isVerified: true, verificationToken: undefined },
+      { new: true }
+    );
 
     res.status(200).json({
       success: true,
