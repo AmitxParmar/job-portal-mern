@@ -22,7 +22,7 @@ const UserJobListings = () => {
     isFetchingNextPage,
     status,
   } = jobQuery;
-  console.log(error);
+
   const isBookmarked = (jobId) => {
     return (
       user?.bookmarkedJobs?.some(

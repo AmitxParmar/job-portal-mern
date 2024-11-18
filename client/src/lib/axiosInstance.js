@@ -2,24 +2,60 @@ import { refreshToken } from "@/services/authServices";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
+
+// Track refresh token attempts per request
+const MAX_REFRESH_ATTEMPTS = 3;
+const refreshAttemptTracker = new Map();
+
+const clearAuthAndRedirect = () => {
+  localStorage.removeItem("isAuthenticated");
+
+  document.cookie.split(";").forEach(function (c) {
+    document.cookie = c.replace(
+      /^.*?=/,
+      "=;expires=" + new Date().toUTCString() + ";path=/"
+    );
+  });
+
+  // Only redirect if we're not already on the login page
+  if (!window.location.pathname.includes("/")) {
+    window.location.href = "/";
+  }
+};
+
+// List of paths that don't require authentication
+const publicPaths = [
+  "/auth/login",
+  "/auth/register",
+  "/auth/refresh-token",
+  // Add any other public paths here
+];
+
+const isPublicPath = (url) => {
+  return publicPaths.some((path) => url?.includes(path));
+};
+
 const axiosInstance = axios.create({
-  baseURL: `${API_URL}/api`, // Your base API URL
-  /*  timeout: 10000, */ // Optional: Set a timeout (in milliseconds)
+  baseURL: `${API_URL}/api`,
   headers: {
-    "Content-Type": "application/json", // Default content type
-    // Add any other custom headers here
+    "Content-Type": "application/json",
   },
-  withCredentials: true, // This allows the browser to send cookies with cross-origin requests
+  withCredentials: true,
 });
 
-// Optional: Add interceptors for request/response
 axiosInstance.interceptors.request.use(
   (config) => {
-    // You can add authorization tokens or modify the request here
-    // const token = localStorage.getItem('accessToken');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    // Always allow public paths
+    if (isPublicPath(config.url)) {
+      return config;
+    }
+
+    // For protected routes, only check if we have authentication
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (!isAuthenticated) {
+      return Promise.reject(new Error("Not authenticated"));
+    }
+
     return config;
   },
   (error) => {
@@ -27,40 +63,66 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance?.interceptors?.response?.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
   async (error) => {
     const originalRequest = error?.config;
 
-    // Check if error status is 401 and if it's the first attempt
+    // Skip if this is a public path
+    if (isPublicPath(originalRequest?.url)) {
+      return Promise.reject(error);
+    }
+
+    // Only attempt refresh token if we get a 401 and have authentication
     if (error?.response?.status === 401 && !originalRequest?._retry) {
-      originalRequest._retry = true; // Prevent infinite loop
+      const requestId = `${originalRequest.method}-${originalRequest.url}`;
+      const currentAttempts = refreshAttemptTracker.get(requestId) || 0;
+
+      if (currentAttempts >= MAX_REFRESH_ATTEMPTS) {
+        console.error("Max refresh attempts reached for request:", requestId);
+        refreshAttemptTracker.delete(requestId);
+        clearAuthAndRedirect();
+        return Promise.reject(error);
+      }
+
+      originalRequest._retry = true;
 
       try {
         const isAllowed = JSON.parse(localStorage.getItem("isAuthenticated"));
-        console.log("IS authentication", isAllowed);
+
         if (isAllowed) {
-          const { accessToken } = await refreshToken(); // Refresh token endpoint
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`; // Update the Authorization header with the new token
+          refreshAttemptTracker.set(requestId, currentAttempts + 1);
+
+          const { accessToken } = await refreshToken();
+          if (!accessToken) {
+            throw new Error("No access token received");
+          }
+
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          return axiosInstance(originalRequest);
         }
-        return axiosInstance(originalRequest); // Retry original request
       } catch (err) {
         console.error("Token refresh failed:", err);
-        // Clear cookies and redirect to login
-        //  document.cookie.split(";").forEach(function (c) {
-        //  document.cookie = c.replace(
-        //   /=.*/,
-        //  "=;expires=" + new Date().toUTCString() + ";path=/"
-        //   );
-        // });
-        // window.location.href = "/";
-        // localStorage.removeItem("isAuthenticated");
+        // Only clear and redirect if we're certain the refresh failed
+        if (
+          err.response?.status === 401 ||
+          err.message === "No access token received"
+        ) {
+          clearAuthAndRedirect();
+        }
+        return Promise.reject(err);
       }
     }
+
     return Promise.reject(error);
   }
 );
+
+// Add a method to reset the refresh attempts counter
+axiosInstance.resetRefreshAttempts = () => {
+  refreshAttemptTracker.clear();
+};
 
 export default axiosInstance;
