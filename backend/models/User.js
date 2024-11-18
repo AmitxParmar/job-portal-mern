@@ -33,7 +33,7 @@ const userSchema = new Schema({
   },
   isVerified: { type: Boolean, default: false },
   inviteCodeUsed: { type: Schema.Types.ObjectId, ref: "InviteCode" },
-  verificationToken: { type: String, required: true },
+  verificationToken: { type: String },
 
   // Reference to profile schema
   profilePic: { type: String },
