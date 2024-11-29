@@ -104,10 +104,27 @@ const Login = () => {
                 NOTE: The backend server may take up to a minute to respond on
                 the first request after being inactive.
               </p>
+              <p className="text-xs mt-3 text-red-600">
+                For optimal testing, please use the live hosted links whenever
+                possible. Using local development links may lead to
+                `refreshToken` issues due to cookie security restrictions.
+              </p>
+              <br />
+              <p className="text-xs">
+                For testing purposes, here are some sample credentials:
+              </p>
+              <p className="text-xs mt-1 text-red-600">
+                <strong>Job Seeker:</strong> ID: jobseeker@gmail.com, Password:
+                1212
+              </p>
+              <p className="text-xs mt-1 text-red-600">
+                <strong>Recruiter:</strong> ID: recruiter@gmail.com, Password:
+                testtest
+              </p>
             </form>
           </Form>
 
-          <div className="relative">
+          {/* <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
@@ -124,7 +141,7 @@ const Login = () => {
               <Icons.google className="mr-2 h-4 w-4" />
             )}
             Google
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

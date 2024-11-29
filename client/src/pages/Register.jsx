@@ -23,7 +23,24 @@ const Register = () => {
   const form = useForm({
     resolver: zodResolver(
       z.object({
-        email: z.string().email("Please enter a valid email"),
+        email: z
+          .string()
+          .email("Please enter a valid email")
+          .refine(
+            (val) => {
+              const [_, provider] = val.split("@");
+              return (
+                provider === "gmail.com" ||
+                provider === "yahoo.com" ||
+                provider === "outlook.com" ||
+                provider.endsWith(".edu")
+              );
+            },
+            {
+              message:
+                "Please use a valid email provider (e.g., gmail, yahoo, outlook, .edu) for email verification.",
+            }
+          ),
         password: z
           .string()
           .min(8, "Password must be at least 8 characters long")
@@ -148,7 +165,7 @@ const Register = () => {
               </div>
             </form>
           </Form>
-          <div className="relative">
+          {/*  <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
@@ -165,7 +182,7 @@ const Register = () => {
               <Icons.google className="mr-2 h-4 w-4" />
             )}{" "}
             Google
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

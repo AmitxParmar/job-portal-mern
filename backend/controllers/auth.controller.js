@@ -52,12 +52,12 @@ export const register = [
       const savedUser = await newUser.save();
 
       // Send verification email
-      const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
-      await sendEmail({
+      /* const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`; */
+      /* await sendEmail({
         email: savedUser.email,
         subject: "Verify your email",
         message: `Please click on this link to verify your email: ${verificationUrl}`,
-      });
+      }); */
 
       const { password: _, ...userDetails } = savedUser._doc;
 
@@ -69,6 +69,17 @@ export const register = [
       });
     } catch (error) {
       console.error("Registration error:", error);
+      // Attempt to delete the user if any error occurred during registration
+      try {
+        await User.deleteOne({ email: req.body.email });
+        console.log(
+          "User with email:",
+          req.body.email,
+          "deleted successfully due to registration error."
+        );
+      } catch (deleteError) {
+        console.error("Error deleting user:", deleteError);
+      }
       next(error);
     }
   },
