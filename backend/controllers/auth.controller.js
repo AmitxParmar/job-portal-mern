@@ -4,7 +4,7 @@ import { createError } from "../utils/error.js";
 
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { sendEmail } from "../utils/sendEmail.js";
+
 import {
   generateToken,
   generateRefreshToken,
