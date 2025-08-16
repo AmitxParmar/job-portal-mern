@@ -1,7 +1,11 @@
 {
-  "name": "client",
+  "name": "job-portal-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "engines": {
+    "node": "18.x",
+    "pnpm": ">=9.8.0 <11"
+  },
   "type": "module",
   "proxy": "https://job-portal-mern-tw7s.onrender.com",
   "scripts": {
